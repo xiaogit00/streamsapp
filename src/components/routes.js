@@ -15,7 +15,7 @@ const Routes = () => {
         <Switch>
         {/* Home Page */}
           <Route exact path="/">
-            <h1> This is 1234 placeholder for the home page</h1>
+            <h1> This is within the develop branch. </h1>
           </Route>
           {/* React Exercises Page */}
           <Route path="/streams">
