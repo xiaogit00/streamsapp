@@ -36,3 +36,342 @@
     transform: rotate(360deg);
   }
 }
+
+.container {
+  display: block;
+  /* border: 1px solid magenta; */
+}
+/*
+//***********************************************************
+//*          NAV BAR
+//***********************************************************
+
+ */
+.left-nav {
+  position: absolute;
+  /* border: 1px solid blue; */
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 100%;
+}
+
+
+.navigation-menu {
+  /* border: 1px solid cyan; */
+  display:flex;
+  width: 180px;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  z-index: 600;
+  background-color: rgb(44, 19, 56);
+  flex-direction: column;
+  position: fixed;
+  /* justify-content:space-around; */
+
+}
+
+.flexbox-item {
+  /* border: 1px solid white; */
+  /* max-height: 32px; */
+  min-height: calc(25.6px);
+  /* width:100%; */
+}
+
+.nav-header-flexbox {
+  padding: 10px;
+  /* height: 100%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* height: 66px;
+  padding-left: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  justify-content: center;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column; */
+}
+
+.nav-section1-flexitem {
+  padding: 11px;
+  /* padding-left: 12px;
+  padding-right: 12px; */
+
+}
+
+.nav-section2-flexitem {
+  padding: 11px;
+}
+
+.nav-section3-flexitem {
+  padding: 11px;
+}
+
+
+.menu-items-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*
+//***********************************************************
+//*         Streams Right Pane
+//***********************************************************
+ */
+.right-pane {
+  margin-left: 180px;
+}
+
+.right-pane-inner {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  border: 2px dotted red;
+}
+.content-container-flex {
+  /* border-top: 2px solid orange; */
+
+  height: 70vh;
+  padding: 30px;
+  display: flex;
+  background-color: #FDFBF9;
+}
+
+.header-container {
+  /* border: 1px solid red; */
+  height: 60px;
+  display: flex;
+  top: 5px;
+  margin-bottom: 4px;
+  /* position: fixed; */
+  box-shadow: rgba(0, 0, 0, 0.13) 0px 2px 6px 0px;
+}
+
+/*
+//***********************************************************
+//*         Streams Table
+//***********************************************************
+ */
+ /*
+ //*****************
+ //*     Overall Table container
+ //*****************
+  */
+.streams-table-container {
+  border: 2px solid #ababab;
+  height: 88%;
+  width:75%;
+  border-radius: 7px;
+  overflow-y: scroll;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.13) 0px 2px 6px 0px;
+}
+/*
+//*****************
+//*     Table Head Flex Container
+//*****************
+ */
+
+.table-head-flex-container {
+  border-bottom: 0.1rem solid #ababab;
+  font-size: 80%;
+  font-weight: 100;
+  display: flex;
+  /* position: -webkit-sticky; */
+  position: sticky;
+  top:0;
+  background-color: #FDFBF9;
+  /* justify-content: space-around; */
+  padding: 7px;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.13) 0px 2px 6px 0px;
+}
+
+/*
+//*****************
+//*     Table Head Span ID tags
+//*****************
+ */
+
+#TH1 {
+
+}
+
+#TH2 {
+  margin-left: 0.5em;
+}
+
+#TH3 {
+
+}
+
+#TH4 {
+  text-align: left;
+}
+
+#TH5 {
+
+}
+
+#TH6 {
+
+}
+
+#TH7 {
+
+}
+
+#TH8 {
+
+}
+
+/*
+//*****************
+//*     Table Row Flex Container
+//*****************
+ */
+.table-row-flex-container {
+  font-size: 70%;
+  display: flex;
+  /* justify-content: space-around; */
+  padding: 2px;
+  align-items: center;
+  margin-bottom: 3px;
+  margin-top: 8px;
+  /* height: 3%; */
+  align-content: start;
+}
+
+/*
+//*****************
+//*     Table Row Cells
+//*****************
+ */
+.table-row-cells {
+  /* background-color: #EDEDF7; */
+  border-top: 2px solid #99999D;
+  border-bottom: 2px solid #99999D;
+  min-height: 15px;
+  padding: 0.8em;
+  text-align: center;
+  /* font-weight: bold; */
+  font-size: 1.2em;
+  /* font-family: "courier new"; */
+
+  /* margin: 5px auto; */
+  /* margin-left: 0.5em; */
+
+}
+
+/*
+//*****************
+//*     Table Row Div Tag Flex items
+//*     (for cells)
+//*****************
+ */
+
+#C1 {
+  /* background-color: white; */
+  border: none;
+  /* text-align: left; */
+  padding: 0.2em;
+}
+
+
+
+#C2 {
+  border-left: 2px solid #99999D;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #EDEDF7;
+
+  /* border: 1px solid grey; */
+  /* margin: 5px auto; */
+  /* margin-left: 0.5em; */
+
+
+  /* padding-left: 2em; */
+  /* min-height: 15px; */
+
+}
+
+#C3 {
+  font-family: courier, monospace;
+  /* font-weight: normal; */
+  border-right: 0.6px dotted grey;
+}
+
+#C4 {
+  border-right: 0.6px dotted grey;
+
+}
+
+#C5 {
+  border-right: 0.6px dotted grey;
+
+}
+
+#C6 {
+  border-right: 0.6px dotted grey;
+}
+
+#C7 {
+  border-right: 0.6px dotted grey;
+}
+
+#C8 {
+  border-right: 2px solid #99999D;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/*
+//*****************
+//*     Table Row Div Tag Flex items
+//*     (for cells)
+//*****************
+ */
+#TR1 {
+  color: #929292;
+  font-family: Calibri, sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+
+}
+
+#TR2 {
+  color: #285054;
+  font-size: 1.1em;
+  font-family: Calibri, sans-serif;
+  font-weight: bold;
+}
+
+#TR3 {
+  font-size: 1em;
+  /* font-weight: bold; */
+  font-family: "American Typewriter", serif
+}
+
+#TR4 {
+
+}
+
+#TR5 {
+
+}
+
+#TR6 {
+
+}
+
+#TR7 {
+
+}
+
+#TR8 {
+
+}
