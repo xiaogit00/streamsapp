@@ -35,7 +35,8 @@ const MenuItem = ({menuInfo}) => {
 
       <div style={menuItemContainerStyle}>
         <img src={menuInfo.logoUrl}
-        height='20px' width='20px'/>
+        height='20px' width='20px'
+        alt="S logo"/>
         <span style={menuText}>{menuInfo.text}</span>
       </div>
 

@@ -25,6 +25,7 @@ const StreamsTable = () => {
       .then(response => {
 
         setStreams(response.data)
+        // console.log("streams",response.data)
       })
   }, [])
   // console.log("value of streams in Streamstable", streams)
