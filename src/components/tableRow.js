@@ -12,8 +12,9 @@ var globalNominalDenom = require('../config.json').globalNominalDenom;
 const TableRow = ({individualStream, trades}) => {
 
 
-  const [currentPrice, setCurrentPrice] = useState("")
-  const [currentValue, setCurrentValue] = useState("")
+  // const [currentPrice, setCurrentPrice] = useState("")
+  // const [currentValue, setCurrentValue] = useState("")
+  const [swapsCurrentPrices, setSwapsCurrentPrices] = useState([])
 
 
   //**********************************************
@@ -24,6 +25,7 @@ const TableRow = ({individualStream, trades}) => {
     filteredTrades: function() {
       return trades.filter(trade => this.tradesInStream.includes(trade.id))
     },
+    baseAsset: individualStream.asset,
     openTrades: function() {
       return this.filteredTrades().filter(trade => trade.position === "open")
     },
@@ -60,33 +62,106 @@ const TableRow = ({individualStream, trades}) => {
   //**********************************************
   //*             Generate current price
   //**********************************************
-  useEffect(() => {
-    alpha.forex.rate(individualStream.asset, globalNominalDenom).then(res => {
-      setCurrentPrice(res["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-      setCurrentValue(streamData.totalAmtPurchased()*res["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+//
+  // useEffect(() => {
+  //   alpha.forex.rate(individualStream.asset, globalNominalDenom).then(res => {
+  //     setCurrentPrice(res["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+  //     setCurrentValue(streamData.totalAmtPurchased()*res["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+  //   })
+    //Getting prices of swap assets
+    //accessible via: swapsCurrentPrices.ZIL
+    // individualStream.swaps.map(swap => {
+    //   alpha.forex.rate(swap.asset, streamData.baseAsset).then(data => {
+    //     setSwapsCurrentPrices(swapsCurrentPrices => [...swapsCurrentPrices, {[swap.asset]:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]}])
+    //   })
+    // })
+    // }, [])
+    // EXAMPLE FORMAT OF SWAP ASSET PRICES:
+//     [
+//   {
+//     "ETH": "0.07434600"
+//   },
+//   {
+//     "ZIL": "0.00000233"
+//   }
+// ]
+
+
+//
+
+
+  //STATIC VALUES TO USE FOR TESTING - COMMENT OFF WHEN TURNING ON API
+
+  swapsCurrentPrices["ZIL"] = 0.00000232
+  swapsCurrentPrices["ETH"] = 0.07416300
+  const currentPrice = 64217
+  const currentValue = 3861
+  //**********************************************
+  //*             Swaps Data
+  //**********************************************
+// Here, I created swapsData, which is an array of swapObjects. Each swapObject represents
+// an aggregation of swap trades within the class.This is done by mapping (looping)
+// over the streams.swaps array of objects.
+
+  let swapsData = individualStream.swaps.map(swapObject => {
+      //DATA GENERATION - totalamtSWAPPED + SWAPPEDTRADES
+      let totalAmtSwapped, totalAmtSwappedBase = 0
+
+      const swappedTrades = trades.filter(trade => swapObject.tradeIDs.includes(trade.id))
+
+      swappedTrades.forEach(trade => {
+        if (trade.position==="open") {
+          totalAmtSwapped += trade.amt
+          totalAmtSwappedBase += trade.value
+        }
+      })
+      //FINDING AVGSWAPPEDPRICE
+      const totalSwappedPrice = swappedTrades.filter(trade=> trade.position==="open").map(trade => trade.price)
+      const avgPurchasePriceInBaseAsset = totalSwappedPrice/swappedTrades.filter(trade=> trade.position==="open").length
+      // console.log("avgPurchasePriceInBaseAsset",avgPurchasePriceInBaseAsset)
+      //VALUE ASSIGNMENT
+      swapObject.swapTrades = swappedTrades
+      swapObject.totalAmtSwapped = totalAmtSwapped
+      swapObject.totalAmtSwappedBase = totalAmtSwappedBase
+      swapObject.avgPurchasePriceInBaseAsset = avgPurchasePriceInBaseAsset
+      return swapObject
     })
-  }, [])
+
+
+
+
   //**********************************************
   //*             Returns Data
   //**********************************************
 
   let returnsData = {
+    //CLOSED RETURNS
     realizedReturnsPercentage: ((streamData.avgClosePrice() / streamData.avgPurchasePrice()) - 1)*100,
     weightClosed: streamData.totalAmtSold() / streamData.totalAmtPurchased(),
     closedTradeReturnsAbsolute: function () {
       return this.realizedReturnsPercentage * this.weightClosed
     },
+    //SWAPS
+    unrealizedReturnsSwapsPercentage: (swapsCurrentPrices["ZIL"]/swapsData[0].avgPurchasePriceInBaseAsset - 1)*100,
+    weightSwaps: swapsData[0].totalAmtSwappedBase / streamData.totalAmtPurchased(),
+    swapsTradeReturnsAbsolute: function() {
+      return this.unrealizedReturnsSwapsPercentage * this.weightSwaps
+    },
+    //OPEN RETURNS
     unrealizedReturnsPercentage: ((currentPrice / streamData.avgPurchasePrice()) - 1)*100,
     weightOpen: function() {
-      return (1 - this.weightClosed)
+      return (1 - this.weightClosed - this.weightSwaps)
     },
     openTradeReturnsAbsolute: function() {
       return this.unrealizedReturnsPercentage * this.weightOpen()
     },
     streamReturns: function() {
-      return this.closedTradeReturnsAbsolute() + this.openTradeReturnsAbsolute()
-    },
+      return this.closedTradeReturnsAbsolute() + this.openTradeReturnsAbsolute() + this.swapsTradeReturnsAbsolute()
+    }
+
   }
+
+console.log("swapsData[0].totalAmtSwappedBase",swapsData[0].totalAmtSwappedBase)
 
 
   //**********************************************
@@ -108,9 +183,17 @@ const TableRow = ({individualStream, trades}) => {
 //**********************************************
     // console.log("value of rowData within tableRow: ", rowData)
     return (
+      <>
       <div className="table-row-flex-container">
         <TableRowItems rowData={rowData}/>
       </div>
+      <div>
+      weights:
+      <p>Closed: {returnsData.weightClosed}</p>
+      <p>Swaps: {returnsData.weightSwaps}</p>
+      <p>Open: {returnsData.weightOpen}</p>
+      </div>
+      </>
     )
 
 }
