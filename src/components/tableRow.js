@@ -4,6 +4,7 @@ import TableRowItems from './tableRowItems'
 import { nominal_value } from './utils'
 import streamData from './calcs/tablerow/streamData'
 import swapsData from './calcs/tablerow/swapsData'
+import returnsDataWithSwap from './calcs/tablerow/returnsDataWithSwap'
 import returnsData from './calcs/tablerow/returnsData'
 // import unrealizedReturnsSwaps from './calcs/tablerow/unrealizedReturnsSwaps'
 const alpha = require('alphavantage')({ key: 'LY78Q3KY7IUG1KFL' })
@@ -16,8 +17,6 @@ var globalNominalDenom = require('../config.json').globalNominalDenom;
 const TableRow = ({individualStream, trades}) => {
 
 
-  // const [currentPrice, setCurrentPrice] = useState("")
-  // const [currentValue, setCurrentValue] = useState("")
   const [swapsCurrentPrices, setSwapsCurrentPrices] = useState([])
 
 
@@ -63,108 +62,60 @@ const TableRow = ({individualStream, trades}) => {
 
   swapsCurrentPrices["ZIL"] = 0.00000232
   swapsCurrentPrices["ETH"] = 0.07416300
-  const currentPrice = 64217
-  const currentValue = 3861
+  let currentPrice = 0
+  let currentValue = 0
+
+  if (individualStream.asset === "BTC") {
+    currentPrice = 64217
+    currentValue = 3861
+  } else if (individualStream.asset === "ETH") {
+    // console.log(individualStream.asset)
+    currentPrice = 5067
+  } else if (individualStream.asset === "Alibaba") {
+    // console.log(individualStream.asset)
+    currentPrice = 28.86
+  } else if (individualStream.asset === "Xiaomi") {
+    // console.log(individualStream.asset)
+    currentPrice = 4.37
+  } else if (individualStream.asset === "JD.com") {
+
+    currentPrice = 53.74
+  } else if (individualStream.asset === "HST") {
+    // console.log(individualStream.asset)
+    currentPrice = 1.132
+  } else if (individualStream.asset === "Tencent") {
+    // console.log(individualStream.asset)
+    currentPrice = 84.32
+    console.log(individualStream.asset)
+    console.log(stream.totalSpentOpenNominal())
+  }
+
+  // console.log(stream.avgPurchasePrice())
+
   //**********************************************
-  //*             Swaps Data
+  //*             Swaps Data (IF THERE ARE SWAPS)
   //**********************************************
 // Here, I created swapsData, which is an array of swapObjects. Each swapObject represents
 // an aggregation of swap trades within the class.
 // Each swap object in array contains the following fields:
 //  -asset, tradeIDs, swapTrades, totalAmtSwapped, totalAmtSwappedBase, avgPurchasePriceInBaseAsset
-  const swaps = swapsData(individualStream, trades)
+  let swaps = []
+  let returns = 0
+
+  if (individualStream.swaps) {
+    swaps = swapsData(individualStream, trades)
+    //**********************************************
+    //*             Returns Data
+    //**********************************************
+    returns = returnsDataWithSwap(stream, trades, swaps, currentPrice, currentValue)
+  } else {
+    returns = returnsData(stream, trades, currentPrice)
+  }
 
 
 
 
 
-  //**********************************************
-  //*             Returns Data
-  //**********************************************
-  const returns = returnsData(stream, trades, swaps, currentPrice, currentValue)
-  // let returnsData = {
-  //   //**********************************************
-  //   //*             Closed Trade Returns Data
-  //   //**********************************************
-  //   realizedReturnsPercentage: ((stream.avgClosePrice() / stream.avgPurchasePrice()) - 1)*100,
-  //   weightClosed: stream.totalAmtSold() / stream.totalAmtPurchased(),
-  //   closedTradeReturnsAbsolute: function () {
-  //     return this.realizedReturnsPercentage * this.weightClosed
-  //   },
-  //   //**********************************************
-  //   //*             Open Swaps Returns
-  //   //**********************************************
-  //   openSwapReturns: individualStream.swaps.map(swap => {
-  //     //This will create as many swap returns objects as there are number of swaps in the Stream
-  //     // Each object will contain unrealizedReturnsSwapsPercentage, weightSwaps, swapsTradeReturnsAbsolute
-  //     // I will need to create a swap object
-  //     swap.unrealizedReturnsSwapsPercentage = (swapsCurrentPrices[swap.asset]/swap.avgPurchasePriceInBaseAsset - 1)*100
-  //     swap.weightSwaps = swap.totalAmtSwappedBase / stream.totalAmtPurchased()
-  //     swap.swapsTradeReturnsAbsolute = swap.unrealizedReturnsSwapsPercentage * swap.weightSwaps
-  //     return swap
-  //   }),
-  //   // unrealizedReturnsSwapsPercentage: (swapsCurrentPrices["ZIL"]/swapsData[0].avgPurchasePriceInBaseAsset - 1)*100,
-  //   // weightSwaps: swapsData[0].totalAmtSwappedBase / stream.totalAmtPurchased(),
-  //   // swapsTradeReturnsAbsolute: function() {
-  //   //   return this.unrealizedReturnsSwapsPercentage * this.weightSwaps
-  //   // },
-  //   //This loops through all swaps and sums their weight together
-  //   weightSwaps: function() {
-  //     return this.openSwapReturns.reduce((a,swap) => a + swap.weightSwaps, 0)
-  //   },
-  //   swapTradeReturnsAbsoluteArray: function() {
-  //     return this.openSwapReturns.map(swap=> swap.swapsTradeReturnsAbsolute)
-  //   },
-  //   swaptradeReturnsAbsolute: function () {
-  //     return this.openSwapReturns.map(swap=> swap.swapsTradeReturnsAbsolute).reduce((a,num) => a+num, 0)
-  //   },
-  //   //**********************************************
-  //   //*             Closed Swaps Returns
-  //   //**********************************************
-  //   closedSwapReturns: individualStream.swaps.map(swap => {
-  //     //This will create as many swap returns objects as there are number of swaps in the Stream
-  //     // Each object will contain unrealizedReturnsSwapsPercentage, weightSwaps, swapsTradeReturnsAbsolute
-  //     // I will need to create a swap object
-  //     swap.realizedReturnsSwapsPercentage = (swapsCurrentPrices[swap.asset]/swap.avgPurchasePriceInBaseAsset - 1)*100
-  //     swap.weightSwaps = swap.totalAmtSwappedBase / stream.totalAmtPurchased()
-  //     swap.swapsTradeReturnsAbsolute = swap.unrealizedReturnsSwapsPercentage * swap.weightSwaps
-  //     return swap
-  //   }),
-  //   // unrealizedReturnsSwapsPercentage: (swapsCurrentPrices["ZIL"]/swapsData[0].avgPurchasePriceInBaseAsset - 1)*100,
-  //   // weightSwaps: swapsData[0].totalAmtSwappedBase / stream.totalAmtPurchased(),
-  //   // swapsTradeReturnsAbsolute: function() {
-  //   //   return this.unrealizedReturnsSwapsPercentage * this.weightSwaps
-  //   // },
-  //   //This loops through all swaps and sums their weight together
-  //   weightSwaps: function() {
-  //     return this.openSwapReturns.reduce((a,swap) => a + swap.weightSwaps, 0)
-  //   },
-  //   swapTradeReturnsAbsoluteArray: function() {
-  //     return this.openSwapReturns.map(swap=> swap.swapsTradeReturnsAbsolute)
-  //   },
-  //   swaptradeReturnsAbsolute: function () {
-  //     return this.openSwapReturns.map(swap=> swap.swapsTradeReturnsAbsolute).reduce((a,num) => a+num, 0)
-  //   },
-  //   //**********************************************
-  //   //*            Open returns
-  //   //**********************************************
-  //   unrealizedReturnsPercentage: ((currentPrice / stream.avgPurchasePrice()) - 1)*100,
-  //   weightOpen: function() {
-  //     return (1 - this.weightClosed - this.weightSwaps())
-  //   },
-  //   openTradeReturnsAbsolute: function() {
-  //     return this.unrealizedReturnsPercentage * this.weightOpen()
-  //   },
-  //   streamReturns: function() {
-  //     return this.closedTradeReturnsAbsolute() + this.openTradeReturnsAbsolute() + this.swaptradeReturnsAbsolute()
-  //   }
-  //
-  // }
-  //
-  //
-  //
-  //
-  //
   // //**********************************************
   // //*             Supplying data into Row
   // //**********************************************
@@ -175,7 +126,7 @@ const TableRow = ({individualStream, trades}) => {
       avgPurchasePrice: Math.round(stream.avgPurchasePrice()*100)/100,
       currentPrice: Math.round(currentPrice*100)/100,
       purchaseValue: Math.round(stream.totalSpentOpenNominal()*100)/100,
-      currentValue: Math.round(currentValue*100)/100,
+      currentValue: Math.round(stream.totalAmtPurchased()*currentPrice*100)/100,
       returns: Math.round(returns*100)/100
     }
 

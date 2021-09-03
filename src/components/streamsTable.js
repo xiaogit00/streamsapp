@@ -35,7 +35,13 @@ const StreamsTable = () => {
       <div className="streams-table-container">
         <TableHead/>
         <TableRow individualStream={streams[0]} trades={trades}/>
-
+        <TableRow individualStream={streams[1]} trades={trades}/>
+        <TableRow individualStream={streams[2]} trades={trades}/>
+        <TableRow individualStream={streams[3]} trades={trades}/>
+        <TableRow individualStream={streams[4]} trades={trades}/>
+        <TableRow individualStream={streams[5]} trades={trades}/>
+        <TableRow individualStream={streams[6]} trades={trades}/>
+        
       </div>
     )
   } else {
