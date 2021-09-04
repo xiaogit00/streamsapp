@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../App.css'
 import TableRowItems from './tableRowItems'
+import TableRowProgressBar from './tableRowProgressBar'
 import { nominal_value } from './utils'
 import streamData from './calcs/tablerow/streamData'
 import swapsData from './calcs/tablerow/swapsData'
@@ -138,7 +139,9 @@ const TableRow = ({individualStream, trades}) => {
       <>
       <div className="table-row-flex-container">
         <TableRowItems rowData={rowData}/>
+        <TableRowProgressBar />
       </div>
+
 
       </>
     )
