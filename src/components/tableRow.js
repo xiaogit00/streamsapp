@@ -180,47 +180,49 @@ const TableRow = ({individualStream, trades}) => {
   const columnStyle = {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   }
+
   const StreamNumber = styled.div`
-  border: 1px dotted black;
+
   width: 17%;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  background-color:
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  background-color: #EDEDF7;
+  font-size: 1.2em;
 
   `
   const Asset = styled.div`
-  border: 1px dotted black;
   width: 11%;
   text-align: center;
+  font-size: 1.2em;
   `
   const AvgPurchasePrice = styled.div`
-  border: 1px dotted black;
   width: 15%;
   text-align: center;
+  font-size: 1.3em;
   `
   const CurPrice = styled.div`
-  border: 1px dotted black;
+  font-size: 1.2em;
   width: 15%;
   text-align: center;
   `
   const PurchaseValue = styled.div`
-  border: 1px dotted black;
+  font-size: 1.2em;
   width: 15%;
   text-align: center;
   `
   const CurrentValue = styled.div`
-  border: 1px dotted black;
+  font-size: 1.2em;
   width: 15%;
   text-align: center;
   `
   const Returns = styled.div`
-  border: 1px dotted black;
+  font-size: 1.3em;
   width: 12%;
   text-align: center;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
   `
 
   //**********************************************
