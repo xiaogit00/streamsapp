@@ -10,6 +10,7 @@ const RightPane = () => {
         <div className='right-pane-inner'>
           <HeaderBlock />
           <ContentContainer />
+          
         </div>
   )
 }

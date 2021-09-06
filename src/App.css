@@ -189,6 +189,7 @@
   padding: 7px;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.13) 0px 2px 6px 0px;
+  z-index: 3;
 }
 
 /*
@@ -235,14 +236,20 @@
 //*****************
  */
 .table-row-flex-container {
+  display: flex;
+  min-height: 42px;
+  max-heigth: 50px;
+}
+
+.streambar-flex-container {
   font-size: 70%;
   display: flex;
   /* justify-content: space-around; */
   padding: 2px;
   align-items: center;
   margin-bottom: 3px;
-  margin-top: 13px;
-  /* height: 3%; */
+  margin-top: 7px;
+  /* height: 10%; */
   align-content: flex-start;
 }
 
@@ -266,10 +273,30 @@
   margin-top: 55px;
   display: flex;
 }
+/*
+//*****************
+//*     Table Row Progress Bar V2
+//*****************
+ */
+ .table-row-progress-barV2-flex-container {
+   /* background-color: orange; */
+   /* border: 1px dotted red; */
+   /* box-shadow: rgba(0, 0, 0, 0.13) 0px 2px 6px 0px; */
+   /* height: 5px; */
+   /* background-color: #7C7D7D; */
+   border-radius: 2px;
+   width: 76.3%;
+   /* height: 100%; */
+   justify-content: flex-start;
+   position: absolute;
+   /* align-content: space-between; */
+   left: 23.55%;
+   /* margin-top: 55px; */
+   display: flex;
 
-.progress-bar-weight-open {
+   height: 40.5px;
 
-}
+ }
 
 /*
 //*****************
@@ -304,6 +331,7 @@
   border: none;
   /* text-align: left; */
   padding: 0.2em;
+
 }
 
 
@@ -365,6 +393,8 @@
   font-family: Calibri, sans-serif;
   font-size: 1em;
   font-weight: bold;
+  z-index: 2;
+  position: relative;
 
 }
 
@@ -373,30 +403,41 @@
   font-size: 1.1em;
   font-family: Calibri, sans-serif;
   font-weight: bold;
+  z-index: 2;
+  position: relative;
 }
 
 #TR3 {
   font-size: 1em;
   /* font-weight: bold; */
-  font-family: "American Typewriter", serif
+  font-family: "American Typewriter", serif;
+  z-index: 2;
+  position: relative;
+
 }
 
 #TR4 {
-
+  z-index: 2;
+  position: relative;
 }
 
 #TR5 {
-
+  z-index: 2;
+  position: relative;
 }
 
 #TR6 {
-
+  z-index: 2;
+  position: relative;
 }
 
 #TR7 {
-
+  z-index: 2;
+  position: relative;
 }
 
 #TR8 {
+  z-index: 2;
+  position: relative;
 
 }

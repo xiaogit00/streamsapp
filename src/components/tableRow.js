@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import '../App.css'
 import TableRowItems from './tableRowItems'
-import TableRowProgressBar from './tableRowProgressBar'
+import TableRowProgressBarV2 from './tableRowProgressBarV2'
 import { nominal_value } from './utils'
 import streamData from './calcs/tablerow/streamData'
 import swapsData from './calcs/tablerow/swapsData'
 import returnsDataWithSwap from './calcs/tablerow/returnsDataWithSwap'
 import returnsData from './calcs/tablerow/returnsData'
+import styled from 'styled-components';
 // import unrealizedReturnsSwaps from './calcs/tablerow/unrealizedReturnsSwaps'
 const alpha = require('alphavantage')({ key: 'LY78Q3KY7IUG1KFL' })
 var globalNominalDenom = require('../config.json').globalNominalDenom;
@@ -102,20 +103,41 @@ const TableRow = ({individualStream, trades}) => {
 //  -asset, tradeIDs, swapTrades, totalAmtSwapped, totalAmtSwappedBase, avgPurchasePriceInBaseAsset
   let swaps = []
   let returns = 0
+  let weights = {}
 
   if (individualStream.swaps) {
     swaps = swapsData(individualStream, trades)
+    // console.log(swaps[0].weightOpen)
+    weights.swapOpen = swaps[0].weightOpen*100
+    weights.swapClosed = swaps[0].weightClosed*100
+    weights.closed = (stream.totalAmtSold() / stream.totalAmtPurchased())*100
+
+    weights.open = (100 - weights.closed - (weights.swapOpen + weights.swapClosed))
+
+    // console.log(swaps)
     //**********************************************
     //*             Returns Data
     //**********************************************
     returns = returnsDataWithSwap(stream, trades, swaps, currentPrice, currentValue)
   } else {
     returns = returnsData(stream, trades, currentPrice)
+    weights.closed = (stream.totalAmtSold() / stream.totalAmtPurchased())*100
+    weights.open = (100 - weights.closed)
   }
 
-
-
-
+  // let round = (weightObj) => {
+  //   const roundedWeights = weightObj.map(weight => Math.round(weight*100)/100)
+  //   return roundedWeights
+  // }
+  //
+  // let weight = round(weights)
+  Object.keys(weights).map((key, index) => weights[key] = Math.round(weights[key]*100)/100)
+  console.log(weights)
+  const dateString = stream.latestDate().getDate()
+                    + ' '
+                    + stream.latestDate().toLocaleString('default', { month:'short'})
+                    + ' '
+                    + stream.latestDate().getFullYear().toString().substr(-2)
 
   // //**********************************************
   // //*             Supplying data into Row
@@ -131,6 +153,76 @@ const TableRow = ({individualStream, trades}) => {
       returns: Math.round(returns*100)/100
     }
 
+  const Date = styled.div`
+  width: 10%;
+  /* border-right: 1px dotted grey; */
+  margin-bottom: 3px;
+  margin-top: 7px;
+  padding: 2px;
+  font-size: .8em;
+  `
+  const StreamBar = styled.div`
+  width: 90%;
+  border: 2px solid grey;
+  border-radius: 18px;
+  display: flex;
+  font-size: 70%;
+  /* padding: 2px; */
+  /* align-items: center; */
+  margin-bottom: 3px;
+  margin-top: 7px;
+  align-content: flex-start;
+  justify-content: space-around;
+  min-height: 42px;
+  max-heigth: 50px;
+  `
+
+  const columnStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  }
+  const StreamNumber = styled.div`
+  border: 1px dotted black;
+  width: 17%;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background-color:
+
+  `
+  const Asset = styled.div`
+  border: 1px dotted black;
+  width: 11%;
+  text-align: center;
+  `
+  const AvgPurchasePrice = styled.div`
+  border: 1px dotted black;
+  width: 15%;
+  text-align: center;
+  `
+  const CurPrice = styled.div`
+  border: 1px dotted black;
+  width: 15%;
+  text-align: center;
+  `
+  const PurchaseValue = styled.div`
+  border: 1px dotted black;
+  width: 15%;
+  text-align: center;
+  `
+  const CurrentValue = styled.div`
+  border: 1px dotted black;
+  width: 15%;
+  text-align: center;
+  `
+  const Returns = styled.div`
+  border: 1px dotted black;
+  width: 12%;
+  text-align: center;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  `
+
   //**********************************************
 //*             Rendering
 //**********************************************
@@ -138,8 +230,19 @@ const TableRow = ({individualStream, trades}) => {
     return (
       <>
       <div className="table-row-flex-container">
-        <TableRowItems rowData={rowData}/>
-        <TableRowProgressBar />
+        <Date style={columnStyle}>
+          {dateString}
+        </Date>
+        <StreamBar>
+          <StreamNumber style={columnStyle}>Stream #{individualStream.id} </StreamNumber>
+          <Asset style={columnStyle}>$23123</Asset>
+          <AvgPurchasePrice style={columnStyle}>$23123</AvgPurchasePrice>
+          <CurPrice style={columnStyle}>$23123</CurPrice>
+          <PurchaseValue style={columnStyle}>$23123</PurchaseValue>
+          <CurrentValue style={columnStyle}>$23123</CurrentValue>
+          <Returns style={columnStyle}>4%</Returns>
+        </StreamBar>
+
       </div>
 
 
@@ -149,3 +252,8 @@ const TableRow = ({individualStream, trades}) => {
 }
 
 export default TableRow
+
+// COMMENTED OUT JSX
+
+// <TableRowItems rowData={rowData}/>
+// <TableRowProgressBarV2 weights={weights}/>
