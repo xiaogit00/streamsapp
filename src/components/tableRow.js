@@ -132,7 +132,7 @@ const TableRow = ({individualStream, trades}) => {
   //
   // let weight = round(weights)
   Object.keys(weights).map((key, index) => weights[key] = Math.round(weights[key]*100)/100)
-  console.log(weights)
+
   const dateString = stream.latestDate().getDate()
                     + ' '
                     + stream.latestDate().toLocaleString('default', { month:'short'})
@@ -142,40 +142,6 @@ const TableRow = ({individualStream, trades}) => {
   // //**********************************************
   // //*             Supplying data into Row
   // //**********************************************
-    var rowData = {
-      date: stream.latestDate(),
-      id: individualStream.id,
-      asset: individualStream.asset,
-      avgPurchasePrice: Math.round(stream.avgPurchasePrice()*100)/100,
-      currentPrice: Math.round(currentPrice*100)/100,
-      purchaseValue: Math.round(stream.totalSpentOpenNominal()*100)/100,
-      currentValue: Math.round(stream.totalAmtPurchased()*currentPrice*100)/100,
-      returns: Math.round(returns*100)/100
-    }
-
-  const Date = styled.div`
-  width: 10%;
-  /* border-right: 1px dotted grey; */
-  margin-bottom: 3px;
-  margin-top: 7px;
-  padding: 2px;
-  font-size: .8em;
-  `
-  const StreamBar = styled.div`
-  width: 90%;
-  border: 2px solid grey;
-  border-radius: 18px;
-  display: flex;
-  font-size: 70%;
-  /* padding: 2px; */
-  /* align-items: center; */
-  margin-bottom: 3px;
-  margin-top: 7px;
-  align-content: flex-start;
-  justify-content: space-around;
-  min-height: 42px;
-  max-heigth: 50px;
-  `
 
   const columnStyle = {
     display: "flex",
@@ -183,48 +149,175 @@ const TableRow = ({individualStream, trades}) => {
     justifyContent: "center",
   }
 
+  const StreamBar = styled.div`
+    width: 90%;
+    outline: 2px solid grey;
+    /* outline: 12px solid red; */
+    border-radius: 10px;
+    display: flex;
+    font-size: 70%;
+    /* padding: 2px; */
+    /* align-items: center; */
+    margin-bottom: 3px;
+    margin-top: 7px;
+    margin-right: 10px;
+    align-content: flex-start;
+    justify-content: space-around;
+    min-height: 42px;
+    max-heigth: 50px;
+  `
+
+  const Date = styled.div`
+    width: 10%;
+    /* border-right: 1px dotted grey; */
+    margin-bottom: 3px;
+    margin-top: 7px;
+    padding: 2px;
+    font-size: 0.9em;
+    color: #929292;
+    font-family: Calibri, sans-serif;
+    font-weight: bold;
+  `
+
   const StreamNumber = styled.div`
-
-  width: 17%;
-  border-top-left-radius: 18px;
-  border-bottom-left-radius: 18px;
-  background-color: #EDEDF7;
-  font-size: 1.2em;
-
+    width: 17%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #EDEDF7;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #285054;
+    font-family: Calibri, sans-serif;
+    z-index: 3;
   `
   const Asset = styled.div`
-  width: 11%;
-  text-align: center;
-  font-size: 1.2em;
+    width: 11%;
+    text-align: center;
+    font-size: 1.2em;
+    font-family: "American Typewriter", serif;
+    border-right: 0.6px dotted grey;
   `
   const AvgPurchasePrice = styled.div`
-  width: 15%;
-  text-align: center;
-  font-size: 1.3em;
+    width: 15%;
+    text-align: center;
+    font-size: 1.3em;
+    border-right: 0.6px dotted grey;
   `
   const CurPrice = styled.div`
-  font-size: 1.2em;
-  width: 15%;
-  text-align: center;
+    font-size: 1.2em;
+    width: 15%;
+    text-align: center;
+    border-right: 0.6px dotted grey;
   `
   const PurchaseValue = styled.div`
-  font-size: 1.2em;
-  width: 15%;
-  text-align: center;
+    font-size: 1.2em;
+    width: 15%;
+    text-align: center;
+    border-right: 0.6px dotted grey;
   `
   const CurrentValue = styled.div`
-  font-size: 1.2em;
-  width: 15%;
-  text-align: center;
+    font-size: 1.2em;
+    width: 15%;
+    text-align: center;
+    border-right: 0.6px dotted grey;
   `
   const Returns = styled.div`
-  font-size: 1.3em;
-  width: 12%;
-  text-align: center;
-  border-top-right-radius: 18px;
-  border-bottom-right-radius: 18px;
+    font-size: 1.3em;
+    width: 12%;
+    text-align: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  `
+  const ProgressBar = styled.div`
+  /* border: 1px solid green; */
+  position: absolute;
+  width: 74.7%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  min-height: 42px;
+  max-height: 50px;
+  right: 0;
+  margin-bottom: 3px;
+  margin-right: 10px;
+  /* margin-top: 7px; */
+  z-index: 2;
+  display: flex;
   `
 
+  let barIsLast = {}
+
+  if (weights.swapClosed > 1) {
+    barIsLast.swapClosed = true
+  } else {
+    if (weights.swapOpen > 1) {
+      barIsLast.swapOpen = true
+    } else {
+        if (weights.closed > 1) {
+          barIsLast.closed = true
+        } else {
+          barIsLast.open = true
+        }
+    }
+  }
+
+  const WeightOpen = styled.div`
+    background-color: #3E8CAA;
+    width: ${weights.open}%;
+    border-top-right-radius: ${props => props.isLast ? "10px" : "0px" };
+    border-bottom-right-radius: ${props => props.isLast ? "10px" : "0px" };
+    opacity: 15%;
+    z-index: 2;
+    :hover {
+      background-color: #EDFBF5;
+      cursor: pointer;
+      opacity: 100%;
+      z-index: 3;
+    }
+  `
+
+  const WeightClosed = styled.div`
+    background-color: #7C7D7D;
+    width: ${weights.closed}%;
+    border-top-right-radius: ${props => props.isLast ? "10px" : "0px" };
+    border-bottom-right-radius: ${props => props.isLast ? "10px" : "0px" };
+    opacity: 15%;
+    z-index: 2;
+    :hover {
+      background-color: grey;
+      cursor: pointer;
+      opacity: 100%;
+      z-index: 3;
+    }
+  `
+  const WeightSwapOpen = styled.div`
+    background-color: #CA8534;
+    width: ${weights.swapOpen}%;
+    border-top-right-radius: ${props => props.isLast ? "10px" : "0px" };
+    border-bottom-right-radius: ${props => props.isLast ? "10px" : "0px" };
+    opacity: 15%;
+    z-index: 2;
+    :hover {
+      background-color: maroon;
+      cursor: pointer;
+      opacity: 100%;
+      z-index: 3;
+    }
+  `
+
+  const WeightSwapClosed = styled.div`
+    background-color: #7C7D7D;
+    width: ${weights.swapClosed}%;
+    border-top-right-radius: ${props => props.isLast ? "10px" : "0px" };
+    border-bottom-right-radius: ${props => props.isLast ? "10px" : "0px" };
+    opacity: 15%;
+    z-index: 2;
+    :hover {
+      background-color: grey;
+      cursor: pointer;
+      opacity: 100%;
+      z-index: 3;
+    }
+  `
   //**********************************************
 //*             Rendering
 //**********************************************
@@ -237,13 +330,20 @@ const TableRow = ({individualStream, trades}) => {
         </Date>
         <StreamBar>
           <StreamNumber style={columnStyle}>Stream #{individualStream.id} </StreamNumber>
-          <Asset style={columnStyle}>$23123</Asset>
-          <AvgPurchasePrice style={columnStyle}>$23123</AvgPurchasePrice>
-          <CurPrice style={columnStyle}>$23123</CurPrice>
-          <PurchaseValue style={columnStyle}>$23123</PurchaseValue>
-          <CurrentValue style={columnStyle}>$23123</CurrentValue>
-          <Returns style={columnStyle}>4%</Returns>
+          <Asset style={columnStyle}>{individualStream.asset}</Asset>
+          <AvgPurchasePrice style={columnStyle}>{Math.round(stream.avgPurchasePrice()*100)/100}</AvgPurchasePrice>
+          <CurPrice style={columnStyle}>{Math.round(currentPrice*100)/100}</CurPrice>
+          <PurchaseValue style={columnStyle}>{Math.round(stream.totalSpentOpenNominal()*100)/100}</PurchaseValue>
+          <CurrentValue style={columnStyle}>{Math.round(stream.totalAmtPurchased()*currentPrice*100)/100}</CurrentValue>
+          <Returns style={columnStyle}>{Math.round(returns*100)/100}</Returns>
+          <ProgressBar>
+            <WeightOpen isLast={barIsLast.open}></WeightOpen>
+            <WeightClosed isLast={barIsLast.closed}></WeightClosed>
+            <WeightSwapOpen isLast={barIsLast.swapOpen}></WeightSwapOpen>
+            <WeightSwapClosed isLast={barIsLast.swapClosed}></WeightSwapClosed>
+          </ProgressBar>
         </StreamBar>
+
 
       </div>
 
