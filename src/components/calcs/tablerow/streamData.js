@@ -3,9 +3,9 @@
 //**********************************************
 //
 import { nominal_value } from '../../utils'
-var globalNominalDenom = require('../../../config.json').globalNominalDenom;
 
-const streamData = (individualStream, trades) => {
+
+const streamData = (individualStream, trades, globalDenom) => {
   const streamDataObject = {
     tradesInStream: individualStream.trades,
     filteredTrades: function() {
@@ -22,12 +22,17 @@ const streamData = (individualStream, trades) => {
       return new Date(Math.max(...this.openTrades().map(trade => new Date(trade.date))))
     },
     totalSpentOpenNominal: function () {
-      const nominalValueTradesOpen = this.openTrades().map(trade => nominal_value(trade.value, trade.value_denom, globalNominalDenom))
+
+      const nominalValueTradesOpen = this.openTrades().map(trade => {
+        // console.log("trade.value",typeof trade.value)
+        // console.log("nominal_value(trade.value, trade.value_denom, globalDenom)",nominal_value(trade.value, trade.value_denom, globalDenom))
+        return nominal_value(trade.value, trade.value_denom, globalDenom)
+      })
       const totalSpentOpenNominal = nominalValueTradesOpen.reduce((a, nominalValue) => a + nominalValue,0)
       return totalSpentOpenNominal
     },
     totalCashedOutNominal: function () {
-      const nominalValueTradesClosed = this.closedTrades().map(trade => nominal_value(trade.value, trade.value_denom, globalNominalDenom))
+      const nominalValueTradesClosed = this.closedTrades().map(trade => nominal_value(trade.value, trade.value_denom, globalDenom))
       const totalCashedOutNominal = nominalValueTradesClosed.reduce((a, nominalValue) => a + nominalValue,0)
       return totalCashedOutNominal
     },

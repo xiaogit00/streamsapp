@@ -10,11 +10,10 @@
   // netOpenSwapAmtInBaseAsset
 import streamData from './streamData'
 import { nominal_value } from '../../utils'
-var globalNominalDenom = require('../../../config.json').globalNominalDenom;
 const alpha = require('alphavantage')({ key: 'LY78Q3KY7IUG1KFL' })
 
-const swapsData = (individualStream, trades) => {
-  const stream = streamData(individualStream, trades)
+const swapsData = (individualStream, trades, globalDenom) => {
+  const stream = streamData(individualStream, trades, globalDenom)
   let swaps = individualStream.swaps.map(swapObject => { //this maps over each swap asset-- returns a list of swapObjects (one for each asset)
     // console.log("SwapsData is entered")
     //**********************************************
@@ -101,8 +100,8 @@ const swapsData = (individualStream, trades) => {
       const avgValueSwapClosedNominal = () => {
         let totalValueClosedNominal = 0
         for (let i=0; i<closedSwapTrades.length; i++) {
-          if (closedSwapTrades[i].value_denom !== globalNominalDenom) {
-            totalValueClosedNominal += nominal_value(closedSwapTrades[i].value, closedSwapTrades[i].value_denom, globalNominalDenom)
+          if (closedSwapTrades[i].value_denom !== globalDenom) {
+            totalValueClosedNominal += nominal_value(closedSwapTrades[i].value, closedSwapTrades[i].value_denom, globalDenom)
           } else {
             totalValueClosedNominal += closedSwapTrades[i].value
           }
@@ -139,6 +138,7 @@ const swapsData = (individualStream, trades) => {
       swapObject.weightOpen = weightOpen
       swapObject.weightClosed = weightClosed
       swapObject.unrealizedReturnsSwapAbsolute = unrealizedReturnsSwapAbsolute
+      swapObject.realizedClosedReturnsSwapPercentage = realizedClosedReturnsSwapPercentage
       swapObject.realizedClosedReturnsSwapAbsolute = realizedClosedReturnsSwapAbsolute
       // console.log("swapObject",swapObject)
       return swapObject

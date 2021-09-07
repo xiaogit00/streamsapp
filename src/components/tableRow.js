@@ -11,7 +11,7 @@ import StreamBar from './streamBar/streamBar'
 import styled from 'styled-components';
 // import unrealizedReturnsSwaps from './calcs/tablerow/unrealizedReturnsSwaps'
 const alpha = require('alphavantage')({ key: 'LY78Q3KY7IUG1KFL' })
-var globalNominalDenom = require('../config.json').globalNominalDenom;
+
 
 const Date = styled.div`
   width: 10%;
@@ -25,19 +25,19 @@ const Date = styled.div`
   font-weight: bold;
 `
 
-const TableRow = ({individualStream, trades}) => {
+const TableRow = ({individualStream, trades, globalDenom}) => {
 
 
-  const [swapsCurrentPrices, setSwapsCurrentPrices] = useState([])
-
+  // const [swapsCurrentPrices, setSwapsCurrentPrices] = useState([])
+  const swapsCurrentPrices = []
 
   //**********************************************
   //*             Data Prep - trades, date, total open/closed amts, avg price
   //**********************************************
   // Returns a stream object with following fields:
   // tradesInStream,filteredTrades,baseAsset,openTrades(),closedTrades(),latestDate(),totalSpentOpenNominal(),totalCashedOutNominal(),totalAmtPurchased(),totalAmtSold(),avgPurchasePrice(),avgClosePrice()
-  const stream = streamData(individualStream, trades)
-
+  const stream = streamData(individualStream, trades, globalDenom)
+  // console.log("stream within the tableRow: ", stream.totalSpentOpenNominal())
   //**********************************************
   //*             Generate current price
   //**********************************************
@@ -75,31 +75,57 @@ const TableRow = ({individualStream, trades}) => {
   swapsCurrentPrices["ETH"] = 0.07416300
   let currentPrice = 0
   let currentValue = 0
+  if (globalDenom === "SGD") {
+    if (individualStream.asset === "BTC") {
+      currentPrice = 64217
 
-  if (individualStream.asset === "BTC") {
-    currentPrice = 64217
-    currentValue = 3861
-  } else if (individualStream.asset === "ETH") {
-    // console.log(individualStream.asset)
-    currentPrice = 5067
-  } else if (individualStream.asset === "Alibaba") {
-    // console.log(individualStream.asset)
-    currentPrice = 28.86
-  } else if (individualStream.asset === "Xiaomi") {
-    // console.log(individualStream.asset)
-    currentPrice = 4.37
-  } else if (individualStream.asset === "JD.com") {
+    } else if (individualStream.asset === "ETH") {
+      // console.log(individualStream.asset)
+      currentPrice = 5067
+    } else if (individualStream.asset === "Alibaba") {
+      // console.log(individualStream.asset)
+      currentPrice = 28.86
+    } else if (individualStream.asset === "Xiaomi") {
+      // console.log(individualStream.asset)
+      currentPrice = 4.37
+    } else if (individualStream.asset === "JD.com") {
 
-    currentPrice = 53.74
-  } else if (individualStream.asset === "HST") {
-    // console.log(individualStream.asset)
-    currentPrice = 1.132
-  } else if (individualStream.asset === "Tencent") {
-    // console.log(individualStream.asset)
-    currentPrice = 84.32
-    console.log(individualStream.asset)
-    console.log(stream.totalSpentOpenNominal())
+      currentPrice = 53.74
+    } else if (individualStream.asset === "HST") {
+      // console.log(individualStream.asset)
+      currentPrice = 1.132
+    } else if (individualStream.asset === "Tencent") {
+      // console.log(individualStream.asset)
+      currentPrice = 84.32
+      // console.log(individualStream.asset)
+      // console.log(stream.totalSpentOpenNominal())
+    }
+  } else if (globalDenom === "USD") {
+    if (individualStream.asset === "BTC") {
+      currentPrice = 47520
+    } else if (individualStream.asset === "ETH") {
+      // console.log(individualStream.asset)
+      currentPrice = 5067*0.744
+    } else if (individualStream.asset === "Alibaba") {
+      // console.log(individualStream.asset)
+      currentPrice = 28.86*0.744
+    } else if (individualStream.asset === "Xiaomi") {
+      // console.log(individualStream.asset)
+      currentPrice = 4.37*0.744
+    } else if (individualStream.asset === "JD.com") {
+
+      currentPrice = 53.74*0.744
+    } else if (individualStream.asset === "HST") {
+      // console.log(individualStream.asset)
+      currentPrice = 1.132*0.744
+    } else if (individualStream.asset === "Tencent") {
+      // console.log(individualStream.asset)
+      currentPrice = 84.32*0.744
+      // console.log(individualStream.asset)
+      // console.log(stream.totalSpentOpenNominal())
+    }
   }
+
 
   // console.log(stream.avgPurchasePrice())
 
@@ -115,8 +141,7 @@ const TableRow = ({individualStream, trades}) => {
   let weights = {}
 
   if (individualStream.swaps) {
-    swaps = swapsData(individualStream, trades)
-    // console.log(swaps[0].weightOpen)
+    swaps = swapsData(individualStream, trades, globalDenom)
     weights.swapOpen = swaps[0].weightOpen*100
     weights.swapClosed = swaps[0].weightClosed*100
     weights.closed = (stream.totalAmtSold() / stream.totalAmtPurchased())*100
@@ -127,9 +152,9 @@ const TableRow = ({individualStream, trades}) => {
     //**********************************************
     //*             Returns Data
     //**********************************************
-    returns = returnsDataWithSwap(stream, trades, swaps, currentPrice, currentValue)
+    returns = returnsDataWithSwap(stream, trades, swaps, currentPrice, globalDenom)
   } else {
-    returns = returnsData(stream, trades, currentPrice)
+    returns = returnsData(stream, trades, currentPrice, globalDenom)
     weights.closed = (stream.totalAmtSold() / stream.totalAmtPurchased())*100
     weights.open = (100 - weights.closed)
   }
@@ -158,7 +183,7 @@ const TableRow = ({individualStream, trades}) => {
     justifyContent: "center",
   }
 
-  
+
 
 
   //**********************************************
@@ -180,6 +205,9 @@ const TableRow = ({individualStream, trades}) => {
                   currentValue={Math.round(stream.totalAmtPurchased()*currentPrice*100)/100}
                   returns={Math.round(returns*100)/100}
                   weights={weights}
+                  avgClosePrice={Math.round(stream.avgClosePrice()*100/100)}
+                  realizedReturns={Math.round(((stream.avgClosePrice() / stream.avgPurchasePrice()) - 1)*100*100/100)}
+                  globalDenom={globalDenom}
         />
 
       </div>

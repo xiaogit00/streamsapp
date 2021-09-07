@@ -5,11 +5,12 @@ import StreamsTable from './streamsTable'
 
 
 
-const ContentContainer = () => {
+const ContentContainer = ({globalDenom, trades, streams}) => {
 
   return (
     <div className="content-container-flex">
-      <StreamsTable />
+    {console.log("this is globalDenom within the render in ContentCOntainer: ", globalDenom)}
+      <StreamsTable globalDenom={globalDenom} trades={trades} streams={streams}/>
 
     </div>
   )

@@ -2,52 +2,34 @@ import React, { useState, useEffect } from 'react'
 import '../App.css'
 import TableHead from './tableHead'
 import TableRow from './tableRow'
-import axios from 'axios'
 
 
-const StreamsTable = () => {
-  const [trades, setTrades] = useState([])
-  const [streams, setStreams] = useState([])
 
-  useEffect(() => {
-    console.log("Successfully finished first render of App and entered effectHook again.")
-    axios
-      .get('http://localhost:3001/api/trades')
-      .then(response => {
+const StreamsTable = ({ globalDenom, trades, streams }) => {
 
-        setTrades(response.data)
-      })
-  }, [])
+  
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/api/streams')
-      .then(response => {
 
-        setStreams(response.data)
-        // console.log("streams",response.data)
-      })
-  }, [])
   // console.log("value of streams in Streamstable", streams)
   // console.log("length of Streams array", streams.length)
   if (streams.length > 0) {
     return (
       <div className="streams-table-container">
-        <TableHead/>
-        <TableRow individualStream={streams[0]} trades={trades}/>
-        <TableRow individualStream={streams[1]} trades={trades}/>
-        <TableRow individualStream={streams[2]} trades={trades}/>
-        <TableRow individualStream={streams[3]} trades={trades}/>
-        <TableRow individualStream={streams[4]} trades={trades}/>
-        <TableRow individualStream={streams[5]} trades={trades}/>
-        <TableRow individualStream={streams[6]} trades={trades}/>
-        
+        <TableHead globalDenom={globalDenom}/>
+        <TableRow individualStream={streams[0]} trades={trades} globalDenom={globalDenom}/>
+        <TableRow individualStream={streams[1]} trades={trades} globalDenom={globalDenom}/>
+        <TableRow individualStream={streams[2]} trades={trades} globalDenom={globalDenom}/>
+        <TableRow individualStream={streams[3]} trades={trades} globalDenom={globalDenom}/>
+        <TableRow individualStream={streams[4]} trades={trades} globalDenom={globalDenom}/>
+        <TableRow individualStream={streams[5]} trades={trades} globalDenom={globalDenom}/>
+        <TableRow individualStream={streams[6]} trades={trades} globalDenom={globalDenom}/>
+
       </div>
     )
   } else {
     return (
       <div className="streams-table-container">
-        <TableHead/>
+        <TableHead globalDenom={globalDenom}/>
 
       </div>
     )

@@ -1,16 +1,17 @@
 import React from 'react'
 import '../App.css'
 
-const TableHeadItems = () => {
+
+const TableHeadItems = ({globalDenom}) => {
   const columns = [
     "Date",
     "Stream",
     "Asset",
-    "Avg Purchase Price",
-    "Cur Price",
-    "Purchase Value",
-    "Current Value",
-    "Returns"
+    "Avg Purchase Price" + " (" + globalDenom + ")",
+    "Cur Price" + " (" + globalDenom + ")",
+    "Purchase Value" + " (" + globalDenom + ")",
+    "Current Value" + " (" + globalDenom + ")",
+    "Total Returns (%)"
   ]
 
   const colWidth = [

@@ -1,5 +1,4 @@
 // import React, { useState, useEffect } from 'react'
-var globalNominalDenom = require('../../../config.json').globalNominalDenom;
 
 
 // const [currentPrice, setCurrentPrice] = useState(null)
@@ -7,7 +6,7 @@ var globalNominalDenom = require('../../../config.json').globalNominalDenom;
 
 
 
-  const returnsDataWithSwap = (stream, trades, swaps, currentPrice, currentValue) => {
+  const returnsDataWithSwap = (stream, trades, swaps, currentPrice, globalDenom) => {
     //**********************************************
     //*             Weight Allocation
     //**********************************************
