@@ -56,9 +56,6 @@
   height: 100%;
 }
 
-.MuiToggleButton-root.Mui-selected {
-  color: white;
-}
 .navigation-menu {
   /* border: 1px solid cyan; */
   display:flex;
