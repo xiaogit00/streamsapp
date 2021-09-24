@@ -13,16 +13,17 @@ const RightPane = () => {
   useEffect(() => {
     console.log("Successfully finished first render of App and entered effectHook again.")
     axios
-      .get('http://localhost:3001/api/trades')
+      .get('http://localhost:3003/api/trades')
       .then(response => {
 
         setTrades(response.data)
+        // console.log("trades",response.data)
       })
   }, [])
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/api/streams')
+      .get('http://localhost:3003/api/streams')
       .then(response => {
 
         setStreams(response.data)
@@ -32,7 +33,7 @@ const RightPane = () => {
 
   const handleDenomChange = (newValue) => {
     setGlobalDenom(newValue)
-    console.log("GLOBAL DENOM IS SET TO: ",newValue)
+    // console.log("GLOBAL DENOM IS SET TO: ",newValue)
   }
 
   return(

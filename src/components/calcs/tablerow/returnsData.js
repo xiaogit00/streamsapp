@@ -23,7 +23,7 @@
     // console.log("openTradeReturnsAbsolute", openTradeReturnsAbsolute)
     const streamReturns = closedTradeReturnsAbsolute + openTradeReturnsAbsolute
     // console.log("openTradeReturnsAbsolute",openTradeReturnsAbsolute)
-
+    
     return streamReturns
 }
 

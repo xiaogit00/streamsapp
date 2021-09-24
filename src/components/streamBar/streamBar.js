@@ -103,7 +103,7 @@ margin-left: 2px;
 `
 
 const StreamBar = (props) => {
-  console.log(props.realizedReturnsSwaps)
+  // console.log("this is within streambar",props)
 
   return (
     <StreamBarStyled>

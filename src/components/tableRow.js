@@ -25,7 +25,7 @@ const Date = styled.div`
   font-weight: bold;
 `
 
-const TableRow = ({individualStream, trades, globalDenom}) => {
+const TableRow = ({individualStream, trades, globalDenom, num}) => {
 
 
   // const [swapsCurrentPrices, setSwapsCurrentPrices] = useState([])
@@ -140,7 +140,8 @@ const TableRow = ({individualStream, trades, globalDenom}) => {
   let returns = 0
   let weights = {}
 
-  if (individualStream.swaps) {
+  if (individualStream.swaps.length > 0) {
+      // console.log("this is individualStream.swaps within tableRow", individualStream.swaps)
     swaps = swapsData(individualStream, trades, globalDenom)
     weights.swapOpen = swaps[0].weightOpen*100
     weights.swapClosed = swaps[0].weightClosed*100
@@ -197,7 +198,7 @@ const TableRow = ({individualStream, trades, globalDenom}) => {
           {dateString}
         </Date>
         <StreamBar columnStyle={columnStyle}
-                  streamID={individualStream.id}
+                  streamID={num}
                   asset={individualStream.asset}
                   avgPurchasePrice={Math.round(stream.avgPurchasePrice()*100)/100}
                   curPrice={Math.round(currentPrice*100)/100}

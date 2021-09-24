@@ -14,6 +14,7 @@ const alpha = require('alphavantage')({ key: 'LY78Q3KY7IUG1KFL' })
 
 const swapsData = (individualStream, trades, globalDenom) => {
   const stream = streamData(individualStream, trades, globalDenom)
+  // console.log("individualStream.swaps",individualStream.swaps)
   let swaps = individualStream.swaps.map(swapObject => { //this maps over each swap asset-- returns a list of swapObjects (one for each asset)
     // console.log("SwapsData is entered")
     //**********************************************
@@ -22,7 +23,8 @@ const swapsData = (individualStream, trades, globalDenom) => {
       //DATA GENERATION - totalamtSWAPPED + swapTrades
       let totalAmtSwappedInSwapped = 0
       let totalAmtSwappedBase = 0 //initializing for calculations
-      const swapTrades = trades.filter(trade => swapObject.tradeIDs.includes(trade.id)) // all the swap trades within an asset
+      const swapTrades = trades.filter(trade => swapObject.trades.includes(trade.id)) // all the swap trades within an asset
+
       const openSwapTrades = swapTrades.filter(trade => trade.position === "open")
       const closedSwapTrades = swapTrades.filter(trade => trade.position === "closed")
       const openAmtSwapInSwap = openSwapTrades.reduce((a, trade) => a + trade.amt, 0)
@@ -34,13 +36,13 @@ const swapsData = (individualStream, trades, globalDenom) => {
       const openAmtSwapBase = openSwapTrades.reduce((a, trade) => a + trade.value, 0)
       const closedAmtSwapBase = closedSwapTrades.reduce((a, trade) => {
 
-        if (trade.value_denom === individualStream.asset) {
+        if (trade.valueDenom === individualStream.asset) {
 
           return a + trade.value
         } else {
           // console.log("THIS WAS DONE",individualStream.asset )
           // console.log(a + nominal_value(trade.value, trade.value_denom, individualStream.asset))
-          return a + nominal_value(trade.value, trade.value_denom, individualStream.asset)
+          return a + nominal_value(trade.value, trade.valueDenom, individualStream.asset)
         }
       }, 0)
 
@@ -65,6 +67,7 @@ const swapsData = (individualStream, trades, globalDenom) => {
           totalAmtSwappedBase += trade.value //...and in Base currency (e.g.BTC)
         }
       })
+
       const percentageClosed = closedAmtSwapInSwap /totalAmtSwappedInSwapped
 
       const weightClosed = (percentageClosed * totalAmtSwappedBase) / stream.totalAmtPurchased()
@@ -100,8 +103,8 @@ const swapsData = (individualStream, trades, globalDenom) => {
       const avgValueSwapClosedNominal = () => {
         let totalValueClosedNominal = 0
         for (let i=0; i<closedSwapTrades.length; i++) {
-          if (closedSwapTrades[i].value_denom !== globalDenom) {
-            totalValueClosedNominal += nominal_value(closedSwapTrades[i].value, closedSwapTrades[i].value_denom, globalDenom)
+          if (closedSwapTrades[i].valueDenom !== globalDenom) {
+            totalValueClosedNominal += nominal_value(closedSwapTrades[i].value, closedSwapTrades[i].valueDenom, globalDenom)
           } else {
             totalValueClosedNominal += closedSwapTrades[i].value
           }
@@ -141,6 +144,8 @@ const swapsData = (individualStream, trades, globalDenom) => {
       swapObject.realizedClosedReturnsSwapPercentage = realizedClosedReturnsSwapPercentage
       swapObject.realizedClosedReturnsSwapAbsolute = realizedClosedReturnsSwapAbsolute
       // console.log("swapObject",swapObject)
+      // console.log("this is swapObject.totalAmtSwappedInSwapped", swapObject.totalAmtSwappedInSwapped)
+      // console.log("swapObject", swapObject)
       return swapObject
 
 

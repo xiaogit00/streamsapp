@@ -44,6 +44,7 @@
                           + openSwapReturnsAbsolute
                           + closedSwapsReturnsAbsolute
     // console.log(`closedTradeReturnsAbsolute:${closedTradeReturnsAbsolute}\n openTradeReturnsAbsolute: ${openTradeReturnsAbsolute}\n openSwapReturnsAbsolute:${openSwapReturnsAbsolute} \n closedSwapsReturnsAbsolute:${closedSwapsReturnsAbsolute}`)
+    // console.log("streamReturns",streamReturns)
     return streamReturns
 }
 
