@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import { changeDenom } from '../reducers/globalDenomReducer'
+import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core'
 import '../App.css'
 import styled from 'styled-components'
@@ -35,7 +37,7 @@ const CurrencyText = styled.span`
 export default function ToggleButtons(props) {
     const [alignment, setAlignment] = React.useState('left')
     const [formats, setFormats] = React.useState(() => ['phone'])
-
+    const dispatch = useDispatch()
     const handleFormat = (event, newFormats) => {
         if (newFormats.length) {
             setFormats(newFormats)
@@ -43,8 +45,10 @@ export default function ToggleButtons(props) {
     }
 
     const handleAlignment = (event, newAlignment) => {
-        console.log(event.target.innerText)
-        props.onChange(event.target.innerText)
+
+        const newGlobalDenom = event.target.innerText
+        //Set the state to newGlobalDenom
+        dispatch(changeDenom(newGlobalDenom))
         if (newAlignment !== null) {
             setAlignment(newAlignment)
         }

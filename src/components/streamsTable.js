@@ -23,7 +23,8 @@ const StreamsTable = () => {
 
     const trades = useSelector(state => state.trades)
 
-    const globalDenom = useSelector(state => state.globalNominalDenom)
+    const globalDenom = useSelector(state => state.globalDenom)
+    
     if (streams.length > 0) {
         return (
             <div className="streams-table-container">
