@@ -1,6 +1,6 @@
 import tradeService from '../services/trades'
 
-export const initializeTrades = async () => {
+export const initializeTrades = () => {
     return async dispatch => {
         const trades = await tradeService.getAll()
         dispatch({

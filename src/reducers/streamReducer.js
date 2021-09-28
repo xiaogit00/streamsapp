@@ -1,6 +1,6 @@
 import streamService from '../services/streams'
 
-export const initializeStreams = async () => {
+export const initializeStreams = () => {
     return async dispatch => {
         const streams = await streamService.getAll()
         dispatch({
