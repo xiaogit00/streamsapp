@@ -17,55 +17,55 @@ import NavSection from './navSection'
 
 const NavSections = () => {
 
-  const section1 = {
-    id: 1,
-    label: false,
-    menuItems: [{
-      logoUrl: "https://res.cloudinary.com/dl4murstw/image/upload/v1629778502/home_1_wchsca.png",
-      text: "Dashboard",
-      uri: "/"
-    }]
-  }
-
-  const section2 = {
-    id: 2,
-    label: true,
-    name: "TRACK",
-    menuItems: [{
-      logoUrl: "https://res.cloudinary.com/dl4murstw/image/upload/v1629781853/waves_w7pkfq.png",
-      text: "Streams",
-      uri: "/streams"
-    }, {
-      logoUrl: "https://res.cloudinary.com/dl4murstw/image/upload/v1629781868/stock_pau4cd.png",
-      text: "Trades", 
-      uri: "/trades"
-    }, {
-      logoUrl: "https://res.cloudinary.com/dl4murstw/image/upload/v1629787495/order_1_n5khi0.png",
-      text: "Orders",
-      url: "/orders"
+    const section1 = {
+        id: 1,
+        label: false,
+        menuItems: [{
+            logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629778502/home_1_wchsca.png',
+            text: 'Dashboard',
+            uri: '/'
+        }]
     }
-  ]
-}
 
-const section3 = {
-  id: 3,
-  label: true,
-  name: "OVERVIEW",
-  menuItems: [{
-    logoUrl: "https://res.cloudinary.com/dl4murstw/image/upload/v1629787638/dollar-symbol_u6h55w.png",
-    text: "Assets"
-  }]
-}
+    const section2 = {
+        id: 2,
+        label: true,
+        name: 'TRACK',
+        menuItems: [{
+            logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629781853/waves_w7pkfq.png',
+            text: 'Streams',
+            uri: '/streams'
+        }, {
+            logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629781868/stock_pau4cd.png',
+            text: 'Trades',
+            uri: '/trades'
+        }, {
+            logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629787495/order_1_n5khi0.png',
+            text: 'Orders',
+            url: '/orders'
+        }
+        ]
+    }
 
-  return (
-    <>
-      <NavSection section={section1} />
-      <NavSection section={section2} />
-      <NavSection section={section3} />
+    const section3 = {
+        id: 3,
+        label: true,
+        name: 'OVERVIEW',
+        menuItems: [{
+            logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629787638/dollar-symbol_u6h55w.png',
+            text: 'Assets'
+        }]
+    }
+
+    return (
+        <>
+            <NavSection section={section1} />
+            <NavSection section={section2} />
+            <NavSection section={section3} />
 
 
-    </>
-  )
+        </>
+    )
 }
 
 export default NavSections

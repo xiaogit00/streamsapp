@@ -1,15 +1,15 @@
 import React from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import ProgressBar from './progressBar'
 
 let assetColors = {
-  "BTC": "orange",
-  "ETH": "green",
-  "Alibaba": "orange",
-  "Xiaomi": "grey",
-  "JD.com": "tomato",
-  "HST": "red",
-  "Tencent": "blue"
+    'BTC': 'orange',
+    'ETH': 'green',
+    'Alibaba': 'orange',
+    'Xiaomi': 'grey',
+    'JD.com': 'tomato',
+    'HST': 'red',
+    'Tencent': 'blue'
 }
 
 const StreamBarStyled = styled.div`
@@ -94,7 +94,7 @@ const Returns = styled.div`
   text-align: center;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  color: ${props=> props.returns > 0 ? "#40a829" : "crimson"};
+  color: ${props=> props.returns > 0 ? '#40a829' : 'crimson'};
 `
 const GlobalNominalDenom = styled.span`
 font-size: 0.6em;
@@ -103,28 +103,28 @@ margin-left: 2px;
 `
 
 const StreamBar = (props) => {
-  // console.log("this is within streambar",props)
+    // console.log("this is within streambar",props)
 
-  return (
-    <StreamBarStyled>
-      <StreamNumber >Stream #{props.streamID}
-      <p>{props.weights.open}% open</p>
+    return (
+        <StreamBarStyled>
+            <StreamNumber >Stream #{props.streamID}
+                <p>{props.weights.open}% open</p>
 
-      </StreamNumber>
-      <Asset style={props.columnStyle} color={assetColors[props.asset]}>{props.asset}</Asset>
-      <AvgPurchasePrice style={props.columnStyle}>
+            </StreamNumber>
+            <Asset style={props.columnStyle} color={assetColors[props.asset]}>{props.asset}</Asset>
+            <AvgPurchasePrice style={props.columnStyle}>
         ${props.avgPurchasePrice} <GlobalNominalDenom>{props.globalDenom}</GlobalNominalDenom>
-      </AvgPurchasePrice>
-      <CurPrice style={props.columnStyle}>${props.curPrice}<GlobalNominalDenom>{props.globalDenom}</GlobalNominalDenom></CurPrice>
-      <PurchaseValue style={props.columnStyle}>${props.purchaseValue}<GlobalNominalDenom>{props.globalDenom}</GlobalNominalDenom></PurchaseValue>
-      <CurrentValue style={props.columnStyle}>${props.currentValue}<GlobalNominalDenom>{props.globalDenom}</GlobalNominalDenom></CurrentValue>
-      <Returns style={props.columnStyle} returns={props.returns}>{props.returns}%</Returns>
-      <ProgressBar weights={props.weights}
-                  avgClosePrice={props.avgClosePrice}
-                  realizedReturns={props.realizedReturns}
-                  />
-    </StreamBarStyled>
-  )
+            </AvgPurchasePrice>
+            <CurPrice style={props.columnStyle}>${props.curPrice}<GlobalNominalDenom>{props.globalDenom}</GlobalNominalDenom></CurPrice>
+            <PurchaseValue style={props.columnStyle}>${props.purchaseValue}<GlobalNominalDenom>{props.globalDenom}</GlobalNominalDenom></PurchaseValue>
+            <CurrentValue style={props.columnStyle}>${props.currentValue}<GlobalNominalDenom>{props.globalDenom}</GlobalNominalDenom></CurrentValue>
+            <Returns style={props.columnStyle} returns={props.returns}>{props.returns}%</Returns>
+            <ProgressBar weights={props.weights}
+                avgClosePrice={props.avgClosePrice}
+                realizedReturns={props.realizedReturns}
+            />
+        </StreamBarStyled>
+    )
 }
 
 export default StreamBar

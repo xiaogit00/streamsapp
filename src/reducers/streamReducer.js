@@ -14,26 +14,26 @@ export const initializeStreams = async () => {
 
 const streamReducer = (state = [], action) => {
     switch(action.type) {
-        case 'INIT_STREAMS': {
-            return action.data
-        }
+    case 'INIT_STREAMS': {
+        return action.data
+    }
 
-        // case 'NEW_STREAM': {
-        //     const newStreams = state.concat(action.data)
-        //     return newStreams
-        // }
-        //
-        // case 'UPDATE_STREAM': {
-        //
-        // }
-        //
-        // case 'UPDATE_TRADE_IN_STREAM': {
-        //
-        // }
-        //
-        // case 'DELETE_STREAM': {
-        //
-        // }
+    // case 'NEW_STREAM': {
+    //     const newStreams = state.concat(action.data)
+    //     return newStreams
+    // }
+    //
+    // case 'UPDATE_STREAM': {
+    //
+    // }
+    //
+    // case 'UPDATE_TRADE_IN_STREAM': {
+    //
+    // }
+    //
+    // case 'DELETE_STREAM': {
+    //
+    // }
     default:
         return state
     }

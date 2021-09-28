@@ -8,7 +8,7 @@
 
 
 
-  const returnsData = (stream, trades, currentPrice, globalDenom) => {
+const returnsData = (stream, trades, currentPrice, globalDenom) => {
     const realizedReturnsPercentage = ((stream.avgClosePrice() / stream.avgPurchasePrice()) - 1)*100 || 0
     // console.log("realizedReturnsPercentage",realizedReturnsPercentage)
     const weightClosed = stream.totalAmtSold() / stream.totalAmtPurchased()
@@ -16,14 +16,14 @@
     const closedTradeReturnsAbsolute = realizedReturnsPercentage * weightClosed
     // console.log("closedTradeReturnsAbsolute",closedTradeReturnsAbsolute)
     const unrealizedReturnsPercentage = ((currentPrice / stream.avgPurchasePrice()) - 1)*100
-        // console.log("currentPrice",currentPrice, stream.avgPurchasePrice())
+    // console.log("currentPrice",currentPrice, stream.avgPurchasePrice())
     const weightOpen = (1 - weightClosed)
     // console.log("unrealizedReturnsPercentage",unrealizedReturnsPercentage)
     const openTradeReturnsAbsolute = unrealizedReturnsPercentage * weightOpen
     // console.log("openTradeReturnsAbsolute", openTradeReturnsAbsolute)
     const streamReturns = closedTradeReturnsAbsolute + openTradeReturnsAbsolute
     // console.log("openTradeReturnsAbsolute",openTradeReturnsAbsolute)
-    
+
     return streamReturns
 }
 

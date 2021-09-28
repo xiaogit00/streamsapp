@@ -3,52 +3,52 @@ import '../App.css'
 
 
 const TableHeadItems = ({globalDenom}) => {
-  const columns = [
-    "Date",
-    "Stream",
-    "Asset",
-    "Avg Purchase Price" + " (" + globalDenom + ")",
-    "Cur Price" + " (" + globalDenom + ")",
-    "Purchase Value" + " (" + globalDenom + ")",
-    "Current Value" + " (" + globalDenom + ")",
-    "Total Returns (%)"
-  ]
+    const columns = [
+        'Date',
+        'Stream',
+        'Asset',
+        'Avg Purchase Price' + ' (' + globalDenom + ')',
+        'Cur Price' + ' (' + globalDenom + ')',
+        'Purchase Value' + ' (' + globalDenom + ')',
+        'Current Value' + ' (' + globalDenom + ')',
+        'Total Returns (%)'
+    ]
 
-  const colWidth = [
-    "8.5%",
-    "15%",
-    "10%",
-    "14%",
-    "14%",
-    "14%",
-    "14%",
-    "10.5%"
-  ]
+    const colWidth = [
+        '8.5%',
+        '15%',
+        '10%',
+        '14%',
+        '14%',
+        '14%',
+        '14%',
+        '10.5%'
+    ]
 
-  const spanID = [
-    "TH1",
-    "TH2",
-    "TH3",
-    "TH4",
-    "TH5",
-    "TH6",
-    "TH7",
-    "TH8"
-  ]
+    const spanID = [
+        'TH1',
+        'TH2',
+        'TH3',
+        'TH4',
+        'TH5',
+        'TH6',
+        'TH7',
+        'TH8'
+    ]
 
-  return (
-    <>
-      {columns.map((column, i) => {
-        return (
-          <div style={{width:`${colWidth[i]}`, textAlign:"center", fontFamily:"Arial"}} key={i}>
-            <span id={spanID[i]}>
-              {column}
-            </span>
-          </div>
-        )
-      })}
-    </>
-  )
+    return (
+        <>
+            {columns.map((column, i) => {
+                return (
+                    <div style={{width:`${colWidth[i]}`, textAlign:'center', fontFamily:'Arial'}} key={i}>
+                        <span id={spanID[i]}>
+                            {column}
+                        </span>
+                    </div>
+                )
+            })}
+        </>
+    )
 }
 
 export default TableHeadItems

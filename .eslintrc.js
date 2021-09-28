@@ -6,7 +6,6 @@ module.exports = {
         'jest': true
     },
     'extends': [
-        'eslint:recommended',
         'plugin:react/recommended'
     ],
     'parserOptions': {
@@ -31,6 +30,9 @@ module.exports = {
         'quotes': [
             'error',
             'single'
+        ],
+        'react/prop-types': [
+            'off'
         ],
         'semi': [
             'error',

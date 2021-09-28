@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { initializeStreams } from '../reducers/streamReducer'
 import { initializeTrades } from '../reducers/tradeReducer'
 import { useSelector, useDispatch } from 'react-redux'
@@ -24,28 +24,28 @@ const StreamsTable = () => {
     const trades = useSelector(state => state.trades)
 
     const globalDenom = useSelector(state => state.globalNominalDenom)
-  if (streams.length > 0) {
-    return (
-      <div className="streams-table-container">
-        <TableHead globalDenom={globalDenom}/>
-        <TableRow individualStream={streams[0]} trades={trades} globalDenom={globalDenom} num={1}/>
-        <TableRow individualStream={streams[1]} trades={trades} globalDenom={globalDenom} num={2}/>
-        <TableRow individualStream={streams[2]} trades={trades} globalDenom={globalDenom} num={3}/>
-        <TableRow individualStream={streams[3]} trades={trades} globalDenom={globalDenom} num={4}/>
-        <TableRow individualStream={streams[4]} trades={trades} globalDenom={globalDenom} num={5}/>
-        <TableRow individualStream={streams[5]} trades={trades} globalDenom={globalDenom} num={6}/>
-        <TableRow individualStream={streams[6]} trades={trades} globalDenom={globalDenom} num={7}/>
+    if (streams.length > 0) {
+        return (
+            <div className="streams-table-container">
+                <TableHead globalDenom={globalDenom}/>
+                <TableRow individualStream={streams[0]} trades={trades} globalDenom={globalDenom} num={1}/>
+                <TableRow individualStream={streams[1]} trades={trades} globalDenom={globalDenom} num={2}/>
+                <TableRow individualStream={streams[2]} trades={trades} globalDenom={globalDenom} num={3}/>
+                <TableRow individualStream={streams[3]} trades={trades} globalDenom={globalDenom} num={4}/>
+                <TableRow individualStream={streams[4]} trades={trades} globalDenom={globalDenom} num={5}/>
+                <TableRow individualStream={streams[5]} trades={trades} globalDenom={globalDenom} num={6}/>
+                <TableRow individualStream={streams[6]} trades={trades} globalDenom={globalDenom} num={7}/>
 
-      </div>
-    )
-  } else {
-    return (
-      <div className="streams-table-container">
-        <TableHead globalDenom={globalDenom}/>
+            </div>
+        )
+    } else {
+        return (
+            <div className="streams-table-container">
+                <TableHead globalDenom={globalDenom}/>
 
-      </div>
-    )
-  }
+            </div>
+        )
+    }
 
 }
 

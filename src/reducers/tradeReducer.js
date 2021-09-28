@@ -14,20 +14,20 @@ export const initializeTrades = async () => {
 
 const tradeReducer = (state = [], action) => {
     switch(action.type) {
-        case 'INIT_TRADES': {
-            return action.data
-        }
+    case 'INIT_TRADES': {
+        return action.data
+    }
 
-        // case 'NEW_TRADES': {
-        // }
-        //
-        // case 'UPDATE_TRADE': {
-        //
-        // }
-        //
-        // case 'DELETE_TRADE': {
-        //
-        // }
+    // case 'NEW_TRADES': {
+    // }
+    //
+    // case 'UPDATE_TRADE': {
+    //
+    // }
+    //
+    // case 'DELETE_TRADE': {
+    //
+    // }
     default:
         return state
     }

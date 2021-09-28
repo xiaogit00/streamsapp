@@ -6,7 +6,7 @@
 
 
 
-  const returnsDataWithSwap = (stream, trades, swaps, currentPrice, globalDenom) => {
+const returnsDataWithSwap = (stream, trades, swaps, currentPrice, globalDenom) => {
     //**********************************************
     //*             Weight Allocation
     //**********************************************

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const ProgressBarStyled = styled.div`
 /* border: 1px solid green; */
@@ -20,8 +20,8 @@ display: flex;
 const WeightOpen = styled.div`
   background-color: #3E8CAA;
   width: ${weights.open}%;
-  border-top-right-radius: ${props => props.isLast ? "10px" : "0px" };
-  border-bottom-right-radius: ${props => props.isLast ? "10px" : "0px" };
+  border-top-right-radius: ${props => props.isLast ? '10px' : '0px' };
+  border-bottom-right-radius: ${props => props.isLast ? '10px' : '0px' };
   opacity: 15%;
   z-index: 2;
   :hover {
@@ -35,8 +35,8 @@ const WeightOpen = styled.div`
 const WeightClosed = styled.div`
   background-color: #7C7D7D;
   width: ${weights.closed}%;
-  border-top-right-radius: ${props => props.isLast ? "10px" : "0px" };
-  border-bottom-right-radius: ${props => props.isLast ? "10px" : "0px" };
+  border-top-right-radius: ${props => props.isLast ? '10px' : '0px' };
+  border-bottom-right-radius: ${props => props.isLast ? '10px' : '0px' };
   opacity: 15%;
   z-index: 2;
   :hover {
@@ -49,8 +49,8 @@ const WeightClosed = styled.div`
 const WeightSwapOpen = styled.div`
   background-color: #CA8534;
   width: ${weights.swapOpen}%;
-  border-top-right-radius: ${props => props.isLast ? "10px" : "0px" };
-  border-bottom-right-radius: ${props => props.isLast ? "10px" : "0px" };
+  border-top-right-radius: ${props => props.isLast ? '10px' : '0px' };
+  border-bottom-right-radius: ${props => props.isLast ? '10px' : '0px' };
   opacity: 15%;
   z-index: 2;
   :hover {
@@ -64,8 +64,8 @@ const WeightSwapOpen = styled.div`
 const WeightSwapClosed = styled.div`
   background-color: #7C7D7D;
   width: ${weights.swapClosed}%;
-  border-top-right-radius: ${props => props.isLast ? "10px" : "0px" };
-  border-bottom-right-radius: ${props => props.isLast ? "10px" : "0px" };
+  border-top-right-radius: ${props => props.isLast ? '10px' : '0px' };
+  border-bottom-right-radius: ${props => props.isLast ? '10px' : '0px' };
   opacity: 15%;
   z-index: 2;
   :hover {
@@ -77,34 +77,34 @@ const WeightSwapClosed = styled.div`
 `
 
 const ProgressBar = ({weights}) => {
-  console.log("PROGRESS BAR ENTERED")
+    console.log('PROGRESS BAR ENTERED')
 
-  let barIsLast = {}
+    let barIsLast = {}
 
-  if (weights.swapClosed > 1) {
-    barIsLast.swapClosed = true
-  } else {
-    if (weights.swapOpen > 1) {
-      barIsLast.swapOpen = true
+    if (weights.swapClosed > 1) {
+        barIsLast.swapClosed = true
     } else {
-        if (weights.closed > 1) {
-          barIsLast.closed = true
+        if (weights.swapOpen > 1) {
+            barIsLast.swapOpen = true
         } else {
-          barIsLast.open = true
+            if (weights.closed > 1) {
+                barIsLast.closed = true
+            } else {
+                barIsLast.open = true
+            }
         }
     }
-  }
 
 
 
-  return (
-    <ProgressBarStyled>
-      <WeightOpen isLast={barIsLast.open}></WeightOpen>
-      <WeightClosed isLast={barIsLast.closed}></WeightClosed>
-      <WeightSwapOpen isLast={barIsLast.swapOpen}></WeightSwapOpen>
-      <WeightSwapClosed isLast={barIsLast.swapClosed}></WeightSwapClosed>
-    </ProgressBarStyled>
-  )
+    return (
+        <ProgressBarStyled>
+            <WeightOpen isLast={barIsLast.open}></WeightOpen>
+            <WeightClosed isLast={barIsLast.closed}></WeightClosed>
+            <WeightSwapOpen isLast={barIsLast.swapOpen}></WeightSwapOpen>
+            <WeightSwapClosed isLast={barIsLast.swapClosed}></WeightSwapClosed>
+        </ProgressBarStyled>
+    )
 }
 
 export default ProgressBar

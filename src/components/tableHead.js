@@ -4,12 +4,12 @@ import TableHeadItems from './tableHeadItems'
 
 const TableHead = ({globalDenom}) => {
 
-  return (
-    <div className="table-head-flex-container">
-      <TableHeadItems globalDenom={globalDenom}/>
+    return (
+        <div className="table-head-flex-container">
+            <TableHeadItems globalDenom={globalDenom}/>
 
-    </div>
-  )
+        </div>
+    )
 }
 
 export default TableHead

@@ -15,7 +15,7 @@ const HeaderLeftWrapper = styled.div`
   margin-bottom: 7px;
 `
 const headerFlexContainer = {
-  height: "100%",
+    height: '100%',
 
 }
 
@@ -59,25 +59,25 @@ const ButtonContainer = styled.div`
 //**********************************************
 const HeaderBlock = ({globalDenom, onChange}) => {
 
-  return(
-    <div className="header-container">
-    <HeaderLeftWrapper>
+    return(
+        <div className="header-container">
+            <HeaderLeftWrapper>
 
-      <StreamLogoContainer style={headerFlexContainer}>
+                <StreamLogoContainer style={headerFlexContainer}>
         Streams
-      </StreamLogoContainer>
+                </StreamLogoContainer>
 
-      <MenuContainer style={headerFlexContainer}>
-        <AssetFilter></AssetFilter>
-      </MenuContainer>
+                <MenuContainer style={headerFlexContainer}>
+                    <AssetFilter></AssetFilter>
+                </MenuContainer>
 
-      <ButtonContainer>
-        <ToggleButton globalDenom={globalDenom} onChange={onChange}/>
-      </ButtonContainer>
+                <ButtonContainer>
+                    <ToggleButton globalDenom={globalDenom} onChange={onChange}/>
+                </ButtonContainer>
 
-    </HeaderLeftWrapper>
-    </div>
-  )
+            </HeaderLeftWrapper>
+        </div>
+    )
 }
 
 export default HeaderBlock

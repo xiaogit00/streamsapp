@@ -7,12 +7,12 @@ import StreamsTable from './streamsTable'
 
 const ContentContainer = () => {
 
-  return (
-    <div className="content-container-flex">
-      <StreamsTable />
+    return (
+        <div className="content-container-flex">
+            <StreamsTable />
 
-    </div>
-  )
+        </div>
+    )
 }
 
 export default ContentContainer
