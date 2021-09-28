@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from 'react'
+import { initializeStreams } from '../reducers/streamReducer'
+import { initializeTrades } from '../reducers/tradeReducer'
+import { useSelector, useDispatch } from 'react-redux'
 import '../App.css'
 import TableHead from './tableHead'
 import TableRow from './tableRow'
 
 
 
-const StreamsTable = ({ globalDenom, trades, streams }) => {
+const StreamsTable = () => {
 
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(initializeStreams())
+    }, [dispatch])
 
+    useEffect(() => {
+        dispatch(initializeTrades())
+    }, [dispatch])
 
+    const streams = useSelector(state => state.streams)
 
-  // console.log("value of streams in Streamstable", streams)
-  // console.log("length of Streams array", streams.length)
+    const trades = useSelector(state => state.trades)
+
+    const globalDenom = useSelector(state => state.globalNominalDenom)
   if (streams.length > 0) {
     return (
       <div className="streams-table-container">
