@@ -5,8 +5,8 @@
 // Has position absolute, width constraint for everythin within for 180px.
 
 import React from 'react'
-import '../App.css'
-import NavigationMenu from './navigationMenu'
+import 'App.css'
+import NavigationMenu from 'components/leftNav/navigationMenu'
 
 const LeftNav = () => {
 

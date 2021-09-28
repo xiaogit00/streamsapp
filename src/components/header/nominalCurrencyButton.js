@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
-import { changeDenom } from '../reducers/globalDenomReducer'
+import { changeDenom } from 'reducers/globalDenomReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core'
-import '../App.css'
+import 'App.css'
 import styled from 'styled-components'
 
 

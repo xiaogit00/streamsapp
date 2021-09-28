@@ -1,7 +1,7 @@
 import React from 'react'
-import '../App.css'
+import 'App.css'
 import styled from 'styled-components'
-import ToggleButton from './nominalCurrencyButton'
+import ToggleButton from 'components/header/nominalCurrencyButton'
 
 //**********************************************
 //*             Styled Components

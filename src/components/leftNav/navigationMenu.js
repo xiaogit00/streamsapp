@@ -9,9 +9,9 @@
 // Styled by App.css
 
 import React from 'react'
-import '../App.css'
-import NavHeader from './navHeader'
-import NavSections from './navSections'
+import 'App.css'
+import NavHeader from 'components/leftNav/navHeader'
+import NavSections from 'components/leftNav/navSections'
 // import MenuItems from './menuItems'
 
 

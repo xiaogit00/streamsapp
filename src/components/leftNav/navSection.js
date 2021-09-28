@@ -10,8 +10,8 @@
 // styled by App.css
 
 import React from 'react'
-import '../App.css'
-import MenuItems from './menuItems'
+import 'App.css'
+import MenuItems from 'components/leftNav/menuItems'
 
 const NavSection = ({section}) => {
     //GENERATES THE CLASS ID TO BE PASSED INTO COMPONENT

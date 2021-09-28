@@ -1,6 +1,6 @@
 import React from 'react'
-import '../App.css'
-import StreamsTable from './streamsTable'
+import 'App.css'
+import StreamsTable from 'components/streamsTable/streamsTable'
 
 
 

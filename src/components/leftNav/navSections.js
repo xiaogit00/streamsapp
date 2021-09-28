@@ -12,8 +12,8 @@
 //JSX calls a NavSection component, which is the individual Section for rendering.
 // The section data is passed into each component.
 import React from 'react'
-import '../App.css'
-import NavSection from './navSection'
+import 'App.css'
+import NavSection from 'components/leftNav/navSection'
 
 const NavSections = () => {
 

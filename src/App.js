@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
-import LeftNav from './components/leftNav'
-import Routes from './components/routes'
+import LeftNav from 'components/leftNav/leftNav'
+import Routes from 'components/routes'
 
 const App = () => {
     return (

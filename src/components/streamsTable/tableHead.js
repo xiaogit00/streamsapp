@@ -1,6 +1,6 @@
 import React from 'react'
-import '../App.css'
-import TableHeadItems from './tableHeadItems'
+import 'App.css'
+import TableHeadItems from 'components/streamsTable/tableHeadItems'
 
 const TableHead = ({globalDenom}) => {
 

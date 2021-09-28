@@ -1,7 +1,7 @@
 import React from 'react'
 import '../App.css'
-import HeaderBlock from './headerBlock'
-import ContentContainer from './contentContainer.js'
+import HeaderBlock from 'components/header/headerBlock'
+import ContentContainer from 'components/contentContainer.js'
 // var globalNominalDenom = require('../config.json').globalNominalDenom;
 
 const RightPane = () => {

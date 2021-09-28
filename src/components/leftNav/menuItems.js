@@ -4,8 +4,8 @@
 // MenuItem container. Gets passed an array of objects.
 // Maps over the array in render to display each menu item.
 import React from 'react'
-import '../App.css'
-import MenuItem from './menuItem'
+import 'App.css'
+import MenuItem from 'components/leftNav/menuItem'
 
 const MenuItems = ({menuItems}) => {
     return (
