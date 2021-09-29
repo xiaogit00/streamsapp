@@ -2,6 +2,7 @@ import * as React from 'react'
 import { styled, Box } from '@mui/system'
 import ModalUnstyled from '@mui/core/ModalUnstyled'
 import { useSelector, useDispatch } from 'react-redux'
+import StreamModalForm from 'components/floatingActionButtonAdd/streamModalForm'
 
 const StreamModal = styled(ModalUnstyled)`
   position: fixed;
@@ -13,6 +14,7 @@ const StreamModal = styled(ModalUnstyled)`
   display: flex;
   align-items: center;
   justify-content: center;
+
 `
 
 const TradeModal = styled(ModalUnstyled)`
@@ -46,17 +48,18 @@ const Backdrop = styled('div')`
   bottom: 0;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   -webkit-tap-highlight-color: transparent;
 `
 
 const style = {
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    p: 2,
-    px: 4,
-    pb: 3,
+    width: 300,
+    bgcolor: '#FFFBFF',
+    borderRadius: '10px',
+    border: '1px dotted red',
+    height: '69vh'
+
+
 }
 
 const Modal = () => {
@@ -79,8 +82,7 @@ const Modal = () => {
                     BackdropComponent={Backdrop}
                 >
                     <Box sx={style}>
-                        <h2 id="unstyled-modal-title">Text in a modal</h2>
-                        <p id="unstyled-modal-description">Aliquid amet deserunt earum!</p>
+                        <StreamModalForm />
                     </Box>
                 </StreamModal>
             )
@@ -94,8 +96,8 @@ const Modal = () => {
                     BackdropComponent={Backdrop}
                 >
                     <Box sx={style}>
-                        <h2 id="unstyled-modal-title">Text in a modal</h2>
-                        <p id="unstyled-modal-description">Aliquid amet deserunt earum!</p>
+                        <h2 id="unstyled-modal-title"></h2>
+                        <p id="unstyled-modal-description"></p>
                     </Box>
                 </TradeModal>
             )
@@ -109,8 +111,8 @@ const Modal = () => {
                     BackdropComponent={Backdrop}
                 >
                     <Box sx={style}>
-                        <h2 id="unstyled-modal-title">Text in a modal</h2>
-                        <p id="unstyled-modal-description">Aliquid amet deserunt earum!</p>
+                        <h2 id="unstyled-modal-title"></h2>
+                        <p id="unstyled-modal-description"></p>
                     </Box>
                 </OrderModal>
             )
