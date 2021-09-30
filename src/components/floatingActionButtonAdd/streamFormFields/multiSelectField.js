@@ -9,23 +9,17 @@ import Select from '@mui/material/Select'
 import Chip from '@mui/material/Chip'
 
 const ITEM_HEIGHT = 48
-const ITEM_PADDING_TOP = 8
+const ITEM_PADDING_TOP = 10
 const MenuProps = {
     PaperProps: {
         style: {
             maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
+            width: 200,
         },
     },
 }
 
-const names = [
-    'Trade 1',
-    'Trade 2',
-    'Trade 3',
-    'Trade 4',
-    'Trade 5'
-]
+
 
 function getStyles(name, personName, theme) {
     return {
@@ -36,31 +30,34 @@ function getStyles(name, personName, theme) {
     }
 }
 
-const TradesField = () => {
+const MultiSelectField = (props) => {
+    const { value, name, onChange, label, menuItems} = props
     const theme = useTheme()
-    const [personName, setPersonName] = React.useState([])
+    // const [personName, setPersonName] = React.useState([])
+    //
+    // const handleChange = (event) => {
+    //     const {
+    //         target: { value },
+    //     } = event
+    //     setPersonName(
+    //         // On autofill we get a the stringified value.
+    //         typeof value === 'string' ? value.split(',') : value,
+    //     )
+    // }
 
-    const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event
-        setPersonName(
-            // On autofill we get a the stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        )
-    }
 
     return (
         <div>
             <FormControl sx={{ m: 1, width: 200 }}>
-                <InputLabel id="demo-multiple-chip-label">Trades</InputLabel>
+                <InputLabel id="demo-multiple-chip-label">{label}</InputLabel>
                 <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
                     size='small'
-                    value={personName}
-                    onChange={handleChange}
+                    value={value}
+                    onChange={onChange}
+                    name={name}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -71,11 +68,11 @@ const TradesField = () => {
                     )}
                     MenuProps={MenuProps}
                 >
-                    {names.map((name) => (
+                    {menuItems.map((name) => (
                         <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, value, theme)}
                         >
                             {name}
                         </MenuItem>
@@ -86,4 +83,4 @@ const TradesField = () => {
     )
 }
 
-export default TradesField
+export default MultiSelectField

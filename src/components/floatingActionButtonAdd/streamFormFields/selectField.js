@@ -4,32 +4,34 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-const AssetClassField = () => {
-    const [assetClass, setAssetClass] = React.useState('')
+const SelectField = (props) => {
 
-    const handleChange = (event) => {
-        setAssetClass(event.target.value)
-    }
+    const { label, onChange, value, name, menuItems } = props
     return (
         <FormControl variant="standard" sx={{ m: 1, minWidth: 110}}>
-            <InputLabel id="demo-simple-select-standard-label">Asset Class</InputLabel>
+            <InputLabel id="demo-simple-select-standard-label">{label}</InputLabel>
             <Select
+                label="Asset Class"
+                size='small'
+                value={value}
+                name={name}
                 labelId="demo-simple-select-standard-label"
                 autoWidth='true'
                 id="demo-simple-select-standard"
-                onChange={handleChange}
-                label="Asset Class"
-                size='small'
+                onChange={onChange}
             >
                 <MenuItem value="">
                     <em>None</em>
                 </MenuItem>
-                <MenuItem value={'Crypto'}>Crypto</MenuItem>
-                <MenuItem value={'Stocks'}>Stocks</MenuItem>
-                <MenuItem value={'ETF'}>ETF</MenuItem>
+                {menuItems.map(menuItem =>
+                    <MenuItem value={menuItem} key={menuItem}>
+                        {menuItem}
+                    </MenuItem>)
+                }
+
             </Select>
         </FormControl>
     )
 }
 
-export default AssetClassField
+export default SelectField
