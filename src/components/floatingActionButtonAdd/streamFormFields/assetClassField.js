@@ -24,9 +24,9 @@ const AssetClassField = () => {
                 <MenuItem value="">
                     <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>Crypto</MenuItem>
-                <MenuItem value={20}>Stocks</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={'Crypto'}>Crypto</MenuItem>
+                <MenuItem value={'Stocks'}>Stocks</MenuItem>
+                <MenuItem value={'ETF'}>ETF</MenuItem>
             </Select>
         </FormControl>
     )
