@@ -123,7 +123,7 @@ const StreamModalForm = () => {
 
             </ModalBody>
             <ModalFooter>
-                <CancelButton></CancelButton>
+                <CancelButton action="TOGGLE_STREAM"></CancelButton>
                 <CreateButton></CreateButton>
             </ModalFooter>
         </>
