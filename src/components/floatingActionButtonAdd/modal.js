@@ -3,6 +3,7 @@ import { styled, Box } from '@mui/system'
 import ModalUnstyled from '@mui/core/ModalUnstyled'
 import { useSelector, useDispatch } from 'react-redux'
 import StreamModalForm from 'components/floatingActionButtonAdd/streamModalForm'
+import TradeModalForm from 'components/floatingActionButtonAdd/tradeModalForm'
 
 const StreamModal = styled(ModalUnstyled)`
   position: fixed;
@@ -96,8 +97,7 @@ const Modal = () => {
                     BackdropComponent={Backdrop}
                 >
                     <Box sx={style}>
-                        <h2 id="unstyled-modal-title"></h2>
-                        <p id="unstyled-modal-description"></p>
+                        <TradeModalForm />
                     </Box>
                 </TradeModal>
             )

@@ -91,6 +91,7 @@ const StreamModalForm = () => {
                     name="asset"
                     value={values.asset}
                     onChange={handleInputChange}
+                    required={true}
                 />
                 <SelectField
                     label="Asset Class"
@@ -111,6 +112,8 @@ const StreamModalForm = () => {
                     name="hasSwaps"
                     value={values.hasSwaps}
                     onChange={handleInputChange}
+                    button1Label="Yes"
+                    button2Label="No"
                 />
                 {values.hasSwaps === 'true' && (<MultiSelectField
                     value={values.swaps}
