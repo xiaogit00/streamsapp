@@ -10,6 +10,16 @@ export const initializeTrades = () => {
     }
 }
 
+export const newTrade = content => {
+    return async dispatch => {
+        const newTrade = await tradeService.createNew(content) //sends the data to Database. content is object.
+        dispatch({
+            type: 'NEW_TRADE',
+            data: newTrade
+        })
+    }
+}
+
 
 
 const tradeReducer = (state = [], action) => {
@@ -18,8 +28,10 @@ const tradeReducer = (state = [], action) => {
         return action.data
     }
 
-    // case 'NEW_TRADES': {
-    // }
+    case 'NEW_TRADE': {
+        const newTrades = state.concat(action.data)
+        return newTrades
+    }
     //
     // case 'UPDATE_TRADE': {
     //

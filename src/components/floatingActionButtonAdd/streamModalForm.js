@@ -10,6 +10,11 @@ import RadioButton from 'components/floatingActionButtonAdd/streamFormFields/rad
 import SwapsField from 'components/floatingActionButtonAdd/streamFormFields/swapsField'
 import CancelButton from 'components/floatingActionButtonAdd/streamFormFields/cancelButton'
 import CreateButton from 'components/floatingActionButtonAdd/streamFormFields/createButton'
+
+const Form = styled.form`
+    height: 69vh;
+`
+
 const HeaderText = styled.p`
     font-family: Calibri, sans-serif;
     font-size: 1.3em;
@@ -62,6 +67,11 @@ const StreamModalForm = () => {
         })
     }
 
+    const submitHandler = (event) => {
+        event.preventDefault()
+        console.log('values in form:',values)
+    }
+
 
     const streamAssetClassMenu = [
         'Crypto',
@@ -87,55 +97,57 @@ const StreamModalForm = () => {
 
     return (
         <>
-            <ModalBody>
-                <HeaderText>Create a Stream</HeaderText>
-                <InputField
-                    label="Asset"
-                    name="asset"
-                    value={values.asset}
-                    onChange={handleInputChange}
-                    required={true}
-                    sx={{ m: 0.5, minWidth:235}}
-                />
-                <SelectField
-                    label="Asset Class"
-                    name='assetClass'
-                    onChange={handleInputChange}
-                    value={values.assetClass}
-                    menuItems={streamAssetClassMenu}
-                    sx={{ m: 1, minWidth: 110}}
-                />
-                <MultiSelectField
-                    label="Trades"
-                    onChange={handleInputChange}
-                    name="trades"
-                    value={values.trades}
-                    menuItems={streamTradeMenuItems}
-                    sx={{ m: 0.5, mt:2, width: 235 }}
-                />
-                <RadioButton
-                    label="Contains Swaps?"
-                    name="hasSwaps"
-                    value={values.hasSwaps}
-                    onChange={handleInputChange}
-                    button1Label="Yes"
-                    button2Label="No"
-                />
-                {values.hasSwaps === 'true' && (<MultiSelectField
-                    value={values.swaps}
-                    name='swaps'
-                    onChange={handleInputChange}
-                    label="Swaps"
-                    menuItems={swapsMenuItems}
-                    sx={{ m: 0.5, mt:2, mb:8, width: 235 }}
-                />)}
+            <Form onSubmit={submitHandler} >
+                <ModalBody>
+                    <HeaderText>Create a Stream</HeaderText>
+                    <InputField
+                        label="Asset"
+                        name="asset"
+                        value={values.asset}
+                        onChange={handleInputChange}
+                        required={true}
+                        sx={{ m: 0.5, minWidth:235}}
+                    />
+                    <SelectField
+                        label="Asset Class"
+                        name='assetClass'
+                        onChange={handleInputChange}
+                        value={values.assetClass}
+                        menuItems={streamAssetClassMenu}
+                        sx={{ m: 1, minWidth: 110}}
+                    />
+                    <MultiSelectField
+                        label="Trades"
+                        onChange={handleInputChange}
+                        name="trades"
+                        value={values.trades}
+                        menuItems={streamTradeMenuItems}
+                        sx={{ m: 0.5, mt:2, width: 235 }}
+                    />
+                    <RadioButton
+                        label="Contains Swaps?"
+                        name="hasSwaps"
+                        value={values.hasSwaps}
+                        onChange={handleInputChange}
+                        button1Label="Yes"
+                        button2Label="No"
+                    />
+                    {values.hasSwaps === 'true' && (<MultiSelectField
+                        value={values.swaps}
+                        name='swaps'
+                        onChange={handleInputChange}
+                        label="Swaps"
+                        menuItems={swapsMenuItems}
+                        sx={{ m: 0.5, mt:2, mb:8, width: 235 }}
+                    />)}
 
 
-            </ModalBody>
-            <ModalFooter>
-                <CancelButton action="TOGGLE_STREAM"></CancelButton>
-                <CreateButton></CreateButton>
-            </ModalFooter>
+                </ModalBody>
+                <ModalFooter>
+                    <CancelButton action="TOGGLE_STREAM"></CancelButton>
+                    <CreateButton></CreateButton>
+                </ModalFooter>
+            </Form>
         </>
     )
 }

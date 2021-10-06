@@ -11,7 +11,9 @@ export default function CreateButton() {
                     backgroundColor: '#7E2C65'
                 }
 
-            }}>Create</Button>
+            }}
+            type="submit"
+        >Create</Button>
     )
 }
 

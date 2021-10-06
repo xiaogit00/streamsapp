@@ -57,7 +57,6 @@ const style = {
     width: 315,
     bgcolor: 'white',
     borderRadius: '10px',
-    border: '1px dotted red',
     height: '69vh'
 
 
