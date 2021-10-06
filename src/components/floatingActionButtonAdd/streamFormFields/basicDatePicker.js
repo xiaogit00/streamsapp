@@ -5,7 +5,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 
 export default function BasicDatePicker(props) {
-    const { label, name, value, onChange } = props
+    const { label, name, value, onChange,sx } = props
     // const [value, setValue] = React.useState(null)
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -14,7 +14,7 @@ export default function BasicDatePicker(props) {
                 name={name}
                 value={value}
                 onChange={onChange}
-                renderInput={(params) => <TextField {...params} size='small' />}
+                renderInput={(params) => <TextField {...params} size="small" variant="filled" sx={sx} />}
             />
         </LocalizationProvider>
     )

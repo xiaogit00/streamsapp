@@ -6,9 +6,9 @@ import Select from '@mui/material/Select'
 
 const SelectField = (props) => {
 
-    const { label, onChange, value, name, menuItems } = props
+    const { label, onChange, value, name, menuItems, sx } = props
     return (
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 110}}>
+        <FormControl variant="standard" sx={sx}>
             <InputLabel id="demo-simple-select-standard-label">{label}</InputLabel>
             <Select
                 label="Asset Class"

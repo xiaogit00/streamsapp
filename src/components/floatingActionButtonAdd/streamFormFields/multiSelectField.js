@@ -31,7 +31,7 @@ function getStyles(name, personName, theme) {
 }
 
 const MultiSelectField = (props) => {
-    const { value, name, onChange, label, menuItems} = props
+    const { value, name, onChange, label, menuItems, sx} = props
     const theme = useTheme()
     // const [personName, setPersonName] = React.useState([])
     //
@@ -44,17 +44,20 @@ const MultiSelectField = (props) => {
     //         typeof value === 'string' ? value.split(',') : value,
     //     )
     // }
+    const handleDelete = (e) => {
+
+    }
 
 
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 200 }}>
+            <FormControl sx={sx}>
                 <InputLabel id="demo-multiple-chip-label">{label}</InputLabel>
                 <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    size='small'
+                    size="large"
                     value={value}
                     onChange={onChange}
                     name={name}
@@ -62,7 +65,7 @@ const MultiSelectField = (props) => {
                     renderValue={(selected) => (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selected.map((value) => (
-                                <Chip key={value} label={value} />
+                                <Chip key={value} label={value} variant="outlined" onDelete={handleDelete} />
                             ))}
                         </Box>
                     )}

@@ -37,7 +37,7 @@ NumberFormatCustom.propTypes = {
 }
 
 export default function CurrencyField(props) {
-    const { onChange, value, name, label } = props
+    const { onChange, value, name, label, sx } = props
 
     return (
 
@@ -50,7 +50,9 @@ export default function CurrencyField(props) {
             InputProps={{
                 inputComponent: NumberFormatCustom,
             }}
-            variant="standard"
+            variant="outlined"
+            size="small"
+            sx={sx}
         />
     )
 }

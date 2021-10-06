@@ -13,8 +13,10 @@ import CreateButton from 'components/floatingActionButtonAdd/streamFormFields/cr
 const HeaderText = styled.p`
     font-family: Calibri, sans-serif;
     font-size: 1.3em;
-    font-weight: lighter;
+    /* border: 1px solid grey; */
+    margin-left: 0.2em;
     color: #5E5E5E;
+
 `
 const ModalBody = styled.div`
     /* border: 0.5px solid green; */
@@ -26,6 +28,7 @@ const ModalBody = styled.div`
     align-items: flex-start;
     overflow-y: scroll;
     overflow-x: hidden;
+    overflow:auto;
 `
 
 const ModalFooter = styled.div`
@@ -92,6 +95,7 @@ const StreamModalForm = () => {
                     value={values.asset}
                     onChange={handleInputChange}
                     required={true}
+                    sx={{ m: 0.5, minWidth:235}}
                 />
                 <SelectField
                     label="Asset Class"
@@ -99,6 +103,7 @@ const StreamModalForm = () => {
                     onChange={handleInputChange}
                     value={values.assetClass}
                     menuItems={streamAssetClassMenu}
+                    sx={{ m: 1, minWidth: 110}}
                 />
                 <MultiSelectField
                     label="Trades"
@@ -106,6 +111,7 @@ const StreamModalForm = () => {
                     name="trades"
                     value={values.trades}
                     menuItems={streamTradeMenuItems}
+                    sx={{ m: 0.5, mt:2, width: 235 }}
                 />
                 <RadioButton
                     label="Contains Swaps?"
@@ -121,6 +127,7 @@ const StreamModalForm = () => {
                     onChange={handleInputChange}
                     label="Swaps"
                     menuItems={swapsMenuItems}
+                    sx={{ m: 0.5, mt:2, mb:8, width: 235 }}
                 />)}
 
 
