@@ -65,8 +65,7 @@ const initialFValues = {
     valueDenom:'',
     fees: '',
     feesDenom: '',
-    comments:'',
-    _id:'614b29988fa8ec2af2acec33'
+    comments:''
 
 }
 const TradeModalForm = () => {

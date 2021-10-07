@@ -5,6 +5,7 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
 import Select from '@mui/material/Select'
 import Chip from '@mui/material/Chip'
 
@@ -31,7 +32,7 @@ function getStyles(name, personName, theme) {
 }
 
 const MultiSelectField = (props) => {
-    const { value, name, onChange, label, menuItems, sx} = props
+    const { value, name, onChange, label, menuItems, sx, handleDelete, selectedChips} = props
     const theme = useTheme()
     // const [personName, setPersonName] = React.useState([])
     //
@@ -44,9 +45,7 @@ const MultiSelectField = (props) => {
     //         typeof value === 'string' ? value.split(',') : value,
     //     )
     // }
-    const handleDelete = (e) => {
 
-    }
 
 
     return (
@@ -62,25 +61,34 @@ const MultiSelectField = (props) => {
                     onChange={onChange}
                     name={name}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value} variant="outlined" onDelete={handleDelete} />
-                            ))}
+                    renderValue={(selected) => {
+                        console.log('from within selected:', selected)
+                        return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {selectedChips.map((value) => {
+                                return <Chip key={value.asset}
+                                    size="small"
+                                    label={value.date.slice(0,10) + ' - ' + value.asset}
+                                    variant="outlined"
+                                    onMouseDown={(event) => {
+                                        event.stopPropagation()
+                                    }}
+                                    onDelete={handleDelete(value)} />
+                            })}
                         </Box>
-                    )}
+                    }}
                     MenuProps={MenuProps}
                 >
-                    {menuItems.map((name) => (
+                    {menuItems.map((trade) => (
                         <MenuItem
-                            key={name}
-                            value={name}
+                            key={trade.asset}
+                            value={trade} /* This displays the chip */
                             style={getStyles(name, value, theme)}
                         >
-                            {name}
+                            <span style={{fontSize:'0.7em'}}>{trade.date.slice(0,10) + ' - ' + trade.asset + ' ($' + trade.price + ' buy in price)' }</span>
                         </MenuItem>
                     ))}
                 </Select>
+                <FormHelperText>Select from unassigned trades. </FormHelperText>
             </FormControl>
         </div>
     )

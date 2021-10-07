@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import * as React from 'react'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputField from 'components/floatingActionButtonAdd/streamFormFields/inputField'
@@ -57,20 +58,45 @@ const initialFValues = {
 }
 const StreamModalForm = () => {
     const [values, setValues] = useState(initialFValues)
+    const [selectedChips, setSelectedChips] = React.useState([])
+    const [chipName, setChipName] = React.useState([])
+    const trades = useSelector(state => state.trades)
+    const streamTradeMenuItems = trades.filter(trade => trade.assigned === false)
+
 
     const handleInputChange = e => {
         const { name, value } = e.target
-        console.log(typeof value)
+        // console.log('e.target:', e.target)
         setValues({
             ...values,
             [name]:value
         })
+
+    }
+
+    const handleChipInputChange = e => {
+        const { name, value } = e.target
+        console.log('value,',value)
+        setValues({
+            ...values,
+            [name]:value
+        })
+        setSelectedChips(value)
+        setChipName(value)
+    }
+    const handleChipDelete = chipToDelete => () => {
+        // console.log('selectedChips',selectedChips)
+        let s = selectedChips.filter(chip => chip.asset !== chipToDelete.asset)
+        console.log('s',s)
+        setSelectedChips(s)
+        setChipName(s)
     }
 
     const submitHandler = (event) => {
         event.preventDefault()
-        console.log('values in form:',values)
+        // console.log('values in form:',values)
     }
+
 
 
     const streamAssetClassMenu = [
@@ -79,13 +105,6 @@ const StreamModalForm = () => {
         'ETF'
     ]
 
-    const streamTradeMenuItems = [
-        'Trade 1',
-        'Trade 2',
-        'Trade 3',
-        'Trade 4',
-        'Trade 5'
-    ]
 
     const swapsMenuItems = [
         'Swap 1',
@@ -118,12 +137,15 @@ const StreamModalForm = () => {
                     />
                     <MultiSelectField
                         label="Trades"
-                        onChange={handleInputChange}
+                        onChange={handleChipInputChange}
                         name="trades"
-                        value={values.trades}
+                        value={chipName}
                         menuItems={streamTradeMenuItems}
                         sx={{ m: 0.5, mt:2, width: 235 }}
+                        handleDelete={handleChipDelete}
+                        selectedChips={selectedChips}
                     />
+
                     <RadioButton
                         label="Contains Swaps?"
                         name="hasSwaps"
