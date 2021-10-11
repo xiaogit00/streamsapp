@@ -13,8 +13,18 @@ const MenuItem = ({menuInfo}) => {
         borderRadius: '10px',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingLeft: '10px'
+        paddingLeft: '10px',
+        position:'relative'
 
+
+    }
+    const spanStyle = {
+        position: 'absolute',
+        width: '100%',
+        height:'100%',
+        top:0,
+        left:0,
+        zIndex: 1
     }
 
     const menuText = {
@@ -38,6 +48,7 @@ const MenuItem = ({menuInfo}) => {
                 height='20px' width='20px'
                 alt="S logo"/>
             <span style={menuText}>{menuInfo.text}</span>
+            <a href={menuInfo.uri}><span style={spanStyle}></span> </a>
         </div>
 
     )

@@ -19,7 +19,10 @@ const Routes = () => {
                     </Route>
                     {/* React Exercises Page */}
                     <Route path="/streams">
-                        <RightPane />
+                        <RightPane type="streams"/>
+                    </Route>
+                    <Route path="/trades">
+                        <RightPane type="trades"/>
                     </Route>
 
                 </Switch>

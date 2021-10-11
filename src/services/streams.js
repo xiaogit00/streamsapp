@@ -8,4 +8,15 @@ const getAll = async () => {
     return response.data
 }
 
-export default { getAll }
+const createNew = async (content) => {
+    const response = await axios.post(baseURL, content)
+    return response.data
+}
+
+const deleteStream = async (id) => {
+    const response = await axios.delete(`${baseURL}/${id}`)
+    return response.status
+}
+
+export default { getAll,
+    createNew, deleteStream}

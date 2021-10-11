@@ -20,6 +20,21 @@ export const newTrade = content => {
     }
 }
 
+export const deleteTrade = id => {
+    return async dispatch => {
+        //the idea is that you make a delete request, and then
+        // dispatch new state of streams
+        const responseStatus = await tradeService.deleteTrade(id)
+        if (responseStatus === 204) {
+            dispatch({
+                type:'DELETE_TRADE',
+                data: id
+            })
+        }
+
+    }
+}
+
 
 
 const tradeReducer = (state = [], action) => {
@@ -37,9 +52,11 @@ const tradeReducer = (state = [], action) => {
     //
     // }
     //
-    // case 'DELETE_TRADE': {
-    //
-    // }
+    case 'DELETE_TRADE': {
+        const id = action.data
+        const newTrades = state.filter(trade => trade.id !== id)
+        return newTrades
+    }
     default:
         return state
     }

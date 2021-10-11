@@ -199,6 +199,7 @@ const TableRow = ({individualStream, trades, globalDenom, num}) => {
                 </Date>
                 <StreamBar columnStyle={columnStyle}
                     streamID={num}
+                    id={individualStream.id}
                     asset={individualStream.asset}
                     avgPurchasePrice={Math.round(stream.avgPurchasePrice()*100)/100}
                     curPrice={Math.round(currentPrice*100)/100}

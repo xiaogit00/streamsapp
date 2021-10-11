@@ -3,6 +3,9 @@ import * as React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { newTrade } from 'reducers/tradeReducer'
+import { Form, HeaderText, ModalBody, ModalFooter, initialFValues,
+    currencies, orderTypeMenuItems } from 'components/floatingActionButtonAdd/tradeModalFormHelper'
+    //A lot of variables used in this component are loaded via the tradeModalFormHelper
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputField from 'components/floatingActionButtonAdd/streamFormFields/inputField'
@@ -16,62 +19,14 @@ import SwapsField from 'components/floatingActionButtonAdd/streamFormFields/swap
 import CancelButton from 'components/floatingActionButtonAdd/streamFormFields/cancelButton'
 import CreateButton from 'components/floatingActionButtonAdd/streamFormFields/createButton'
 
-const Form = styled.form`
-    height: 69vh;
-`
 
-const HeaderText = styled.p`
-    font-family: Calibri, sans-serif;
-    font-size: 1.3em;
-    /* font-weight: lighter; */
-    color: #5E5E5E;
-`
-const ModalBody = styled.div`
-    /* border: 0.5px solid green; */
-    height: 87%;
-    display: flex;
-    padding-left: 2em;
-    padding-right: 2em;
-    flex-direction: column;
-    align-items: flex-start;
-    overflow-y: scroll;
-    overflow-x: hidden;
-
-`
-
-const ModalFooter = styled.div`
-    /* border: 0.5px solid maroon; */
-    background-color: #F8F8F8;
-    position: relative;
-    height: 12.5%;
-    padding-left: 30%;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-`
-const initialFValues = {
-    date: {},
-    asset: '',
-    isSwap: 'false',
-    orderType: '',
-    platform: '',
-    position: 'open',
-    price: '',
-    priceDenom:'',
-    amt:'',
-    value: '',
-    valueDenom:'',
-    fees: '',
-    feesDenom: '',
-    comments:''
-
-}
 const TradeModalForm = () => {
     const [values, setValues] = useState(initialFValues)
     const dispatch = useDispatch()
 
+    //**********************************************************
+    //*                     HANDLERS
+    //**********************************************************
     const handleInputChange = e => {
         const { name, value } = e.target
         if (name === 'price') {
@@ -94,11 +49,6 @@ const TradeModalForm = () => {
                 [name]: value
             })
         }
-
-
-
-        // '$'+Math.round(values.amt*values.price * 100) / 100
-
     }
 
     const handlePriceDenomChange = e => {
@@ -144,41 +94,9 @@ const TradeModalForm = () => {
 
     const submitHandler = (event) => {
         event.preventDefault()
-
+        console.log('values:',values)
         dispatch(newTrade(values))
     }
-    // date: {},
-    // asset: '',
-    // isSwap: 'false',
-    // orderType: '',
-    // platform: '',
-    // position: 'open',
-    // price: '',
-    // priceDenom:'',
-    // amt:'',
-    // value: '',
-    // valueDenom:'',
-    // fees: '',
-    // feesDenom: '',
-    // comments:''
-
-
-    const currencies = [
-        { label: 'SGD' },
-        { label: 'USD' },
-        { label: 'CNY' },
-        { label: 'GBP' }
-    ]
-
-    const orderTypeMenuItems = [
-        'Limit Buy',
-        'Limit Sell',
-        'Market Buy',
-        'Market Sell',
-        'Swap',
-        'Stop Loss',
-        'Take Profit'
-    ]
 
 
     return (
@@ -308,8 +226,3 @@ const TradeModalForm = () => {
 }
 
 export default TradeModalForm
-
-// <div style={{marginRight:43}}>
-//     <span style={{fontSize:'0.8em',fontFamily:'Calibri, sans-serif'}}>Value:</span>
-//     <span>3213</span>
-// </div>

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import ProgressBar from './progressBar'
+import StreamMenuBar from 'components/streamBar/streamMenuBar'
+
 
 let assetColors = {
     'BTC': 'orange',
@@ -30,11 +32,24 @@ const StreamBarStyled = styled.div`
   max-height: 50px;
 `
 
-const StreamNumber = styled.div`
-  width: 17%;
+const StreamNumberContainer = styled.div`
+    width: 17%;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   background-color: #EDEDF7;
+  color: #285054;
+  font-family: Calibri, sans-serif;
+  z-index: 3;
+  display:flex;
+  justify-content:center;
+  :hover {
+    background-color: #F1F4FF;
+    cursor: pointer;
+  }
+`
+
+const StreamNumber = styled.div`
+/* border: 1px solid green; */
   font-size: 1.2em;
   font-weight: bold;
   color: #285054;
@@ -104,13 +119,17 @@ margin-left: 2px;
 
 const StreamBar = (props) => {
     // console.log("this is within streambar",props)
-
+    const streamId = props.id
     return (
         <StreamBarStyled>
-            <StreamNumber >Stream #{props.streamID}
-                <p>{props.weights.open}% open</p>
+            <StreamNumberContainer >
+                <StreamNumber>
+                    Stream #{props.streamID}
+                    <p>{props.weights.open}% open</p>
+                </StreamNumber>
+                <StreamMenuBar id={streamId}/>
+            </StreamNumberContainer>
 
-            </StreamNumber>
             <Asset style={props.columnStyle} color={assetColors[props.asset]}>{props.asset}</Asset>
             <AvgPurchasePrice style={props.columnStyle}>
         ${props.avgPurchasePrice} <GlobalNominalDenom>{props.globalDenom}</GlobalNominalDenom>

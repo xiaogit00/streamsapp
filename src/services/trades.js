@@ -15,5 +15,11 @@ const createNew = async (content) => {
     return response.data
 }
 
+const deleteTrade = async (id) => {
+    const response = await axios.delete(`${baseURL}/${id}`)
+    return response.status
+}
+
 export default { getAll,
-    createNew}
+    createNew,
+    deleteTrade}

@@ -78,17 +78,17 @@ const MultiSelectField = (props) => {
                     }}
                     MenuProps={MenuProps}
                 >
-                    {menuItems.map((trade) => (
+                    {menuItems.map((swap) => (
                         <MenuItem
-                            key={trade.id}
-                            value={trade} /* This displays the chip */
+                            key={swap.id}
+                            value={swap} /* This displays the chip */
                             style={getStyles(name, value, theme)}
                         >
-                            <span style={{fontSize:'0.7em'}}>{trade.date.slice(0,10) + ' - ' + trade.asset + ' ($' + trade.price + ' buy in price)' }</span>
+                            <span style={{fontSize:'0.7em'}}>{swap.date.slice(0,10) + ' - ' + swap.asset + ' ($' + swap.price + ' buy in price)' }</span>
                         </MenuItem>
                     ))}
                 </Select>
-                <FormHelperText>Select from unassigned trades. </FormHelperText>
+                <FormHelperText>Select from unassigned swaps. </FormHelperText>
             </FormControl>
         </div>
     )

@@ -9,8 +9,6 @@ import ToggleButton from 'components/header/nominalCurrencyButton'
 const HeaderLeftWrapper = styled.div`
   /* border: 1px dotted green; */
   width: 85%;
-  display: flex;
-  justify-content: space-around;
   align-items: flex-end;
   margin-bottom: 7px;
 `
@@ -28,56 +26,26 @@ const StreamLogoContainer = styled.div`
   font-style: italic;
 
 `
-const MenuContainer = styled.div`
-  /* border: 1px dotted cyan; */
-  width: 65%;
-  display:flex;
-  align-items: flex-end;
-  justify-content:center;
-`
-
-const AssetFilter = styled.div `
-  border: 2px solid grey;
-  width: 90%;
-  height: 5vh;
-`
-
-const ButtonContainer = styled.div`
-  /* border: 3px solid grey; */
-  width: 130px;
-  margin-right: 20px;
-  height: 60%;
-  display: flex;
-  align-items: center;
-  justify-content:center;
-  /* border-radius: 12px; */
-`
 
 
 //**********************************************
 //*             Main Component
 //**********************************************
-const HeaderBlock = () => {
+const HeaderBlockTrades = () => {
 
     return(
         <div className="header-container">
             <HeaderLeftWrapper>
 
                 <StreamLogoContainer style={headerFlexContainer}>
-        Streams
+        Trades
                 </StreamLogoContainer>
 
-                <MenuContainer style={headerFlexContainer}>
-                    <AssetFilter></AssetFilter>
-                </MenuContainer>
 
-                <ButtonContainer>
-                    <ToggleButton />
-                </ButtonContainer>
 
             </HeaderLeftWrapper>
         </div>
     )
 }
 
-export default HeaderBlock
+export default HeaderBlockTrades

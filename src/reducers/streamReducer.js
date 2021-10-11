@@ -10,6 +10,31 @@ export const initializeStreams = () => {
     }
 }
 
+export const newStream = content => {
+    return async dispatch => {
+        const newStream = await streamService.createNew(content) //sends the data to Database. content is object.
+        dispatch({
+            type: 'NEW_STREAM',
+            data: newStream
+        })
+    }
+}
+
+export const deleteStream = id => {
+    return async dispatch => {
+        //the idea is that you make a delete request, and then
+        // dispatch new state of streams
+        const responseStatus = await streamService.deleteStream(id)
+        if (responseStatus === 204) {
+            dispatch({
+                type:'DELETE_STREAM',
+                data: id
+            })
+        }
+
+    }
+}
+
 
 
 const streamReducer = (state = [], action) => {
@@ -18,10 +43,10 @@ const streamReducer = (state = [], action) => {
         return action.data
     }
 
-    // case 'NEW_STREAM': {
-    //     const newStreams = state.concat(action.data)
-    //     return newStreams
-    // }
+    case 'NEW_STREAM': {
+        const newStreams = state.concat(action.data)
+        return newStreams
+    }
     //
     // case 'UPDATE_STREAM': {
     //
@@ -31,9 +56,11 @@ const streamReducer = (state = [], action) => {
     //
     // }
     //
-    // case 'DELETE_STREAM': {
-    //
-    // }
+    case 'DELETE_STREAM': {
+        const id = action.data
+        const newStreams = state.filter(stream => stream.id !== id)
+        return newStreams
+    }
     default:
         return state
     }
