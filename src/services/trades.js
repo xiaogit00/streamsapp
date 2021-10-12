@@ -20,6 +20,12 @@ const deleteTrade = async (id) => {
     return response.status
 }
 
+const updateTrade = async (id, newTrade) => {
+    const response = await axios.put(`${baseURL}/${id}`, newTrade)
+    return response.status
+}
+
 export default { getAll,
     createNew,
-    deleteTrade}
+    deleteTrade,
+    updateTrade}

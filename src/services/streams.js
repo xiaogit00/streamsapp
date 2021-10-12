@@ -18,5 +18,12 @@ const deleteStream = async (id) => {
     return response.status
 }
 
+const updateStream = async (id, newStream) => {
+    const response = await axios.put(`${baseURL}/${id}`, newStream)
+    return response.status
+}
+
 export default { getAll,
-    createNew, deleteStream}
+    createNew,
+    deleteStream,
+    updateStream}

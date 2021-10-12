@@ -35,6 +35,22 @@ export const deleteStream = id => {
     }
 }
 
+export const updateStream = (id, stream) => {
+    return async dispatch => {
+        const newStream = await streamService.updateStream(id, stream)
+        if (newStream === 204) {
+            dispatch({
+                type: 'UPDATE_STREAM',
+                data: {
+                    id,
+                    stream
+                }
+            })
+        }
+
+    }
+}
+
 
 
 const streamReducer = (state = [], action) => {
@@ -48,9 +64,11 @@ const streamReducer = (state = [], action) => {
         return newStreams
     }
     //
-    // case 'UPDATE_STREAM': {
-    //
-    // }
+    case 'UPDATE_STREAM': {
+        const id = action.data.id
+        const newStream = action.data.stream
+        return state.map(stream => stream.id !== id ? stream : newStream)
+    }
     //
     // case 'UPDATE_TRADE_IN_STREAM': {
     //

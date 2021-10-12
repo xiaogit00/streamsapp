@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import 'App.css'
 import TableHead from 'components/streamsTable/tableHead'
 import TableRow from 'components/streamsTable/tableRow'
-
+import EditStreamModal from 'components/streamBar/editStreamModal'
 
 
 const StreamsTable = () => {
@@ -25,13 +25,17 @@ const StreamsTable = () => {
 
     const globalDenom = useSelector(state => state.globalDenom)
 
+
+
     if (streams.length > 0) {
+        console.log('STREAMS:', streams)
         return (
             <div className="streams-table-container">
                 <TableHead globalDenom={globalDenom}/>
                 {streams.map((stream, i) => {
                     return <TableRow key={stream.id} individualStream={stream} trades={trades} globalDenom={globalDenom} num={i+1}/>
                 })}
+                <EditStreamModal/>
 
             </div>
         )

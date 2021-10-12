@@ -35,6 +35,20 @@ export const deleteTrade = id => {
     }
 }
 
+export const updateTrade = (id, trade) => {
+    return async dispatch => {
+        const response = await tradeService.updateTrade(id, trade)
+        dispatch({
+            type:'UPDATE_TRADE',
+            data: {
+                id,
+                trade
+            }
+        })
+
+    }
+}
+
 
 
 const tradeReducer = (state = [], action) => {
@@ -48,9 +62,12 @@ const tradeReducer = (state = [], action) => {
         return newTrades
     }
     //
-    // case 'UPDATE_TRADE': {
-    //
-    // }
+    case 'UPDATE_TRADE': {
+        const id = action.data.id
+        const newTrade = action.data.trade
+        console.log('newTrade',newTrade)
+        return state.map(trade => trade.id !== id ? trade : newTrade)
+    }
     //
     case 'DELETE_TRADE': {
         const id = action.data

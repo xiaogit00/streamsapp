@@ -12,7 +12,7 @@ export default function RadioButton(props) {
     return (
         <FormControl component="fieldset" sx={sx}>
             <FormLabel sx={{fontSize:'0.9'}} component="legend">{label}</FormLabel>
-            <RadioGroup row aria-label={label} name={name} onChange={onChange}>
+            <RadioGroup row aria-label={label} name={name} onChange={onChange} value={value}>
                 <FormControlLabel value={true} control={<Radio />} label={<span style={{ fontSize: '0.8em' }}>{button1Label}</span>} />
                 <FormControlLabel value={false} control={<Radio />} label={<span style={{ fontSize: '0.8em' }}>{button2Label}</span>} />
 

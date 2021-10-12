@@ -1,11 +1,12 @@
 import React from 'react'
 import IconButton from '@mui/material/IconButton'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteStream } from 'reducers/streamReducer'
 import streamServices from 'services/streams'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+
 
 const options = [
     'Edit',
@@ -21,14 +22,16 @@ function StreamMenuBar({id}) {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
     }
+    const streamData = useSelector(state => state.streams).find(stream => stream.id === id)
+    const editStreamState = useSelector(state => state.modals).editStreamModalOpen
+
     const handleClose = (event) => {
         const action = event.target.textContent
         if (action === 'Edit') {
-
+            dispatch({type: 'TOGGLE_EDIT_STREAM', id:id})
         } else if (action === 'Delete') {
             if (confirm('Are you sure you want to delete this stream?')) {
                 dispatch(deleteStream(id))
-
             }
         }
         setAnchorEl(null)
@@ -48,7 +51,6 @@ function StreamMenuBar({id}) {
             >
                 <MoreVertIcon />
             </IconButton>
-            {console.log('anchorEl',anchorEl)}
             <Menu
                 id="long-menu"
                 MenuListProps={{

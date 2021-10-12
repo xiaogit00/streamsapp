@@ -4,7 +4,11 @@
 const initialState = {
     streamModalOpen: false,
     tradeModalOpen: false,
-    orderModalOpen: false
+    orderModalOpen: false,
+    editStreamModalOpen: {
+        state: false,
+        targettedStream: ''
+    }
 }
 
 const modalReducer = (state = initialState, action) => {
@@ -27,6 +31,16 @@ const modalReducer = (state = initialState, action) => {
         const newState = {
             ...state,
             tradeModalOpen: !state.tradeModalOpen
+        }
+        return newState
+    }
+    case 'TOGGLE_EDIT_STREAM': {
+        const newState = {
+            ...state,
+            editStreamModalOpen: {
+                state: !state.editStreamModalOpen.state,
+                targettedStream: action.id
+            }
         }
         return newState
     }

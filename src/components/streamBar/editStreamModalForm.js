@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import * as React from 'react'
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { newStream } from 'reducers/streamReducer'
-import { Form, HeaderText, ModalBody, ModalFooter, initialFValues,
+import { newStream, updateStream } from 'reducers/streamReducer'
+import { Form, HeaderText, ModalBody, ModalFooter,
     streamAssetClassMenu } from 'components/floatingActionButtonAdd/streamModalFormHelper'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -18,21 +18,40 @@ import CreateButton from 'components/floatingActionButtonAdd/streamFormFields/cr
 
 
 
-const StreamModalForm = () => {
+const EditStreamModalForm = ({ id }) => {
 //**********************************************************
 //*                     Definitions
 //**********************************************************
-    const [values, setValues] = useState(initialFValues)
+    const streams = useSelector(state => state.streams) //all the streams
+    const targetStreamId = useSelector(state => state.modals).editStreamModalOpen.targettedStream //gets the streamID in question
+
+    const currentStream = streams.find(stream => stream.id === targetStreamId) //uses the streamID to return stream object
+    currentStream.swaps.length > 0 ? currentStream.hasSwaps = 'true' : currentStream.hasSwaps = 'false' //adds hasSwaps field to stream object
+    const [values, setValues] = useState(currentStream)
     //For Trades
-    const [selectedChips, setSelectedChips] = React.useState([])
-    const [chipName, setChipName] = React.useState([])
-    //For Swaps
-    const [selectedSwapChips, setSelectedSwapChips] = React.useState([])
-    const [swapChipName, setSwapChipName] = React.useState([])
-    //Setting Menu Items
     const trades = useSelector(state => state.trades)
-    const streamTradeMenuItems = trades.filter(trade => trade.assigned === false && !trade.isSwap)
-    const swapsMenuItems = trades.filter(trade => trade.assigned === false && trade.isSwap === true)
+    const tradesInStream = trades.filter(trade => currentStream.trades.includes(trade.id))
+    const [selectedChips, setSelectedChips] = React.useState(tradesInStream)
+    const [chipName, setChipName] = React.useState(tradesInStream)
+
+    //For Swaps
+    //Okay my swaps field is a bit more complex. currentStream.swaps is an array. To get all the trades in the object, we'll need to
+    //Loop through the array, and
+    let swapsInStream = []
+    currentStream.swaps.map(swap => swapsInStream.push(...swap.trades))
+    const swapObjectsInStream = trades.filter(trade => swapsInStream.includes(trade.id))
+    console.log('swapObjectsInStream',swapObjectsInStream)
+    const [selectedSwapChips, setSelectedSwapChips] = React.useState(swapObjectsInStream)
+    const [swapChipName, setSwapChipName] = React.useState(swapObjectsInStream)
+
+    //Setting Menu Items
+    //Now there is a problem cos currentStream.trades returns the trade IDs - but I would need to be sending the trade objects into
+    //multiSelectField for it to work.
+    //Write a new variable that returns the objects based on tradeIDs.
+
+    const streamTradeMenuItems = tradesInStream.concat(trades.filter(trade => trade.assigned === false && !trade.isSwap)) //This returns an array of unassigned trades.
+    //^This above basically returns an array of trade objects that is based on 1) what is in currentStream, and 2) the trades that are unassigned
+    const swapsMenuItems = swapObjectsInStream.concat(trades.filter(trade => trade.assigned === false && trade.isSwap === true))
 
     const dispatch = useDispatch()
     //**********************************************************
@@ -102,11 +121,11 @@ const StreamModalForm = () => {
         setChipName(s)
 
     }
-    console.log('This is reached again')
+
     const handleSwapChipDelete = chipToDelete => () => {
         // console.log('selectedSwapChips',selectedSwapChips)
         let s = selectedSwapChips.filter(chip => chip.id !== chipToDelete.id)
-        console.log('s',s)
+
         const swapsID = s.map(swap => swap.id)
         setValues({
             ...values,
@@ -118,7 +137,9 @@ const StreamModalForm = () => {
 
     const submitHandler = (event) => {
         event.preventDefault()
-        dispatch(newStream(values))
+        // console.log('FINAL VALUE id', values)
+        dispatch(updateStream(values.id, values))
+        dispatch({type:'TOGGLE_EDIT_STREAM'})
     }
 
     //**********************************************************
@@ -128,7 +149,7 @@ const StreamModalForm = () => {
         <>
             <Form onSubmit={submitHandler} >
                 <ModalBody>
-                    <HeaderText>Create a Stream</HeaderText>
+                    <HeaderText>Update {values.asset} stream</HeaderText>
                     <InputField
                         label="Asset"
                         name="asset"
@@ -164,6 +185,7 @@ const StreamModalForm = () => {
                         button1Label="Yes"
                         button2Label="No"
                     />
+                    {console.log('VALUES of HASSWAPS',values.hasSwaps)}
                     {values.hasSwaps === 'true' && (<MultiSelectSwaps
                         value={swapChipName}
                         name='swaps'
@@ -177,12 +199,12 @@ const StreamModalForm = () => {
 
                 </ModalBody>
                 <ModalFooter>
-                    <CancelButton action="TOGGLE_STREAM"></CancelButton>
-                    <CreateButton label="CREATE"></CreateButton>
+                    <CancelButton action="TOGGLE_EDIT_STREAM"></CancelButton>
+                    <CreateButton label="UPDATE"></CreateButton>
                 </ModalFooter>
             </Form>
         </>
     )
 }
 
-export default StreamModalForm
+export default EditStreamModalForm

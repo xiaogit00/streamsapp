@@ -115,6 +115,8 @@ const Modal = () => {
                     </Box>
                 </OrderModal>
             )
+        } else {
+            return null
         }
 
     } else {

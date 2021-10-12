@@ -13,7 +13,7 @@ const options = [
 
 const ITEM_HEIGHT = 48
 
-function TradeMenuBar({id}) {
+function TradeMenuBar({id, handleTradeEdit }) {
     const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = React.useState(null)
     const open = Boolean(anchorEl)
@@ -23,7 +23,7 @@ function TradeMenuBar({id}) {
     const handleClose = (event) => {
         const action = event.target.textContent
         if (action === 'Edit') {
-
+            handleTradeEdit(id)
         } else if (action === 'Delete') {
             if (confirm('Are you sure you want to delete this trade?')) {
                 dispatch(deleteTrade(id))

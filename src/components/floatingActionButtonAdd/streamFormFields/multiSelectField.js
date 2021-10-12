@@ -46,8 +46,6 @@ const MultiSelectField = (props) => {
     //     )
     // }
 
-
-
     return (
         <div>
             <FormControl sx={sx}>
@@ -62,12 +60,11 @@ const MultiSelectField = (props) => {
                     name={name}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => {
-                        console.log('from within selected:', selected)
                         return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selectedChips.map((value) => {
                                 return <Chip key={value.id}
                                     size="small"
-                                    label={value.date.slice(0,10) + ' - ' + value.asset}
+                                    label={value.date.slice(0,10) + ' - ' + value.asset + ' ($' + value.price+ ')'}
                                     variant="outlined"
                                     onMouseDown={(event) => {
                                         event.stopPropagation()
@@ -78,15 +75,18 @@ const MultiSelectField = (props) => {
                     }}
                     MenuProps={MenuProps}
                 >
-                    {menuItems.map((trade) => (
-                        <MenuItem
-                            key={trade.id}
-                            value={trade} /* This displays the chip */
-                            style={getStyles(name, value, theme)}
-                        >
-                            <span style={{fontSize:'0.7em'}}>{trade.date.slice(0,10) + ' - ' + trade.asset + ' ($' + trade.price + ' buy in price)' }</span>
-                        </MenuItem>
-                    ))}
+                    {menuItems.map((trade) => {
+                        return (
+                            <MenuItem
+                                key={trade.id}
+                                value={trade} /* This displays the chip */
+                                style={getStyles(name, value, theme)}
+                            >
+                                <span style={{fontSize:'0.7em'}}>{trade.date.slice(0,10) + ' - ' + trade.asset + ' ($' + trade.price + ' buy in price)' }</span>
+                            </MenuItem>
+                        )
+
+                    })}
                 </Select>
                 <FormHelperText>Select from unassigned trades. </FormHelperText>
             </FormControl>

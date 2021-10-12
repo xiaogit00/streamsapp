@@ -62,7 +62,7 @@ const MultiSelectField = (props) => {
                     name={name}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => {
-                        console.log('from within selected:', selected)
+                        
                         return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selectedChips.map((value) => {
                                 return <Chip key={value.id}

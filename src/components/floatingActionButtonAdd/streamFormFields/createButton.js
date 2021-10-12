@@ -2,7 +2,7 @@ import * as React from 'react'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 
-export default function CreateButton() {
+export default function CreateButton({label}) {
     return (
         <Button variant="contained"
             sx={{backgroundColor: '#460F61',
@@ -13,7 +13,7 @@ export default function CreateButton() {
 
             }}
             type="submit"
-        >Create</Button>
+        >{label}</Button>
     )
 }
 
