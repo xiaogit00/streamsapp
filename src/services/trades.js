@@ -4,24 +4,42 @@
 import axios from 'axios'
 
 const baseURL = 'http://localhost:3003/api/trades'
+const token = localStorage.getItem('token')
 
 const getAll = async () => {
-    const response = await axios.get(baseURL)
+    const response = await axios.get(baseURL, {
+        headers: {
+            Authorization:`bearer ${token}`
+        }
+    })
     return response.data
 }
 
 const createNew = async (content) => {
-    const response = await axios.post(baseURL, content)
+    console.log('token within tradeServices', token)
+    const response = await axios.post(baseURL, content, {
+        headers: {
+            Authorization:`bearer ${token}`
+        }
+    })
     return response.data
 }
 
 const deleteTrade = async (id) => {
-    const response = await axios.delete(`${baseURL}/${id}`)
+    const response = await axios.delete(`${baseURL}/${id}`, {
+        headers: {
+            Authorization:`bearer ${token}`
+        }
+    })
     return response.status
 }
 
 const updateTrade = async (id, newTrade) => {
-    const response = await axios.put(`${baseURL}/${id}`, newTrade)
+    const response = await axios.put(`${baseURL}/${id}`, newTrade, {
+        headers: {
+            Authorization:`bearer ${token}`
+        }
+    })
     return response.status
 }
 
