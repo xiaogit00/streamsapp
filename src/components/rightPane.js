@@ -3,6 +3,7 @@ import '../App.css'
 import HeaderBlock from 'components/header/headerBlock'
 import HeaderBlockTrades from 'components/header/headerBlockTrades'
 import ContentContainer from 'components/contentContainer.js'
+import Login from 'components/login'
 // var globalNominalDenom = require('../config.json').globalNominalDenom;
 
 const RightPane = ({type}) => {
@@ -23,6 +24,10 @@ const RightPane = ({type}) => {
                 <ContentContainer type="trades"/>
 
             </div>
+        )
+    } else if (type === 'login') {
+        return (
+            <Login />
         )
     }
 
