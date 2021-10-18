@@ -26,9 +26,8 @@ const StreamsTable = () => {
     const globalDenom = useSelector(state => state.globalDenom)
 
 
-
     if (streams.length > 0) {
-        console.log('STREAMS:', streams)
+        // console.log('STREAMS:', streams)
         return (
             <div className="streams-table-container">
                 <TableHead globalDenom={globalDenom}/>

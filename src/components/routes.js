@@ -6,7 +6,13 @@ import {
 } from 'react-router-dom'
 import RightPane from './rightPane'
 import LeftNav from 'components/leftNav/leftNav'
+import currentPriceService from 'services/currentPriceService'
 
+
+const clickHandler = async () => {
+    const response = await currentPriceService.fetchPriceForStock('0700.XHKG')
+    console.log(response)
+}
 
 const Routes = () => {
     console.log('Router entered')
@@ -18,6 +24,7 @@ const Routes = () => {
                     <Route exact path="/">
                         <LeftNav />
                         <h1> This is within the develop branch. </h1>
+                        <button onClick={clickHandler}>Click me to test</button>
                     </Route>
                     {/* React Exercises Page */}
                     <Route path="/streams">

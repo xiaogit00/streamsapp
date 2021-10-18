@@ -9,8 +9,11 @@ import returnsDataWithSwap from 'components/calcs/tablerow/returnsDataWithSwap'
 import returnsData from 'components/calcs/tablerow/returnsData'
 import StreamBar from 'components/streamBar/streamBar'
 import styled from 'styled-components'
+import currentPriceService from 'services/currentPriceService'
+import exchangeService from 'services/exchangeService'
 // import unrealizedReturnsSwaps from './calcs/tablerow/unrealizedReturnsSwaps'
 const alpha = require('alphavantage')({ key: 'LY78Q3KY7IUG1KFL' })
+
 
 
 const Date = styled.div`
@@ -30,7 +33,8 @@ const TableRow = ({individualStream, trades, globalDenom, num}) => {
 
     // const [swapsCurrentPrices, setSwapsCurrentPrices] = useState([])
     const swapsCurrentPrices = []
-
+    const [currentPrice, setCurrentPrice] = useState(0)
+    console.log('tablerow is entered')
     //**********************************************
     //*             Data Prep - trades, date, total open/closed amts, avg price
     //**********************************************
@@ -65,66 +69,113 @@ const TableRow = ({individualStream, trades, globalDenom, num}) => {
     //   }
     // ]
 
+    useEffect(() => {
+        console.log('useEffect is entered ')
+
+        if (individualStream.assetClass === 'Stocks') {
+            // currentPriceService.fetchPriceForStock(individualStream.ticker)
+            //     .then(response => response.data[0].open)
+            //     .then(unconvertedPrice => {
+            //         const baseDenom = individualStream.exchangePriceDenom
+            //         const conversionRate = exchangeService.exchange(baseDenom, globalDenom)
+            //             .then(data => data.conversion_rate)
+            //             .then(response => setCurrentPrice(response * unconvertedPrice))
+            //     })
+            const getCurrentPrice = async () => {
+                const baseDenom = individualStream.exchangePriceDenom
+
+                const stockPrice = currentPriceService.fetchPriceForStock(individualStream.ticker)
+                const conversionRate = exchangeService.exchange(baseDenom, globalDenom)
+                let values = await Promise.all([stockPrice, conversionRate])
+                const newPrice = values[0].data[0].open * values[1].conversion_rate
+                setCurrentPrice(newPrice)
+            }
+            getCurrentPrice()
+
+        } else if (individualStream.assetClass === 'ETF') {
+            const getCurrentPrice = async () => {
+                const baseDenom = individualStream.exchangePriceDenom
+                const etfPrice = currentPriceService.fetchPriceForETF(individualStream.ticker)
+
+                const conversionRate = exchangeService.exchange(baseDenom, globalDenom)
+                const values = await Promise.all([etfPrice, conversionRate])
+                const newPrice = values[0].price.regularMarketPrice.raw * values[1].conversion_rate
+                setCurrentPrice(newPrice)
+            }
+            getCurrentPrice()
+
+            // currentPriceService.fetchPriceForETF(individualStream.ticker)
+            //     .then(response => setCurrentPrice(response.price.regularMarketPrice.raw))
+            //.then(response => setCurrentPrice(response.price.regularMarketPrice))
+        } else if (individualStream.assetClass === 'Crypto') {
+            currentPriceService.fetchPriceForCrypto(individualStream.coinId, globalDenom)
+                .then(response => {
+                    setCurrentPrice(response[individualStream.coinId][globalDenom.toLowerCase()])
+                })
+        }
+    }, [globalDenom])
+
 
     //
 
+    //**********************************************************
+    //*   STATIC VALUES TO USE FOR TESTING - COMMENT OFF WHEN TURNING ON API
+    //**********************************************************
 
-    //STATIC VALUES TO USE FOR TESTING - COMMENT OFF WHEN TURNING ON API
-
-    swapsCurrentPrices['ZIL'] = 0.00000232
-    swapsCurrentPrices['ETH'] = 0.07416300
-    let currentPrice = 0
-    let currentValue = 0
-    if (globalDenom === 'SGD') {
-        if (individualStream.asset === 'BTC') {
-            currentPrice = 64217
-
-        } else if (individualStream.asset === 'ETH') {
-            // console.log(individualStream.asset)
-            currentPrice = 5067
-        } else if (individualStream.asset === 'Alibaba') {
-            // console.log(individualStream.asset)
-            currentPrice = 28.86
-        } else if (individualStream.asset === 'Xiaomi') {
-            // console.log(individualStream.asset)
-            currentPrice = 4.37
-        } else if (individualStream.asset === 'JD.com') {
-
-            currentPrice = 53.74
-        } else if (individualStream.asset === 'HST') {
-            // console.log(individualStream.asset)
-            currentPrice = 1.132
-        } else if (individualStream.asset === 'Tencent') {
-            // console.log(individualStream.asset)
-            currentPrice = 84.32
-            // console.log(individualStream.asset)
-            // console.log(stream.totalSpentOpenNominal())
-        }
-    } else if (globalDenom === 'USD') {
-        if (individualStream.asset === 'BTC') {
-            currentPrice = 47520
-        } else if (individualStream.asset === 'ETH') {
-            // console.log(individualStream.asset)
-            currentPrice = 5067*0.744
-        } else if (individualStream.asset === 'Alibaba') {
-            // console.log(individualStream.asset)
-            currentPrice = 28.86*0.744
-        } else if (individualStream.asset === 'Xiaomi') {
-            // console.log(individualStream.asset)
-            currentPrice = 4.37*0.744
-        } else if (individualStream.asset === 'JD.com') {
-
-            currentPrice = 53.74*0.744
-        } else if (individualStream.asset === 'HST') {
-            // console.log(individualStream.asset)
-            currentPrice = 1.132*0.744
-        } else if (individualStream.asset === 'Tencent') {
-            // console.log(individualStream.asset)
-            currentPrice = 84.32*0.744
-            // console.log(individualStream.asset)
-            // console.log(stream.totalSpentOpenNominal())
-        }
-    }
+    // swapsCurrentPrices['ZIL'] = 0.00000232
+    // swapsCurrentPrices['ETH'] = 0.07416300
+    // let currentPrice = 0
+    // let currentValue = 0
+    // if (globalDenom === 'SGD') {
+    //     if (individualStream.asset === 'BTC') {
+    //         currentPrice = 64217
+    //
+    //     } else if (individualStream.asset === 'ETH') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 5067
+    //     } else if (individualStream.asset === 'Alibaba') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 28.86
+    //     } else if (individualStream.asset === 'Xiaomi') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 4.37
+    //     } else if (individualStream.asset === 'JD.com') {
+    //
+    //         currentPrice = 53.74
+    //     } else if (individualStream.asset === 'HST') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 1.132
+    //     } else if (individualStream.asset === 'Tencent') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 84.32
+    //         // console.log(individualStream.asset)
+    //         // console.log(stream.totalSpentOpenNominal())
+    //     }
+    // } else if (globalDenom === 'USD') {
+    //     if (individualStream.asset === 'BTC') {
+    //         currentPrice = 47520
+    //     } else if (individualStream.asset === 'ETH') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 5067*0.744
+    //     } else if (individualStream.asset === 'Alibaba') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 28.86*0.744
+    //     } else if (individualStream.asset === 'Xiaomi') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 4.37*0.744
+    //     } else if (individualStream.asset === 'JD.com') {
+    //
+    //         currentPrice = 53.74*0.744
+    //     } else if (individualStream.asset === 'HST') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 1.132*0.744
+    //     } else if (individualStream.asset === 'Tencent') {
+    //         // console.log(individualStream.asset)
+    //         currentPrice = 84.32*0.744
+    //         // console.log(individualStream.asset)
+    //         // console.log(stream.totalSpentOpenNominal())
+    //     }
+    // }
 
 
     // console.log(stream.avgPurchasePrice())

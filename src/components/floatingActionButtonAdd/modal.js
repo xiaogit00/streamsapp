@@ -70,7 +70,7 @@ const Modal = () => {
     const dispatch = useDispatch()
 
     //Accessing: modalStates.streamModalOpen
-    console.log('This is Modal State from within Modal:', modalStates)
+    // console.log('This is Modal State from within Modal:', modalStates)
     if (Object.values(modalStates).includes(true)) {
         if (modalStates.streamModalOpen) {
             return (

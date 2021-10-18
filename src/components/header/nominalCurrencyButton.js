@@ -55,9 +55,6 @@ export default function ToggleButtons(props) {
     }
     const classes = useStyles()
 
-    const handleDenomChange = (event) => {
-
-    }
 
     return (
         <ToggleButtonGroup
@@ -68,7 +65,7 @@ export default function ToggleButtons(props) {
             className={classes.btnGrp}
             size='small'
         >
-            <ToggleButton onClick={handleDenomChange} value="left" aria-label="left aligned"
+            <ToggleButton value="left" aria-label="left aligned"
                 classes={{
                     root:classes.root,
                     selected: classes.selected
@@ -77,7 +74,7 @@ export default function ToggleButtons(props) {
             >
                 <CurrencyText value={props.value}>SGD</CurrencyText>
             </ToggleButton>
-            <ToggleButton onClick={handleDenomChange} value="right" aria-label="right aligned"
+            <ToggleButton value="right" aria-label="right aligned"
                 classes={{
                     root:classes.root,
                     selected: classes.selected
