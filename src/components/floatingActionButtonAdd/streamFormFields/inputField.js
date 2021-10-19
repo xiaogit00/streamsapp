@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 
 const InputField = (props) => {
-    const { label, name, value, onChange, required, sx } = props
+    const { label, name, value, onChange, required, sx, onBlur, helperText } = props
     return (
 
         <TextField id="outlined-basic"
@@ -15,6 +15,8 @@ const InputField = (props) => {
             value={value}
             onChange={onChange}
             sx={sx}
+            onBlur={onBlur}
+            helperText={helperText}
 
         />
 

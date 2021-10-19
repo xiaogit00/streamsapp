@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import tickerService from 'services/tickerService'
+import coinService from 'services/coinService'
 //**********************************************************
 //*                    STYLED COMPONENTS
 //**********************************************************
@@ -42,7 +44,10 @@ export const ModalFooter = styled.div`
 //**********************************************************
 export const initialFValues = {
     date: {},
+    assetClass: '',
     asset: '',
+    ticker:'',
+    coinId:'',
     isSwap: 'false',
     assigned: false,
     orderType: '',
@@ -58,6 +63,42 @@ export const initialFValues = {
     comments:''
 
 }
+
+export const tradeAssetClassMenu = [
+    'Crypto',
+    'Stocks',
+    'ETF'
+]
+
+export let coinMenuItems = async (coinSymbol) => {
+    const foundCoins = await coinService.find(coinSymbol)
+
+    return foundCoins
+}
+
+export let tickerMenuItems = async (assetName) => {
+    if (assetName !== '') {
+        const foundTickers = await tickerService.find(assetName)
+        //Here, I want to create an array that looks like this:
+        // {ticker: 'AAPL', display: 'Apple - AAPL | NYSE '}
+
+
+        //Returns an object (ticker, display)
+        const menuItems = foundTickers.map(ticker => {
+            const display = `${ticker.name} - ${ticker.symbol} (${ticker.stock_exchange.acronym})`
+            return {
+                ticker: ticker.symbol,
+                exchange: ticker.stock_exchange.acronym,
+                display
+            }
+        })
+        return menuItems
+    } else {
+        return ''
+    }
+
+}
+
 
 export const currencies = [
     { label: 'SGD' },

@@ -62,10 +62,10 @@
 //*                     MarketStack API
 //**********************************************************
 // import axios from 'axios'
-// const url = 'http://api.marketstack.com/v1/eod/latest?access_key=0221109a31d8e5eb503908abf0c40e17&symbols=C31.XSES'
+// const url = 'https://api.marketstack.com/v1/tickers?limit=10000?access_key=0221109a31d8e5eb503908abf0c40e17'
 // test('marketplace', async () => {
 //     const data = await axios.get(url).then(res => res.data)
-//     console.log(data.data[0].open)
+//     console.log(data)
 // })
 //858ms
 //**********************************************************
@@ -101,24 +101,24 @@
 //*                    RapidAPI Yahoo Finance service
 //**********************************************************
 
-var axios = require('axios').default
-
-var options = {
-    method: 'GET',
-    url: 'https://yh-finance.p.rapidapi.com/stock/v2/get-summary',
-    params: {symbol: 'HST.SI', region: 'US'},
-    headers: {
-        'x-rapidapi-host': 'yh-finance.p.rapidapi.com',
-        'x-rapidapi-key': '26bba5edbcmshd0431d7b9b7d5f9p180f33jsn8e45abafe4b1'
-    }
-}
-test('price', async () => {
-    await axios.request(options).then(function (response) {
-        console.log(response.data.price.currency)
-    }).catch(function (error) {
-        console.error(error)
-    })
-})
+// var axios = require('axios').default
+//
+// var options = {
+//     method: 'GET',
+//     url: 'https://yh-finance.p.rapidapi.com/stock/v2/get-summary',
+//     params: {symbol: 'HST.SI', region: 'US'},
+//     headers: {
+//         'x-rapidapi-host': 'yh-finance.p.rapidapi.com',
+//         'x-rapidapi-key': '26bba5edbcmshd0431d7b9b7d5f9p180f33jsn8e45abafe4b1'
+//     }
+// }
+// test('price', async () => {
+//     await axios.request(options).then(function (response) {
+//         console.log(response.data.price.currency)
+//     }).catch(function (error) {
+//         console.error(error)
+//     })
+// })
 
 
 //**********************************************************

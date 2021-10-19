@@ -1,15 +1,18 @@
 import styled from 'styled-components'
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { newTrade } from 'reducers/tradeReducer'
 import { Form, HeaderText, ModalBody, ModalFooter, initialFValues,
-    currencies, orderTypeMenuItems } from 'components/floatingActionButtonAdd/tradeModalFormHelper'
+    currencies, orderTypeMenuItems, tradeAssetClassMenu, tickerMenuItems, coinMenuItems } from 'components/floatingActionButtonAdd/tradeModalFormHelper'
     //A lot of variables used in this component are loaded via the tradeModalFormHelper
+import coinService from 'services/coinService'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputField from 'components/floatingActionButtonAdd/streamFormFields/inputField'
 import SelectField from 'components/floatingActionButtonAdd/streamFormFields/selectField'
+import TickerSelectField from 'components/floatingActionButtonAdd/streamFormFields/tickerSelectField'
+import CoinTickerSelectField from 'components/floatingActionButtonAdd/streamFormFields/coinTickerSelectField'
 import MultiSelectField from 'components/floatingActionButtonAdd/streamFormFields/multiSelectField'
 import AutocompleteField from 'components/floatingActionButtonAdd/streamFormFields/autocompleteField'
 import BasicDatePicker from 'components/floatingActionButtonAdd/streamFormFields/basicDatePicker'
@@ -22,7 +25,10 @@ import CreateButton from 'components/floatingActionButtonAdd/streamFormFields/cr
 
 const TradeModalForm = () => {
     const [values, setValues] = useState(initialFValues)
+    const [displayedTickerMenu, setDisplayedTickerMenu] = useState(null)
+    const [inputValue, setInputValue] = useState('')
     const dispatch = useDispatch()
+
 
     //**********************************************************
     //*                     HANDLERS
@@ -98,28 +104,91 @@ const TradeModalForm = () => {
         dispatch(newTrade(values))
     }
 
+    const onAssetLeave = async (event) => {
+        const data = await tickerMenuItems(values.asset)
+        //this will be set to the list of objects returned
+        console.log('ticker data is fetched from server')
+        setDisplayedTickerMenu(data)
+    }
+
+    const onCoinAssetLeave = async (event) => {
+        const data = await coinMenuItems(values.asset.toLowerCase())
+        //this will be set to the list of objects returned
+        console.log('ticker data is fetched from server', data)
+        setDisplayedTickerMenu(data)
+    }
+
+
+
+
+    // console.log('coinMenuItems',coinMenuItems('btc'))
+
 
     return (
         <>
             <Form onSubmit={submitHandler} >
                 <ModalBody>
                     <HeaderText>Create a Trade</HeaderText>
-                    <BasicDatePicker
-                        label="Date of trade"
-                        name="date"
-                        value={values.date}
-                        onChange={handleDateChange}
-                        sx={{m:0.5, width:150}}
-                    />
+                    <div style={{display:'flex', alignItems:'center', marginTop:2}}>
+                        <BasicDatePicker
+                            label="Date of trade"
+                            name="date"
+                            value={values.date}
+                            onChange={handleDateChange}
+                            sx={{m:0.5, width:140}}
+                        />
+                        <SelectField
+                            label={<span style={{ fontSize: '0.8em'}}>Asset Class</span>}
+                            name='assetClass'
+                            onChange={handleInputChange}
+                            value={values.assetClass}
+                            menuItems={tradeAssetClassMenu}
+                            sx={{ m: 1, minWidth: 80}}
+                        />
+                    </div>
                     <InputField
-                        label="Asset"
+                        label="Coin"
                         name="asset"
                         value={values.asset}
                         onChange={handleInputChange}
                         required={true}
-                        sx={{ m: 0.5, mt: 1, minWidth:235}}
+                        sx={{ m: 0.5, mt: 1, minWidth:130}}
+                        onBlur={onCoinAssetLeave}
+                        helperText="e.g. BTC/ETH"
 
                     />
+
+                    <CoinTickerSelectField
+                        label={<span style={{ fontSize: '0.8em'}}>Ticker (Coingecko)</span>}
+                        name='coinId'
+                        onChange={handleInputChange}
+                        value={values.coinId}
+                        menuItems={displayedTickerMenu}
+                        sx={{ m: 1, minWidth: 90}}
+                        inputValue={inputValue}
+                    />
+
+                    {/*<InputField
+                        label="Asset Name"
+                        name="asset"
+                        value={values.asset}
+                        onChange={handleInputChange}
+                        required={true}
+                        sx={{ m: 0.5, mt: 1, minWidth:130}}
+                        onBlur={onAssetLeave}
+                        helperText="e.g. Alphabet/Apple/Microsoft"
+
+                    />
+
+                    <TickerSelectField
+                        label={<span style={{ fontSize: '0.8em'}}>Ticker</span>}
+                        name='ticker'
+                        onChange={handleInputChange}
+                        value={values.ticker}
+                        menuItems={displayedTickerMenu}
+                        sx={{ m: 1, minWidth: 90}}
+                        inputValue={inputValue}
+                    />*/}
 
                     <div style={{display:'flex', alignItems:'center', marginTop:2}}>
                         <CurrencyField
@@ -217,7 +286,7 @@ const TradeModalForm = () => {
                 </ModalBody>
                 <ModalFooter>
                     <CancelButton action="TOGGLE_TRADE"></CancelButton>
-                    <CreateButton></CreateButton>
+                    <CreateButton label="CREATE"></CreateButton>
                 </ModalFooter>
             </Form>
         </>

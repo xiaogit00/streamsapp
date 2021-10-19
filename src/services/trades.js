@@ -2,6 +2,7 @@
 //tradeService.getAll()
 
 import axios from 'axios'
+import interceptorService from 'services/interceptorService'
 
 const baseURL = 'http://localhost:3003/api/trades'
 const token = localStorage.getItem('token')
@@ -17,6 +18,8 @@ const getAll = async () => {
 
 const createNew = async (content) => {
     console.log('token within tradeServices', token)
+    interceptorService.ejectAxiosRequestInterceptor()
+    interceptorService.ejectAxiosResponseInterceptor()
     const response = await axios.post(baseURL, content, {
         headers: {
             Authorization:`bearer ${token}`
@@ -26,6 +29,8 @@ const createNew = async (content) => {
 }
 
 const deleteTrade = async (id) => {
+    interceptorService.ejectAxiosRequestInterceptor()
+    interceptorService.ejectAxiosResponseInterceptor()
     const response = await axios.delete(`${baseURL}/${id}`, {
         headers: {
             Authorization:`bearer ${token}`
