@@ -2,11 +2,16 @@ import streamService from '../services/streams'
 
 export const initializeStreams = () => {
     return async dispatch => {
-        const streams = await streamService.getAll()
-        dispatch({
-            type: 'INIT_STREAMS',
-            data: streams
-        })
+        try {
+            const streams = await streamService.getAll()
+            dispatch({
+                type: 'INIT_STREAMS',
+                data: streams
+            })
+        } catch(err) {
+            console.log('an error has occurred within streamReducer:',err)
+        }
+
     }
 }
 

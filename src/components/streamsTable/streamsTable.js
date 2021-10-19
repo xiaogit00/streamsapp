@@ -9,7 +9,7 @@ import EditStreamModal from 'components/streamBar/editStreamModal'
 
 
 const StreamsTable = () => {
-
+    console.log('StreamsTable is entered')
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(initializeStreams())

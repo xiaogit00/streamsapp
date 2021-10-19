@@ -14,6 +14,7 @@ import Container from '@mui/material/Container'
 import PropTypes from 'prop-types'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import axios from 'axios'
 
 const loginURL = 'http://localhost:3003/api/login'
@@ -39,22 +40,33 @@ const newLogin = async (loginCredentials) => {
 }
 
 export default function Login({ setToken }) {
+    // const dispatch = useDispatch()
+
     const handleSubmit = async event => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
         // eslint-disable-next-line no-console
         const loginCredentials = {
-            username: data.get('email'),
+            email: data.get('email'),
             password: data.get('password'),
         }
-        const token = await newLogin(loginCredentials)
-        setToken(token)
+
+        try {
+            const token = await newLogin(loginCredentials)
+            setToken(token)
+        } catch(err) {
+            console.log(err)
+            setWrongCredentials(true)
+        }
+
+        // dispatch({type: 'LOGIN'})
         // console.log('token from within login',token)
         // setToken(token)
     }
 
-    const [username, setUserName] = useState()
+    const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [wrongCredentials, setWrongCredentials] = useState(false)
 
     return (
         <ThemeProvider theme={theme}>
@@ -84,7 +96,7 @@ export default function Login({ setToken }) {
                             name="email"
                             autoComplete="email"
                             autoFocus
-                            onChange={e => setUserName(e.target.value)}
+                            onChange={e => setEmail(e.target.value)}
                         />
                         <TextField
                             margin="normal"
@@ -97,6 +109,9 @@ export default function Login({ setToken }) {
                             autoComplete="current-password"
                             onChange={e => setPassword(e.target.value)}
                         />
+                        {wrongCredentials &&
+                        <span style={{color:'red'}}>The email/password combination used was not found on the system.</span>}
+                        <br/>
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
@@ -106,6 +121,7 @@ export default function Login({ setToken }) {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+
                         >
               Sign In
                         </Button>
@@ -116,7 +132,7 @@ export default function Login({ setToken }) {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/signup" variant="body2">
                                     {'Don\'t have an account? Sign Up'}
                                 </Link>
                             </Grid>

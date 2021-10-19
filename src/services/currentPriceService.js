@@ -27,7 +27,7 @@ function responseHandler(response) {
 }
 
 function errorHandler(error) {
-    // console.log('error object:', error)
+    console.log('error object:', error)
     if (error.headers.cached === true) {
         console.log('got cached data in response, serving it directly')
         return Promise.resolve(error)
@@ -45,7 +45,7 @@ function requestHandler(request) {
             return Promise.reject(request)
         }
     }
-    console.log('serving fresh from API')
+    console.log('serving fresh from API, request: ', request)
     return request
 }
 
@@ -102,6 +102,8 @@ const fetchPriceForCrypto = (coinId, baseCurrency) => {
     // console.log('response', response)
     return response.then(res => res.data)
 }
+
+
 
 export default {
     fetchPriceForStock,

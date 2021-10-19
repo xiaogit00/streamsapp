@@ -4,13 +4,21 @@ import axios from 'axios'
 const baseURL = 'http://localhost:3003/api/streams'
 const token = localStorage.getItem('token')
 
+
+
 const getAll = async () => {
-    const response = await axios.get(baseURL, {
-        headers: {
-            Authorization:`bearer ${token}`
-        }
-    })
-    return response.data
+    console.log('getAll from Streamreducer is called')
+    try {
+        const response = await axios.get(baseURL, {
+            headers: {
+                Authorization:`bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (err) {
+        console.log('unable to get data, error message:', err)
+    }
+
 }
 
 const createNew = async (content) => {

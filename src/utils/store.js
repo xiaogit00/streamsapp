@@ -7,12 +7,14 @@ import streamReducer from '../reducers/streamReducer'
 import tradeReducer from '../reducers/tradeReducer'
 import globalDenomReducer from '../reducers/globalDenomReducer'
 import modalReducer from '../reducers/modalReducer'
+import loggedInReducer from '../reducers/loggedInReducer'
 
 const reducer = combineReducers({
     streams: streamReducer,
     trades: tradeReducer,
     globalDenom: globalDenomReducer,
     modals: modalReducer
+    // loggedIn: loggedInReducer
 })
 
 const store = createStore(

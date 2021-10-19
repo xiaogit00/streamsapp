@@ -2,11 +2,15 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    Redirect
 } from 'react-router-dom'
 import RightPane from './rightPane'
 import LeftNav from 'components/leftNav/leftNav'
 import currentPriceService from 'services/currentPriceService'
+import { useSelector } from 'react-redux'
+import Login from 'components/login'
+import SignUp from 'components/signUp'
 
 
 const clickHandler = async () => {
@@ -16,6 +20,7 @@ const clickHandler = async () => {
 
 const Routes = () => {
     console.log('Router entered')
+    const loggedIn = useSelector(state => state.loggedIn)
     return (
         <>
             <Router>
@@ -35,10 +40,7 @@ const Routes = () => {
                         <LeftNav />
                         <RightPane type="trades"/>
                     </Route>
-                    <Route path="/login">
-                        <RightPane type="login"/>
-                    </Route>
-
+                    <Redirect from="*" to="/" />
                 </Switch>
             </Router>
         </>
