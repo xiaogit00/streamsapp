@@ -105,7 +105,7 @@ import { useDispatch } from 'react-redux'
 // }
 
 const actions = [
-    { icon: <CreateIcon />, name: 'Add Order', operation: 'order' },
+    // { icon: <CreateIcon />, name: 'Add Order', operation: 'order' },
     { icon: <AddchartIcon />, name: 'Add Trade', operation: 'trade' },
     { icon: <WavesIcon />, name: 'Add Stream', operation: 'stream' }
 ]

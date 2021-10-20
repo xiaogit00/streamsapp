@@ -82,29 +82,29 @@ const Asset = styled.div`
 const AvgPurchasePrice = styled.div`
   width: 15%;
   text-align: center;
-  font-size: 1.3em;
+  font-size: 1.2em;
   border-right: 0.6px dotted grey;
 `
 const CurPrice = styled.div`
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 15%;
   text-align: center;
   border-right: 0.6px dotted grey;
 `
 const PurchaseValue = styled.div`
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 15%;
   text-align: center;
   border-right: 0.6px dotted grey;
 `
 const CurrentValue = styled.div`
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 15%;
   text-align: center;
   border-right: 0.6px dotted grey;
 `
 const Returns = styled.div`
-  font-size: 1.3em;
+  font-size: 1.2em;
   width: 12%;
   text-align: center;
   border-top-right-radius: 10px;

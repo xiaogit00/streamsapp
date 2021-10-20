@@ -40,7 +40,18 @@ const deleteTrade = async (id) => {
 }
 
 const updateTrade = async (id, newTrade) => {
+    interceptorService.ejectAxiosRequestInterceptor()
+    interceptorService.ejectAxiosResponseInterceptor()
     const response = await axios.put(`${baseURL}/${id}`, newTrade, {
+        headers: {
+            Authorization:`bearer ${token}`
+        }
+    })
+    return response.status
+}
+
+const toggleTradeAssignment = async (id) => {
+    const response = await axios.put(`${baseURL}/${id}`, {assigned: false}, {
         headers: {
             Authorization:`bearer ${token}`
         }
@@ -51,4 +62,6 @@ const updateTrade = async (id, newTrade) => {
 export default { getAll,
     createNew,
     deleteTrade,
-    updateTrade}
+    updateTrade,
+    toggleTradeAssignment
+}

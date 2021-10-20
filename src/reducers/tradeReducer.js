@@ -49,6 +49,19 @@ export const updateTrade = (id, trade) => {
     }
 }
 
+export const toggleTradeAssignment = (id) => {
+    return async dispatch => {
+        const response = await tradeService.toggleTradeAssignment(id)
+        dispatch({
+            type:'TOGGLE_TRADE_IN_STREAM_ASSIGNMENT',
+            data: {
+                id
+            }
+        })
+
+    }
+}
+
 
 
 const tradeReducer = (state = [], action) => {
@@ -67,6 +80,16 @@ const tradeReducer = (state = [], action) => {
         const newTrade = action.data.trade
         console.log('newTrade',newTrade)
         return state.map(trade => trade.id !== id ? trade : newTrade)
+    }
+    case 'TOGGLE_TRADE_IN_STREAM_ASSIGNMENT': {
+        const id = action.data.id
+        const tradeObject = state.filter(trade => trade.id === id)
+        const newTradeOject = {
+            ...tradeObject,
+            assigned: false
+        }
+        return state.map(trade => trade.id !== id ? trade : newTrade)
+
     }
     //
     case 'DELETE_TRADE': {

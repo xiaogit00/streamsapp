@@ -1,5 +1,10 @@
+body {
+    margin: 0;
+    background-color: #FDFBF9;
+}
 .App {
   text-align: center;
+  border: 1px solid blue;
 }
 
 .App-logo {
@@ -129,7 +134,6 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  border: 2px dotted red;
 }
 .content-container-flex {
   /* border-top: 2px solid orange; */
@@ -148,6 +152,7 @@
   margin-bottom: 4px;
   /* position: fixed; */
   box-shadow: rgba(0, 0, 0, 0.13) 0px 2px 6px 0px;
+  background-color: white;
 }
 
 /*
@@ -249,6 +254,9 @@
   align-items: center;
   margin-top: 10px;
 
+}
+.table-row-cells {
+    font-family: arial;
 }
 /*
 .MuiSpeedDial-fab {

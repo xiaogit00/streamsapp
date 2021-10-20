@@ -36,9 +36,10 @@ const CoinTickerSelectField = (props) => {
                 <MenuItem value="">
                     <em>None</em>
                 </MenuItem>
+                {console.log('menuItems from within coinTicker', menuItems)}
                 {menuItems && menuItems.map(menuItem =>
-                    <MenuItem value={menuItem.symbol} key={menuItem.id}>
-                        <span style={{ fontSize: '0.9em'}}>{menuItem.symbol} | {menuItem.id}</span>
+                    <MenuItem value={menuItem.id} key={menuItem.id}>
+                        <span style={{ fontSize: '0.9em'}}>{menuItem.symbol.toUpperCase()} ({menuItem.id.toUpperCase()})</span>
                     </MenuItem>)
                 }
 

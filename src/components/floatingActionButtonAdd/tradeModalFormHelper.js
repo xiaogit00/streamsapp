@@ -31,7 +31,8 @@ export const ModalFooter = styled.div`
     /* border: 0.5px solid maroon; */
     background-color: #F8F8F8;
     position: relative;
-    height: 12.5%;
+    height: 55px;
+    bottom:0;
     padding-left: 30%;
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;

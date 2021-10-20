@@ -28,8 +28,9 @@ const Routes = () => {
                     {/* Home Page */}
                     <Route exact path="/">
                         <LeftNav />
-                        <h1> This is within the develop branch. </h1>
-                        <button onClick={clickHandler}>Click me to test</button>
+                        <div style={{fontFamily:'menlo',fontSize:'2em', margin:'30px'}}>Dashboard feature coming soon!</div>
+                        <p style={{fontFamily:'menlo',fontSize:'1em', margin:'30px'}}> In the mean time, listen to some jazz while keying in your trades...</p>
+                        <iframe style={{marginLeft:'30px'}} width="800" height="430" src="https://www.youtube.com/embed/u-32Wr8Gxzk" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </Route>
                     {/* React Exercises Page */}
                     <Route path="/streams">

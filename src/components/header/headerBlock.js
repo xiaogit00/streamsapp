@@ -22,11 +22,13 @@ const headerFlexContainer = {
 const StreamLogoContainer = styled.div`
   /* border: 1px dotted blue; */
   width: 10%;
-  font-size: 2vw;
+  font-size: 1.4rem;
   display:flex;
   align-items: center;
   font-style: italic;
-
+  font-family:menlo;
+  color: #290b38;
+  margin-left: 1em;
 `
 const MenuContainer = styled.div`
   /* border: 1px dotted cyan; */
@@ -37,7 +39,7 @@ const MenuContainer = styled.div`
 `
 
 const AssetFilter = styled.div `
-  border: 2px solid grey;
+  /* border: 2px solid grey; */
   width: 90%;
   height: 5vh;
 `

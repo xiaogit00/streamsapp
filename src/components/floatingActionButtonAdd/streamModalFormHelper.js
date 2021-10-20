@@ -12,6 +12,7 @@ export const HeaderText = styled.p`
     font-size: 1.3em;
     /* border: 1px solid grey; */
     margin-left: 0.2em;
+    margin-bottom:0.5em;
     color: #5E5E5E;
 
 `
@@ -32,7 +33,7 @@ export const ModalFooter = styled.div`
     /* border: 0.5px solid maroon; */
     background-color: #F8F8F8;
     position: relative;
-    height: 12.5%;
+    height: 55px;
     padding-left: 30%;
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
@@ -41,11 +42,13 @@ export const ModalFooter = styled.div`
     align-items: center;
 `
 //**********************************************************
-//*                    Initialize Values                       
+//*                    Initialize Values
 //**********************************************************
 export const initialFValues = {
     asset:'',
     assetClass:'',
+    coinId: '',
+    ticker: '',
     trades: [],
     hasSwaps: false,
     swaps: []

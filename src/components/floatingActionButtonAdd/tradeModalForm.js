@@ -13,6 +13,7 @@ import InputField from 'components/floatingActionButtonAdd/streamFormFields/inpu
 import SelectField from 'components/floatingActionButtonAdd/streamFormFields/selectField'
 import TickerSelectField from 'components/floatingActionButtonAdd/streamFormFields/tickerSelectField'
 import CoinTickerSelectField from 'components/floatingActionButtonAdd/streamFormFields/coinTickerSelectField'
+import Asset from 'components/floatingActionButtonAdd/streamFormFields/asset'
 import MultiSelectField from 'components/floatingActionButtonAdd/streamFormFields/multiSelectField'
 import AutocompleteField from 'components/floatingActionButtonAdd/streamFormFields/autocompleteField'
 import BasicDatePicker from 'components/floatingActionButtonAdd/streamFormFields/basicDatePicker'
@@ -23,10 +24,12 @@ import CancelButton from 'components/floatingActionButtonAdd/streamFormFields/ca
 import CreateButton from 'components/floatingActionButtonAdd/streamFormFields/createButton'
 
 
-const TradeModalForm = () => {
+
+const TradeModalForm = ({notifHandler}) => {
     const [values, setValues] = useState(initialFValues)
     const [displayedTickerMenu, setDisplayedTickerMenu] = useState(null)
     const [inputValue, setInputValue] = useState('')
+
     const dispatch = useDispatch()
 
 
@@ -48,6 +51,13 @@ const TradeModalForm = () => {
                 ...values,
                 [name]: value,
                 value: valueField
+            })
+        } else if (name ==='assetClass') {
+            setDisplayedTickerMenu(null)
+            setValues({
+                ...values,
+                [name]: value,
+                asset: ''
             })
         } else {
             setValues({
@@ -102,9 +112,13 @@ const TradeModalForm = () => {
         event.preventDefault()
         console.log('values:',values)
         dispatch(newTrade(values))
+        dispatch({type: 'TOGGLE_TRADE'})
+        notifHandler(values.asset)
+
     }
 
     const onAssetLeave = async (event) => {
+        console.log('assetleave is triggered')
         const data = await tickerMenuItems(values.asset)
         //this will be set to the list of objects returned
         console.log('ticker data is fetched from server')
@@ -117,7 +131,6 @@ const TradeModalForm = () => {
         console.log('ticker data is fetched from server', data)
         setDisplayedTickerMenu(data)
     }
-
 
 
 
@@ -146,49 +159,15 @@ const TradeModalForm = () => {
                             sx={{ m: 1, minWidth: 80}}
                         />
                     </div>
-                    <InputField
-                        label="Coin"
-                        name="asset"
-                        value={values.asset}
-                        onChange={handleInputChange}
-                        required={true}
-                        sx={{ m: 0.5, mt: 1, minWidth:130}}
-                        onBlur={onCoinAssetLeave}
-                        helperText="e.g. BTC/ETH"
+                    {values.assetClass!=='' && (<><Asset assetClass={values.assetClass}
+                        values={values}
+                        handleInputChange={handleInputChange}
+                        onAssetLeave={onAssetLeave}
+                        onCoinAssetLeave={onCoinAssetLeave}
+                        displayedTickerMenu={displayedTickerMenu}
+                        inputValue={inputValue}/>
 
-                    />
 
-                    <CoinTickerSelectField
-                        label={<span style={{ fontSize: '0.8em'}}>Ticker (Coingecko)</span>}
-                        name='coinId'
-                        onChange={handleInputChange}
-                        value={values.coinId}
-                        menuItems={displayedTickerMenu}
-                        sx={{ m: 1, minWidth: 90}}
-                        inputValue={inputValue}
-                    />
-
-                    {/*<InputField
-                        label="Asset Name"
-                        name="asset"
-                        value={values.asset}
-                        onChange={handleInputChange}
-                        required={true}
-                        sx={{ m: 0.5, mt: 1, minWidth:130}}
-                        onBlur={onAssetLeave}
-                        helperText="e.g. Alphabet/Apple/Microsoft"
-
-                    />
-
-                    <TickerSelectField
-                        label={<span style={{ fontSize: '0.8em'}}>Ticker</span>}
-                        name='ticker'
-                        onChange={handleInputChange}
-                        value={values.ticker}
-                        menuItems={displayedTickerMenu}
-                        sx={{ m: 1, minWidth: 90}}
-                        inputValue={inputValue}
-                    />*/}
 
                     <div style={{display:'flex', alignItems:'center', marginTop:2}}>
                         <CurrencyField
@@ -280,7 +259,7 @@ const TradeModalForm = () => {
                         variant='outlined'
                         rows={3}
                         sx={{m:0.5, mt:2, width: 235}}
-                    />
+                    /></>)}
 
 
                 </ModalBody>
@@ -289,6 +268,7 @@ const TradeModalForm = () => {
                     <CreateButton label="CREATE"></CreateButton>
                 </ModalFooter>
             </Form>
+
         </>
 
     )

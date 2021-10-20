@@ -2,8 +2,10 @@ import * as React from 'react'
 import { styled, Box } from '@mui/system'
 import ModalUnstyled from '@mui/core/ModalUnstyled'
 import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
 import StreamModalForm from 'components/floatingActionButtonAdd/streamModalForm'
 import TradeModalForm from 'components/floatingActionButtonAdd/tradeModalForm'
+import Notification from 'components/floatingActionButtonAdd/streamFormFields/notification'
 
 const StreamModal = styled(ModalUnstyled)`
   position: fixed;
@@ -66,8 +68,28 @@ const Modal = () => {
     // const [open, setOpen] = React.useState(false)
     // const handleOpen = () => setOpen(true)
     // const handleClose = () => setOpen(false)
+    const [notificationOpen, setNotificationOpen] = useState(false)
+    const [notificationMessage, setNotificationMessage] = useState('')
     const modalStates = useSelector(state => state.modals)
     const dispatch = useDispatch()
+
+    // Notification
+    const tradeNotifHandler = (asset) => {
+        setNotificationMessage(`New trade created for ${asset}.`)
+        setNotificationOpen(true)
+    }
+
+    const streamNotifHandler = (asset) => {
+        setNotificationMessage(`New stream created for ${asset}.`)
+        setNotificationOpen(true)
+    }
+    const handleNotifClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+
+        setNotificationOpen(false)
+    }
 
     //Accessing: modalStates.streamModalOpen
     // console.log('This is Modal State from within Modal:', modalStates)
@@ -82,23 +104,25 @@ const Modal = () => {
                     BackdropComponent={Backdrop}
                 >
                     <Box sx={style}>
-                        <StreamModalForm />
+                        <StreamModalForm notifHandler={streamNotifHandler}/>
                     </Box>
                 </StreamModal>
             )
         } else if (modalStates.tradeModalOpen) {
             return (
-                <TradeModal
-                    aria-labelledby="unstyled-modal-title"
-                    aria-describedby="unstyled-modal-description"
-                    open={modalStates.tradeModalOpen}
-                    onClose={() => dispatch({type: 'TOGGLE_TRADE'})}
-                    BackdropComponent={Backdrop}
-                >
-                    <Box sx={style}>
-                        <TradeModalForm />
-                    </Box>
-                </TradeModal>
+                <>
+                    <TradeModal
+                        aria-labelledby="unstyled-modal-title"
+                        aria-describedby="unstyled-modal-description"
+                        open={modalStates.tradeModalOpen}
+                        onClose={() => dispatch({type: 'TOGGLE_TRADE'})}
+                        BackdropComponent={Backdrop}
+                    >
+                        <Box sx={style}>
+                            <TradeModalForm notifHandler={tradeNotifHandler}/>
+                        </Box>
+                    </TradeModal>
+                </>
             )
         } else if (modalStates.orderModalOpen) {
             return (
@@ -120,7 +144,9 @@ const Modal = () => {
         }
 
     } else {
-        return null
+        return (
+            <Notification openState={notificationOpen} handleClose={handleNotifClose} notificationMessage={notificationMessage}/>
+        )
     }
 }
 

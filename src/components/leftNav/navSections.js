@@ -39,11 +39,12 @@ const NavSections = () => {
             logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629781868/stock_pau4cd.png',
             text: 'Trades',
             uri: '/trades'
-        }, {
-            logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629787495/order_1_n5khi0.png',
-            text: 'Orders',
-            url: '/orders'
-        }
+        },
+        // {
+        //     logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629787495/order_1_n5khi0.png',
+        //     text: 'Orders',
+        //     url: '/orders'
+        // }
         ]
     }
 
@@ -53,7 +54,7 @@ const NavSections = () => {
         name: 'OVERVIEW',
         menuItems: [{
             logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1629787638/dollar-symbol_u6h55w.png',
-            text: 'Assets'
+            text: 'Assets (Coming soon!)'
         }]
     }
 

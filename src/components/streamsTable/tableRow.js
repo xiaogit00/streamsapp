@@ -238,6 +238,7 @@ const TableRow = ({individualStream, trades, globalDenom, num}) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        fontFamily: 'Calibri, sans-serif'
     }
 
 

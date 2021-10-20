@@ -3,11 +3,14 @@ import * as React from 'react'
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { newStream } from 'reducers/streamReducer'
+import { updateTrade } from 'reducers/tradeReducer'
 import { Form, HeaderText, ModalBody, ModalFooter, initialFValues,
     streamAssetClassMenu } from 'components/floatingActionButtonAdd/streamModalFormHelper'
+import { tickerMenuItems, coinMenuItems } from 'components/floatingActionButtonAdd/tradeModalFormHelper'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputField from 'components/floatingActionButtonAdd/streamFormFields/inputField'
+import Asset from 'components/floatingActionButtonAdd/streamFormFields/asset'
 import SelectField from 'components/floatingActionButtonAdd/streamFormFields/selectField'
 import MultiSelectField from 'components/floatingActionButtonAdd/streamFormFields/multiSelectField'
 import MultiSelectSwaps from 'components/floatingActionButtonAdd/streamFormFields/multiSelectSwaps'
@@ -18,11 +21,14 @@ import CreateButton from 'components/floatingActionButtonAdd/streamFormFields/cr
 
 
 
-const StreamModalForm = () => {
+
+const StreamModalForm = ({notifHandler}) => {
 //**********************************************************
 //*                     Definitions
 //**********************************************************
     const [values, setValues] = useState(initialFValues)
+    const [displayedTickerMenu, setDisplayedTickerMenu] = useState(null)
+    const [inputValue, setInputValue] = useState('')
     //For Trades
     const [selectedChips, setSelectedChips] = React.useState([])
     const [chipName, setChipName] = React.useState([])
@@ -41,10 +47,21 @@ const StreamModalForm = () => {
     const handleInputChange = e => {
         const { name, value } = e.target
         // console.log('e.target:', e.target)
-        setValues({
-            ...values,
-            [name]:value
-        })
+        if (name ==='assetClass') {
+            setDisplayedTickerMenu(null)
+            setValues({
+                ...values,
+                [name]: value,
+                asset: ''
+            })
+        } else {
+            setValues({
+                ...values,
+                [name]:value
+            })
+        }
+
+
 
     }
 
@@ -118,7 +135,33 @@ const StreamModalForm = () => {
 
     const submitHandler = (event) => {
         event.preventDefault()
+        console.log('values', values)
         dispatch(newStream(values))
+        if (values.trades.length > 0) {
+            console.log('if statement of submit handler is reached')
+            values.trades.map(tradeId => {
+                const tradeObject = trades.filter(trade => trade.id === tradeId)
+                dispatch(updateTrade(tradeId, {...tradeObject, assigned:false}))
+            })
+        }
+        dispatch({type: 'TOGGLE_STREAM'})
+        notifHandler(values.asset)
+    }
+
+    //ASSET HANDLERS
+    const onAssetLeave = async (event) => {
+        console.log('assetleave is triggered')
+        const data = await tickerMenuItems(values.asset)
+        //this will be set to the list of objects returned
+        console.log('ticker data is fetched from server')
+        setDisplayedTickerMenu(data)
+    }
+
+    const onCoinAssetLeave = async (event) => {
+        const data = await coinMenuItems(values.asset.toLowerCase())
+        //this will be set to the list of objects returned
+        console.log('ticker data is fetched from server', data)
+        setDisplayedTickerMenu(data)
     }
 
     //**********************************************************
@@ -129,14 +172,6 @@ const StreamModalForm = () => {
             <Form onSubmit={submitHandler} >
                 <ModalBody>
                     <HeaderText>Create a Stream</HeaderText>
-                    <InputField
-                        label="Asset"
-                        name="asset"
-                        value={values.asset}
-                        onChange={handleInputChange}
-                        required={true}
-                        sx={{ m: 0.5, minWidth:235}}
-                    />
                     <SelectField
                         label="Asset Class"
                         name='assetClass'
@@ -145,7 +180,18 @@ const StreamModalForm = () => {
                         menuItems={streamAssetClassMenu}
                         sx={{ m: 1, minWidth: 110}}
                     />
-                    <MultiSelectField
+
+                    <Asset assetClass={values.assetClass}
+                        values={values}
+                        handleInputChange={handleInputChange}
+                        onAssetLeave={onAssetLeave}
+                        onCoinAssetLeave={onCoinAssetLeave}
+                        displayedTickerMenu={displayedTickerMenu}
+                        inputValue={inputValue}
+                    />
+
+
+                    {values.assetClass!=='' && (<><MultiSelectField
                         label="Trades"
                         onChange={handleChipInputChange}
                         name="trades"
@@ -173,7 +219,7 @@ const StreamModalForm = () => {
                         sx={{ m: 0.5, mt:2, mb:8, width: 235 }}
                         handleDelete={handleSwapChipDelete}
                         selectedChips={selectedSwapChips}
-                    />)}
+                    />)}</>)}
 
                 </ModalBody>
                 <ModalFooter>

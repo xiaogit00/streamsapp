@@ -18,6 +18,9 @@ export const initializeStreams = () => {
 export const newStream = content => {
     return async dispatch => {
         const newStream = await streamService.createNew(content) //sends the data to Database. content is object.
+        const tradeIDs = content.trades
+        // I'll need to 1) create a tradeService.toggleAssignment(tradeIDs)
+        // 2) create a new dispatch to update store for trade 
         dispatch({
             type: 'NEW_STREAM',
             data: newStream
@@ -74,10 +77,6 @@ const streamReducer = (state = [], action) => {
         const newStream = action.data.stream
         return state.map(stream => stream.id !== id ? stream : newStream)
     }
-    //
-    // case 'UPDATE_TRADE_IN_STREAM': {
-    //
-    // }
     //
     case 'DELETE_STREAM': {
         const id = action.data

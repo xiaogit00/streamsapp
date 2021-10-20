@@ -37,7 +37,7 @@ const TickerSelectField = (props) => {
                     <em>None</em>
                 </MenuItem>
                 {menuItems && menuItems.map(menuItem =>
-                    <MenuItem value={menuItem.ticker} key={menuItem.display}>
+                    <MenuItem value={menuItem.ticker} key={`${menuItem.ticker} ${menuItem.exchange}`}>
                         <span style={{ fontSize: '0.9em'}}>{menuItem.ticker} | {menuItem.exchange}</span>
                     </MenuItem>)
                 }

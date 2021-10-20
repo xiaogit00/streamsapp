@@ -6,6 +6,7 @@ export default function CreateButton({label}) {
     return (
         <Button variant="contained"
             sx={{backgroundColor: '#460F61',
+                height: '75%',
                 color: 'white',
                 '&:hover': {
                     backgroundColor: '#7E2C65'

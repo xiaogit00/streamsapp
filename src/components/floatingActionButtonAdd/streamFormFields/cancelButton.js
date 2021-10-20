@@ -9,6 +9,7 @@ export default function CancelButton({ action }) {
     return (
         <Button variant="contained"
             sx={{backgroundColor: 'white',
+                height: '75%',
                 color: '#5E5E5E',
                 '&:hover': {
                     backgroundColor: '#EDEEEF'
