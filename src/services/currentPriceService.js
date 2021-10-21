@@ -12,8 +12,8 @@ const token = localStorage.getItem('token')
 const fetchPriceForStock = (ticker) => {
     console.log('currentPriceService is entered')
     const fetchCurrentStockPriceURL = `http://localhost:3003/api/streams/currentstockprice/${ticker}`
-    interceptorService.useAxiosRequestInterceptor()
-    interceptorService.useAxiosResponseInterceptor()
+    // interceptorService.useAxiosRequestInterceptor()
+    // interceptorService.useAxiosResponseInterceptor()
     const response = axios.get(fetchCurrentStockPriceURL, {
         headers: {
             Authorization:`bearer ${token}`
@@ -21,7 +21,7 @@ const fetchPriceForStock = (ticker) => {
     })
     return response.then(res => {
         console.log(`[CurrenPriceService] response for ${ticker} is fetched, and it is:`, res.data)
-    
+
         return res.data
     } ).catch(err => {
         console.log(`There is an error in fetching for ${ticker}, the error is: `, err)
