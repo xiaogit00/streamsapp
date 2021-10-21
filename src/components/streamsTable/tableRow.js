@@ -13,6 +13,7 @@ import currentPriceService from 'services/currentPriceService'
 import exchangeService from 'services/exchangeService'
 // import unrealizedReturnsSwaps from './calcs/tablerow/unrealizedReturnsSwaps'
 const alpha = require('alphavantage')({ key: 'LY78Q3KY7IUG1KFL' })
+import interceptorService from 'services/interceptorService'
 
 
 
@@ -84,38 +85,41 @@ const TableRow = ({individualStream, trades, globalDenom, num}) => {
             const getCurrentPrice = async () => {
                 const baseDenom = individualStream.exchangePriceDenom
 
-                const stockPrice = currentPriceService.fetchPriceForStock(individualStream.ticker)
-                const conversionRate = exchangeService.exchange(baseDenom, globalDenom)
-                try {
-                    let values = await Promise.all([stockPrice, conversionRate])
-                    const newPrice = values[0].data[0].open * values[1].conversion_rate
-                    setCurrentPrice(newPrice)
-                } catch (err) {
-                    console.log(err)
-                }
-
-            }
-            getCurrentPrice()
-
-        } else if (individualStream.assetClass === 'ETF') {
-            const getCurrentPrice = async () => {
-                const baseDenom = individualStream.exchangePriceDenom
-                const etfPrice = currentPriceService.fetchPriceForETF(individualStream.ticker)
+                const stockPrice = await currentPriceService.fetchPriceForStock(individualStream.ticker)
+                console.log('stockPrice is:', stockPrice)
 
                 const conversionRate = exchangeService.exchange(baseDenom, globalDenom)
-                const values = await Promise.all([etfPrice, conversionRate])
-                const newPrice = values[0].price.regularMarketPrice.raw * values[1].conversion_rate
+
+                let values = await Promise.all([stockPrice, conversionRate])
+                const newPrice = values[0][0].open * values[1].conversion_rate
                 setCurrentPrice(newPrice)
             }
-            getCurrentPrice()
+            getCurrentPrice().catch(e => {
+                console.log('[TableRow]There\'s a problem with getting current price for: ', individualStream.asset)
+                console.log('[TableRow]this is the error request if it\'s cached:', e)
+                // setCurrentPrice(0)
+            })
 
-            // currentPriceService.fetchPriceForETF(individualStream.ticker)
-            //     .then(response => setCurrentPrice(response.price.regularMarketPrice.raw))
-            //.then(response => setCurrentPrice(response.price.regularMarketPrice))
+            // } else if (individualStream.assetClass === 'ETF') {
+            //     const getCurrentPrice = async () => {
+            //         const baseDenom = individualStream.exchangePriceDenom
+            //         const etfPrice = currentPriceService.fetchPriceForETF(individualStream.ticker)
+            //
+            //         const conversionRate = exchangeService.exchange(baseDenom, globalDenom)
+            //         const values = await Promise.all([etfPrice, conversionRate])
+            //         const newPrice = values[0].price.regularMarketPrice.raw * values[1].conversion_rate
+            //         setCurrentPrice(newPrice)
+            //     }
+            //     getCurrentPrice()
+
         } else if (individualStream.assetClass === 'Crypto') {
             currentPriceService.fetchPriceForCrypto(individualStream.coinId, globalDenom)
                 .then(response => {
                     setCurrentPrice(response[individualStream.coinId][globalDenom.toLowerCase()])
+                })
+                .catch(err => {
+                    console.log(err)
+                    setCurrentPrice('Failed')
                 })
         }
     }, [globalDenom])

@@ -2,10 +2,8 @@ import axios from 'axios'
 import { cache } from 'services/cacheHandler'
 
 const whiteList = [
-    'api.marketstack.com',
-    'v6.exchangerate-api.com',
-    'api.coingecko.com',
-    'yh-finance.p.rapidapi.com'
+    'localhost:3003',
+    'v6.exchangerate-api.com'
 ]
 function isURLInWhiteList(url) {
     return whiteList.includes(url.split('/')[2])
@@ -15,9 +13,10 @@ function requestHandler(request) {
     if (request.method === 'GET' || 'get') {
         var checkIsValidResponse = cache.isValid(request.url || '')
         if (checkIsValidResponse.isValid) {
-            console.log('serving cached data')
+            console.log('[RequestHandler-InterceptorService] serving cached data:')
             request.headers.cached = true
             request.data = JSON.parse(checkIsValidResponse.value || '{}')
+            console.log('cached data:', request.data)
             return Promise.reject(request)
         }
     }
@@ -26,10 +25,11 @@ function requestHandler(request) {
 }
 
 function responseHandler(response) {
+    console.log('ResponseHandler is triggered and the response object is:', response)
     if (response.config.method === 'GET' || 'get') {
-
+        console.log('[ResponseHandler-InterceptorService]', response)
         if (response.config.url && isURLInWhiteList(response.config.url)) {
-            console.log('storing in cache')
+            console.log('[ResponseHandler-InterceptorService]storing in cache')
             cache.store(response.config.url, JSON.stringify(response.data))
         }
     }
@@ -37,17 +37,21 @@ function responseHandler(response) {
 }
 
 function errorHandler(error) {
-    console.log('error object:', error)
+    console.log('[ErrorHandler-InterceptorService] error.headers.cached:', error.headers.cached)
     if (error.headers.cached === true) {
-        console.log('got cached data in response, serving it directly')
+        console.log('[ErrorHandler-InterceptorService] got cached data in response, serving it directly: ', error)
         return Promise.resolve(error)
     }
     return Promise.reject(error)
 }
 
-const useAxiosRequestInterceptor = () => axios.interceptors.request.use(request => requestHandler(request))
+const useAxiosRequestInterceptor = () => {
+    console.log('axios request interceptor is mounted')
+    axios.interceptors.request.use(request => requestHandler(request))
+}
 
 const useAxiosResponseInterceptor = () => {
+    console.log('axios response interceptor is mounted')
     return (
         axios.interceptors.response.use(
             response => responseHandler(response),
@@ -56,9 +60,16 @@ const useAxiosResponseInterceptor = () => {
     )
 }
 
-const ejectAxiosRequestInterceptor = () => axios.interceptors.request.eject(useAxiosRequestInterceptor())
+const ejectAxiosRequestInterceptor = () => {
+    console.log('axios request interceptor is unmounted')
+    axios.interceptors.request.eject(useAxiosRequestInterceptor)
+}
 
-const ejectAxiosResponseInterceptor = () => axios.interceptors.response.eject(useAxiosResponseInterceptor())
+
+const ejectAxiosResponseInterceptor = () => {
+    console.log('axios response interceptor is unmounted')
+    axios.interceptors.response.eject(useAxiosResponseInterceptor)
+}
 
 export default {
     useAxiosRequestInterceptor,

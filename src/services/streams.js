@@ -3,11 +3,14 @@ import axios from 'axios'
 
 const baseURL = 'http://localhost:3003/api/streams'
 const token = localStorage.getItem('token')
+import interceptorService from 'services/interceptorService'
 
 
 
 const getAll = async () => {
+
     console.log('getAll from Streamreducer is called')
+
     try {
         const response = await axios.get(baseURL, {
             headers: {
