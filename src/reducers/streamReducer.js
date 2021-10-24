@@ -3,6 +3,7 @@ import streamService from '../services/streams'
 export const initializeStreams = () => {
     return async dispatch => {
         try {
+            console.log('hi from initializeStreams, trying to call streamService.getAll()')
             const streams = await streamService.getAll()
             dispatch({
                 type: 'INIT_STREAMS',
@@ -20,7 +21,7 @@ export const newStream = content => {
         const newStream = await streamService.createNew(content) //sends the data to Database. content is object.
         const tradeIDs = content.trades
         // I'll need to 1) create a tradeService.toggleAssignment(tradeIDs)
-        // 2) create a new dispatch to update store for trade 
+        // 2) create a new dispatch to update store for trade
         dispatch({
             type: 'NEW_STREAM',
             data: newStream

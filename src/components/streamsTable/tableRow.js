@@ -85,11 +85,10 @@ const TableRow = ({individualStream, trades, globalDenom, num}) => {
             const getCurrentPrice = async () => {
                 const baseDenom = individualStream.exchangePriceDenom
 
-                const stockPrice = await currentPriceService.fetchPriceForStock(individualStream.ticker)
-                console.log('stockPrice is:', stockPrice)
+                const stockPrice = currentPriceService.fetchPriceForStock(individualStream.ticker)
 
-                const conversionRate = await exchangeService.exchange(baseDenom, globalDenom)
-                console.log('conversionRate is:', conversionRate)
+                const conversionRate = exchangeService.exchange(baseDenom, globalDenom)
+
                 let values = await Promise.all([stockPrice, conversionRate])
                 const newPrice = values[0][0].open * values[1].conversion_rate
                 setCurrentPrice(newPrice)

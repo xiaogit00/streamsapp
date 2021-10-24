@@ -1,7 +1,7 @@
 //Uses axios to get all the data.
 import axios from 'axios'
 
-const baseURL = 'http://localhost:3003/api/streams'
+const baseURL = '/api/streams/'
 const token = localStorage.getItem('token')
 import interceptorService from 'services/interceptorService'
 

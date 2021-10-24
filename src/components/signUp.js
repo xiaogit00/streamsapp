@@ -28,7 +28,7 @@ function Copyright(props) {
     )
 }
 
-const signUpURL = 'http://localhost:3003/api/users'
+const signUpURL = '/api/users'
 
 const theme = createTheme()
 

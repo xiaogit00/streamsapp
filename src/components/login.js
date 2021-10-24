@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 
-const loginURL = 'http://localhost:3003/api/login'
+const loginURL = '/api/login'
 
 function Copyright(props) {
     return (
@@ -35,6 +35,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 const newLogin = async (loginCredentials) => {
+    console.log('Hi from newLogin axios post', loginURL, loginCredentials)
     const response = await axios.post(loginURL, loginCredentials)
     return response.data.token
 }
@@ -50,6 +51,7 @@ export default function Login({ setToken }) {
             email: data.get('email'),
             password: data.get('password'),
         }
+        console.log('loginCredentials',loginCredentials)
 
         try {
             const token = await newLogin(loginCredentials)

@@ -4,7 +4,7 @@
 import axios from 'axios'
 import interceptorService from 'services/interceptorService'
 
-const baseURL = 'http://localhost:3003/api/trades'
+const baseURL = '/api/trades/'
 const token = localStorage.getItem('token')
 
 

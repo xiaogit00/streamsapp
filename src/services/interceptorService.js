@@ -2,7 +2,7 @@ import axios from 'axios'
 import { cache } from 'services/cacheHandler'
 
 const whiteList = [
-    'localhost:3003',
+    'shielded-reaches-54541.herokuapp.com',
     'v6.exchangerate-api.com'
 ]
 function isURLInWhiteList(url) {

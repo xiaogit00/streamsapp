@@ -11,7 +11,7 @@ const token = localStorage.getItem('token')
 
 const fetchPriceForStock = (ticker) => {
     console.log('currentPriceService is entered')
-    const fetchCurrentStockPriceURL = `http://localhost:3003/api/streams/currentstockprice/${ticker}`
+    const fetchCurrentStockPriceURL = `/api/streams/currentstockprice/${ticker}`
     // interceptorService.useAxiosRequestInterceptor()
     // interceptorService.useAxiosResponseInterceptor()
     const response = axios.get(fetchCurrentStockPriceURL, {
@@ -55,7 +55,7 @@ const fetchPriceForStock = (ticker) => {
 
 
 const fetchPriceForCrypto = (coinId, baseCurrency) => {
-    const fetchCurrentCryptoPriceURL = `http://localhost:3003/api/streams/currentcryptoprice/${coinId}/${baseCurrency}`
+    const fetchCurrentCryptoPriceURL = `/api/streams/currentcryptoprice/${coinId}/${baseCurrency}`
 
     const response = axios.get(fetchCurrentCryptoPriceURL, {
         headers: {

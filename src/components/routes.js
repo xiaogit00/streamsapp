@@ -23,6 +23,7 @@ const Routes = () => {
     const loggedIn = useSelector(state => state.loggedIn)
     return (
         <>
+
             <Router>
                 <Switch>
                     {/* Home Page */}
@@ -44,6 +45,7 @@ const Routes = () => {
                     <Redirect from="*" to="/" />
                 </Switch>
             </Router>
+    
         </>
     )
 }
