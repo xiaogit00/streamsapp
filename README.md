@@ -12,6 +12,6 @@ Streams is a light weight browser based investment tracker that allows you to:
 
 Developed entirely with React, CSS, Express, and MongoDB for backend.
 ---
-### Streams.xyz is currently in beta testing stage. Register for an account at streams.xyz/signup and be a beta tester today!
+### Streams.xyz is currently in beta testing stage. Register for an account at app.streams.xyz/signup and be a beta tester today!
 
 All feedback appreciated. You can either open an issue here, or send your comments or suggestions to leibingguo@gmail.com. 
