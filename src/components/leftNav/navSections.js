@@ -17,6 +17,11 @@ import NavSection from 'components/leftNav/navSection'
 
 const NavSections = () => {
 
+    const logoutHandler = () => {
+        window.localStorage.removeItem('token')
+        window.location.reload()
+    }
+
     const section1 = {
         id: 1,
         label: false,
@@ -58,11 +63,24 @@ const NavSections = () => {
         }]
     }
 
+    const section4 = {
+        id:4,
+        label: false,
+        name: 'loggedInUser',
+        menuItems: [{
+            logoUrl: 'https://res.cloudinary.com/dl4murstw/image/upload/v1638760878/user_1_b87gap.png',
+            text: 'Logout',
+            notPage: true
+        }]
+    }
+    // <button onClick={logoutHandler}>Log Out</button>
+
     return (
         <>
             <NavSection section={section1} />
             <NavSection section={section2} />
             <NavSection section={section3} />
+            <NavSection section={section4} />
 
 
         </>

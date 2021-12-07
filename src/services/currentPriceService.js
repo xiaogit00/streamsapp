@@ -24,8 +24,11 @@ const fetchPriceForStock = (ticker) => {
 
         return res.data
     } ).catch(err => {
-        console.log(`There is an error in fetching for ${ticker}, the error is: `, err)
-
+        if (err.data) {
+            return err.data
+        } else {
+            console.log(`There is an error in fetching for ${ticker}, the error is: `, err)
+        }
     })
     // const price = response.data[0].open
     // console.log('price received: ', price)

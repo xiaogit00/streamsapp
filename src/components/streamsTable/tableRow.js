@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import currentPriceService from 'services/currentPriceService'
 import exchangeService from 'services/exchangeService'
 // import unrealizedReturnsSwaps from './calcs/tablerow/unrealizedReturnsSwaps'
-const alpha = require('alphavantage')({ key: 'LY78Q3KY7IUG1KFL' })
+
 import interceptorService from 'services/interceptorService'
 
 

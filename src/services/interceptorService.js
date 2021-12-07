@@ -10,6 +10,7 @@ function isURLInWhiteList(url) {
 }
 
 function requestHandler(request) {
+    console.log('RequestHandler is triggered and the request object is:', request)
     if (request.method === 'GET' || 'get') {
         var checkIsValidResponse = cache.isValid(request.url || '')
         if (checkIsValidResponse.isValid) {
@@ -37,7 +38,7 @@ function responseHandler(response) {
 }
 
 function errorHandler(error) {
-    console.log('[ErrorHandler-InterceptorService] error.headers.cached:', error.headers.cached)
+    // console.log('[ErrorHandler-InterceptorService] error.headers.cached:', error.headers.cached)
     if (error.headers.cached === true) {
         console.log('[ErrorHandler-InterceptorService] got cached data in response, serving it directly: ', error)
         return Promise.resolve(error)

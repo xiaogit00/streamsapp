@@ -39,6 +39,11 @@ const MenuItem = ({menuInfo}) => {
         marginLeft: '12px'
     }
 
+    const logoutHandler = () => {
+        window.localStorage.removeItem('token')
+        window.location.reload()
+    }
+
 
 
     return (
@@ -48,7 +53,14 @@ const MenuItem = ({menuInfo}) => {
                 height='20px' width='20px'
                 alt="S logo"/>
             <span style={menuText}>{menuInfo.text}</span>
-            <a href={menuInfo.uri}><span style={spanStyle}></span> </a>
+            {!menuInfo.notPage &&
+                <a href={menuInfo.uri}><span style={spanStyle}></span> </a>
+            }
+
+            {menuInfo.notPage &&
+                <a href={'/'} onClick={logoutHandler}><span style={spanStyle}></span> </a>
+            }
+
         </div>
 
     )

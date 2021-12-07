@@ -114,6 +114,15 @@ body {
   padding: 11px;
 }
 
+.nav-section4-flexitem {
+    width: 160px;
+  padding: 11px;
+  /* border: 1px solid grey; */
+  position: absolute;
+  bottom: 0px;
+
+}
+
 
 .menu-items-container {
   display: flex;
