@@ -271,3 +271,23 @@ body {
 .MuiSpeedDial-fab {
     background-color: black;
 } */
+
+/*
+//***********************************************************
+//*          Trades Table
+//***********************************************************
+ */
+.trades-helper-container-flex {
+    position:absolute;
+    /* border: 1px solid blue; */
+    /* justify-content: center; */
+    display: flex;
+    width: 96%;
+    height: 70%;
+}
+
+ .trades-helper-dialogue {
+     margin: auto;
+     font-family: "Calibri", sans-serif;
+     font-size: 0.9em;
+ }

@@ -89,15 +89,18 @@ const TableRow = ({individualStream, trades, globalDenom, num}) => {
 
                 const conversionRate = exchangeService.exchange(baseDenom, globalDenom)
 
-                let values = await Promise.all([stockPrice, conversionRate])
-                const newPrice = values[0][0].open * values[1].conversion_rate
-                setCurrentPrice(newPrice)
+                return await Promise.all([stockPrice, conversionRate])
+
             }
-            getCurrentPrice().catch(e => {
-                console.log('[TableRow]There\'s a problem with getting current price for: ', individualStream.asset)
-                console.log('[TableRow]this is the error request if it\'s cached:', e)
-                // setCurrentPrice(0)
-            })
+
+            getCurrentPrice()
+                .then(res => {
+                    const newPrice = res[0][0].open * res[1].conversion_rate
+                    setCurrentPrice(newPrice)
+                })
+                .catch(err => {
+                    console.log('Error in fetching price for stock:',err)
+                })
 
             // } else if (individualStream.assetClass === 'ETF') {
             //     const getCurrentPrice = async () => {
@@ -117,8 +120,7 @@ const TableRow = ({individualStream, trades, globalDenom, num}) => {
                     setCurrentPrice(response[individualStream.coinId][globalDenom.toLowerCase()])
                 })
                 .catch(err => {
-                    console.log(err)
-                    setCurrentPrice('Failed')
+                    console.log('Error in fetching price for Crypto:',err)
                 })
         }
     }, [globalDenom])

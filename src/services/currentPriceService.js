@@ -9,27 +9,23 @@ const token = localStorage.getItem('token')
 
 
 
-const fetchPriceForStock = (ticker) => {
+const fetchPriceForStock = async ticker => {
     console.log('currentPriceService is entered')
     const fetchCurrentStockPriceURL = `/api/streams/currentstockprice/${ticker}`
-    // interceptorService.useAxiosRequestInterceptor()
-    // interceptorService.useAxiosResponseInterceptor()
-    const response = axios.get(fetchCurrentStockPriceURL, {
-        headers: {
-            Authorization:`bearer ${token}`
-        }
-    })
-    return response.then(res => {
-        console.log(`[CurrenPriceService] response for ${ticker} is fetched, and it is:`, res.data)
+    interceptorService.useAxiosRequestInterceptor()
+    interceptorService.useAxiosResponseInterceptor()
+    try {
+        const response = await axios.get(fetchCurrentStockPriceURL, {
+            headers: {
+                Authorization:`bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (err) {
 
-        return res.data
-    } ).catch(err => {
-        if (err.data) {
-            return err.data
-        } else {
-            console.log(`There is an error in fetching for ${ticker}, the error is: `, err)
-        }
-    })
+        return err
+    }
+
     // const price = response.data[0].open
     // console.log('price received: ', price)
     // return price
@@ -57,21 +53,23 @@ const fetchPriceForStock = (ticker) => {
 
 
 
-const fetchPriceForCrypto = (coinId, baseCurrency) => {
+const fetchPriceForCrypto = async (coinId, baseCurrency) => {
     const fetchCurrentCryptoPriceURL = `/api/streams/currentcryptoprice/${coinId}/${baseCurrency}`
+    interceptorService.useAxiosRequestInterceptor()
+    interceptorService.useAxiosResponseInterceptor()
 
-    const response = axios.get(fetchCurrentCryptoPriceURL, {
-        headers: {
-            Authorization:`bearer ${token}`
-        }
-    })
-    return response.then(res => {
-        console.log(`response for ${coinId} is fetched, and it is:`, res.data)
+    try {
+        let response = await axios.get(fetchCurrentCryptoPriceURL, {
+            headers: {
+                Authorization:`bearer ${token}`
+            }
+        })
 
-        return res.data
-    } ).catch(err => {
-        console.log(`There is an error in fetching for ${coinId}, the error is: `, err)
-    })
+        return response.data
+    } catch (err) {
+        return err
+    }
+
 }
 
 

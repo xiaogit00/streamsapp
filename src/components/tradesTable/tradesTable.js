@@ -63,6 +63,7 @@ import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
 import TradeMenuBar from 'components/tradesTable/tradeMenuBar'
 import { makeStyles } from '@material-ui/core'
+import HelperDialogue from 'components/tradesTable/helperDialogue'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -156,7 +157,7 @@ export default function CustomizedTables() {
     return (
 
         <TableContainer component={Paper}>
-
+            <HelperDialogue sortedTrades={sortedTrades}/>
             <Table stickyHeader sx={{ minWidth: 700}} aria-label="customized table">
                 <TableHead>
                     <TableRow hover>
@@ -175,6 +176,7 @@ export default function CustomizedTables() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
+
                     {sortedTrades.map((trade) => {
                         if (trade.id===tradeEditId) {
                             return (

@@ -2,6 +2,7 @@ import React from 'react'
 import 'App.css'
 import styled from 'styled-components'
 import ToggleButton from 'components/header/nominalCurrencyButton'
+import TestCacheButton from 'components/streamsTable/testCacheButton'
 
 //**********************************************
 //*             Styled Components
@@ -68,6 +69,7 @@ const HeaderBlock = () => {
                 <StreamLogoContainer style={headerFlexContainer}>
         Streams
                 </StreamLogoContainer>
+                
 
                 <MenuContainer style={headerFlexContainer}>
                     <AssetFilter></AssetFilter>

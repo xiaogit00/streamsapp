@@ -3,7 +3,8 @@ import { cache } from 'services/cacheHandler'
 
 const whiteList = [
     'shielded-reaches-54541.herokuapp.com',
-    'v6.exchangerate-api.com'
+    'v6.exchangerate-api.com',
+    'streams'
 ]
 function isURLInWhiteList(url) {
     return whiteList.includes(url.split('/')[2])
@@ -27,22 +28,28 @@ function requestHandler(request) {
 
 function responseHandler(response) {
     console.log('ResponseHandler is triggered and the response object is:', response)
-    if (response.config.method === 'GET' || 'get') {
-        console.log('[ResponseHandler-InterceptorService]', response)
-        if (response.config.url && isURLInWhiteList(response.config.url)) {
-            console.log('[ResponseHandler-InterceptorService]storing in cache')
-            cache.store(response.config.url, JSON.stringify(response.data))
+    if (response.config) {
+        if (response.config.method === 'GET' || 'get') {
+            console.log('[ResponseHandler-InterceptorService]', response)
+            if (response.config.url && isURLInWhiteList(response.config.url)) {
+                console.log('[ResponseHandler-InterceptorService]storing in cache')
+                cache.store(response.config.url, JSON.stringify(response.data))
+            }
         }
     }
+
     return response
 }
 
 function errorHandler(error) {
     // console.log('[ErrorHandler-InterceptorService] error.headers.cached:', error.headers.cached)
-    if (error.headers.cached === true) {
-        console.log('[ErrorHandler-InterceptorService] got cached data in response, serving it directly: ', error)
-        return Promise.resolve(error)
+    if (error.headers.cached) {
+        if (error.headers.cached === true) {
+            console.log('[ErrorHandler-InterceptorService] got cached data in response, serving it directly: ', error)
+            return Promise.resolve(error)
+        }
     }
+
     return Promise.reject(error)
 }
 

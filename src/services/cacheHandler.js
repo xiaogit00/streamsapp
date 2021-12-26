@@ -11,7 +11,7 @@ function store(key, value) {
 }
 
 function isValid(key) {
-    console.log('[isValid- CacheHandler]cache.isValid is entered')
+    console.log('Hi from isValid function')
     var value = localStorage.getItem(key)
     if (value === null) {
         return {
