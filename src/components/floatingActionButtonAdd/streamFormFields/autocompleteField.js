@@ -1,21 +1,32 @@
 import React from 'react'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
+import {useState} from 'react'
+
 
 export default function AutocompleteField(props) {
-    const { options, name, value, label, onChange, sx, ref} = props
-
+    const { options, name, value, label, inputValue, onChange, onInputChange, sx, ref } = props
     return (
         <Autocomplete
             disablePortal
-            onChange={onChange}
-            id="free-solo-demo"
-            freeSolo
             value={value}
+            onChange={onChange}
+            inputValue={inputValue}
+            onInputChange={onInputChange}
+            id="free-solo-demo"
             disableClearable
-            options={options}
+            options={[value, ...options]}
             sx={sx}
-            renderInput={(params) => <TextField {...params} variant="filled" label={<span style={{ fontSize: '0.8em'}}>{label}</span>} size="small" />}
+            renderOption={(props, option) => {
+                return (
+                    <li {...props} key={option.label}>
+                        {option.label}
+                    </li>
+                )
+            }}
+            isOptionEqualToValue={(option, value) => option.label === value.label}
+            getOptionLabel={option => option.label || ''}
+            renderInput={(params) => <TextField {...params} variant="filled" label={label} size="small" />}
         />
     )
 }
