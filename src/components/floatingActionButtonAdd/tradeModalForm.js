@@ -200,12 +200,8 @@ const TradeModalForm = ({notifHandler}) => {
                             name="priceDenom"
                             value={values.priceDenom}
                             inputValue={denomInputValue}
-                            onInputChange={(event, newInputValue) => {
-                                console.log('newInputValue: ', newInputValue)
-                                setDenomInputValue(newInputValue)
-                            }}
                             onChange={handlePriceDenomChange}
-                            sx={{ width: 80, ml:2 }}
+                            sx={{ width: 95, ml:2 }}
                         />
                     </div>
                     <div style={{display:'flex', width: '100%', alignItems:'center',justifyContent:'space-between'}}>
@@ -265,14 +261,14 @@ const TradeModalForm = ({notifHandler}) => {
                             onChange={handleInputChange}
                             sx={{m:1,ml:0.5, mt:2, width:80}}
                         />
-                        {/*<AutocompleteField
+                        <AutocompleteField
                             options={currencies}
                             label="Denom"
                             name="feesDenom"
                             value={values.feesDenom}
                             onChange={handleFeesDenomChange}
-                            sx={{ width: 80, ml:8}}
-                        />*/}
+                            sx={{ width: 95, ml:8}}
+                        />
                     </div>
                     <TextField
                         id="outlined-multiline-static"
@@ -290,7 +286,7 @@ const TradeModalForm = ({notifHandler}) => {
                     <CreateButton label="CREATE"></CreateButton>
                 </ModalFooter>
             </Form>
-            {console.log('denomInputValue',denomInputValue)}
+            {console.log('values',values)}
         </>
 
     )

@@ -1,0 +1,15 @@
+Additional steps for creating email verification:
+
+1. Create a new gmail account
+2. Add the gmail credentials into the server's .env file.
+3. Have a user model ready - with a 'confirmed' field
+
+const fields = {
+  email: {
+    type: String
+  },
+  confirmed: {
+    type: Boolean,
+    default: false
+  }
+}

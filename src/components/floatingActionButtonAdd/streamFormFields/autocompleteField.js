@@ -9,24 +9,13 @@ export default function AutocompleteField(props) {
     return (
         <Autocomplete
             disablePortal
-            value={value}
-            onChange={onChange}
-            inputValue={inputValue}
-            onInputChange={onInputChange}
-            id="free-solo-demo"
             disableClearable
-            options={[value, ...options]}
+            id="combo-box-demo"
+            onChange={onChange}
+            options={options}
             sx={sx}
-            renderOption={(props, option) => {
-                return (
-                    <li {...props} key={option.label}>
-                        {option.label}
-                    </li>
-                )
-            }}
-            isOptionEqualToValue={(option, value) => option.label === value.label}
-            getOptionLabel={option => option.label || ''}
             renderInput={(params) => <TextField {...params} variant="filled" label={label} size="small" />}
         />
+
     )
 }
