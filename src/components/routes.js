@@ -34,15 +34,11 @@ const Routes = () => {
                     {/* Home Page */}
                     <Route exact path="/">
                         <LeftNav />
-                        <div style={{fontFamily:'menlo',fontSize:'2em', margin:'30px'}}>How to use Streams</div>
-                        <p style={{fontFamily:'menlo',fontSize:'1em', margin:'30px'}}>
-                            1. Add a new trade <br /> <br />
-                            2. Put your trade into a stream <br /> <br />
-                            3. View your stream returns! <br /> <br />
-                            4. Add another trade of same asset. <br /> <br />
-                            5. Add that trade into stream. <br /> <br />
-                            6. View your overall returns for asset. 
-                        </p>
+                        <div style={{fontFamily:'menlo',fontSize:'2em', margin:'60px'}}>
+                            Watch this video to learn how to use Streams!
+                            <iframe width="888.8" height="500" src="https://www.youtube.com/embed/BWv0N0ONSa8" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        </div>
+
 
                     </Route>
                     {/* React Exercises Page */}
