@@ -4,7 +4,7 @@
 import axios from 'axios'
 import interceptorService from 'services/interceptorService'
 
-const baseURL = '/api/trades/'
+const baseURL = '/api/trades'
 const token = localStorage.getItem('token')
 
 
@@ -38,7 +38,7 @@ const deleteTrade = async (id) => {
 }
 
 const updateTrade = async (id, newTrade) => {
-
+    console.log('hi from within trades service: this is the URL:', `${baseURL}/${id}`)
     const response = await axios.put(`${baseURL}/${id}`, newTrade, {
         headers: {
             Authorization:`bearer ${token}`

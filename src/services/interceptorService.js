@@ -6,6 +6,7 @@ const whiteList = [
     'v6.exchangerate-api.com',
     'streams'
 ]
+
 function isURLInWhiteList(url) {
     return whiteList.includes(url.split('/')[2])
 }

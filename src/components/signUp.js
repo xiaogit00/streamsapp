@@ -29,11 +29,21 @@ function Copyright(props) {
 }
 
 const signUpURL = '/api/users'
+const confirmationEmailURL = '/api/email'
 
 const theme = createTheme()
 
 const newSignUp = async (signUpCredentials) => {
     const response = await axios.post(signUpURL, signUpCredentials)
+    return response.status
+}
+
+const sendConfirmationEmail = async (content) => {
+    const response = await axios.post(confirmationEmailURL, content, {
+        headers: {
+            Authorization:`bearer ${token}`
+        }
+    })
     return response.status
 }
 
@@ -56,10 +66,17 @@ export default function SignUp() {
         const response = await newSignUp(signUpCredentials)
         console.log(response)
         if (response === 200) {
-            setSignUpSuccess(true)
-            setUsername('')
-            setEmail('')
-            setPassword('')
+            //HERE, I'll want to send another post request to
+            // email router,
+            const confirmationRes = await sendConfirmationEmail(signUpCredentials)
+            if (response.status === 200) {
+                //Display page: Confirmation is sent to your email. Pls confirm. 
+                // setSignUpSuccess(true)
+                // setUsername('')
+                // setEmail('')
+                // setPassword('')
+            }
+
         }
     }
     if (!signUpSuccess) {

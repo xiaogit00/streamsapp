@@ -36,6 +36,11 @@ export const deleteTrade = id => {
 }
 
 export const updateTrade = (id, trade) => {
+    console.log(`id: ${id}`)
+    console.log('trade Object: ', trade)
+    //Okay there is a problem here. the trade object is an object with two properties: 0, and assigned.
+    //It should be just an object, with assigned as property. This means that when
+    //it is passed to updateTrade, it is already in the wrong format. 
     return async dispatch => {
         const response = await tradeService.updateTrade(id, trade)
         dispatch({

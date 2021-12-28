@@ -67,10 +67,12 @@ const StreamModalForm = ({notifHandler}) => {
 
     const handleChipInputChange = e => {
         const { name, value } = e.target
+        console.log('Value of chip: ', value)
         const tradeIDs = value.map(item => item.id)
         setValues({
             ...values,
-            trades:tradeIDs
+            trades:tradeIDs,
+            exchangePriceDenom: value[0].priceDenom
         })
         setSelectedChips(value)
         setChipName(value)
@@ -140,7 +142,11 @@ const StreamModalForm = ({notifHandler}) => {
         if (values.trades.length > 0) {
             console.log('if statement of submit handler is reached')
             values.trades.map(tradeId => {
-                const tradeObject = trades.filter(trade => trade.id === tradeId)
+                const tradeObject = trades.filter(trade => trade.id === tradeId)[0]
+                //This is the problematic line. I'll need to see what tradeObject returns
+                //I think I found the problem. tradeObject is not an array. it returns an array.
+                //That's right. The fix
+                console.log('tradeObject: ', tradeObject)
                 dispatch(updateTrade(tradeId, {...tradeObject, assigned:false}))
             })
         }
