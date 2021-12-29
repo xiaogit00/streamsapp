@@ -144,6 +144,8 @@ const TradeModalForm = ({notifHandler}) => {
 
     const onCoinAssetLeave = async (event) => {
         const data = await coinMenuItems(values.asset.toLowerCase())
+        console.log(`this is the value of values.asset:${values.asset.toLowerCase()}`)
+        console.log('this is what is submitted to coinservice:', values.asset.toLowerCase())
         //this will be set to the list of objects returned
         console.log('ticker data is fetched from server', data)
         setDisplayedTickerMenu(data)
