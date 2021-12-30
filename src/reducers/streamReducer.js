@@ -17,6 +17,7 @@ export const initializeStreams = () => {
 }
 
 export const newStream = content => {
+    console.log('newStream is entered, and the value of content is:', content)
     return async dispatch => {
         const newStream = await streamService.createNew(content) //sends the data to Database. content is object.
         const tradeIDs = content.trades

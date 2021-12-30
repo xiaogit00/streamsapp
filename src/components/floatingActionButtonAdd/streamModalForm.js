@@ -147,7 +147,7 @@ const StreamModalForm = ({notifHandler}) => {
                 //I think I found the problem. tradeObject is not an array. it returns an array.
                 //That's right. The fix
                 console.log('tradeObject: ', tradeObject)
-                dispatch(updateTrade(tradeId, {...tradeObject, assigned:false}))
+                dispatch(updateTrade(tradeId, {...tradeObject, assigned:true}))
             })
         }
         dispatch({type: 'TOGGLE_STREAM'})

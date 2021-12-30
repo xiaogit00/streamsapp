@@ -25,11 +25,14 @@ const getAll = async () => {
 }
 
 const createNew = async (content) => {
+    console.log('createNew Service is entered, and the value of input content is: ', content)
     const response = await axios.post(baseURL, content, {
         headers: {
             Authorization:`bearer ${token}`
         }
     })
+    console.log('THis is the response data returned from createNew:', response.data)
+    console.log('THis is the response returned from createNew:', response)
     return response.data
 }
 

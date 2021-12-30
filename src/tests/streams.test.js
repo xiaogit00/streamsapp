@@ -1,49 +1,17 @@
-//Main logic for the Test
+// Pseudocode:
 
-// I'll need to make a dispatch(deleteStream(id)) call.
-// If successful, the stream will be deleted.
-
-// This test checks for a couple of things.
-// -First, that my reducer is ok.
-// -Second, that my action creator is okay.
-// -Third, that my axios service is okay.
-// -Fourth, that my delete API is okay.
-
-// Implementation
-
-// 1. Test whether you could get the state of the store from within test environment.
-// 2. import useDispatch, import reducer. Let's just try
-import { useDispatch } from 'react-redux'
-import { deleteStream } from 'reducers/streamreducer'
-import StreamMenuBar from 'components/streamBar/streamMenuBar'
-
-describe('test suite', () => {
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector')
-    const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch')
-    beforeEach(() => {
-        useSelectorMock.mockClear()
-        useDispatchMock.mockClear()
-    })
-
-    it('does something', () => {
-        // ARRANGE
-        const dummyDispatch = jest.fn()
-        useDispatchMock.mockReturnValue(dummyDispatch)  /* SANITY CHECK */
-        expect(dummyDispatch).not.toHaveBeenCalled()    /* RENDER COMPONENT AND ASSERT HERE */})
-})
+// import newStream, import dispatch; import streamReducer.
+// Create the values
+// Might need to find a way to check that a new stream is successfully created in DB - this requires us to make calls to the backend.
+//  - Add a token
+//  - import streamServices
+//  - make a getAll call request - after adding streams, length of return object should be +1. Expect that.
 //
-// test('Deleting Streams works from UI', () => {
-//     const wrapper = mount(<StreamMenuBar />)
-//     dispatch(deleteStream('614b2acbcc94e92506c2d108'))
-//     // at this point, I should invoke deleteStream action creator.
-//     // This actioncreator will help me create the following action:
+// Initialize State of store
+// Check that store contains new stream after making dispatch call. Again, expect that.
+//
+// Create the logic where the state of the database is not changed after the test (need to re-read up on how to do it for this, I rmb sth similar)
 //
 //
-//     //In addition, because I've used async dispatch, I will also be sending an
-//     // axios delete request to the URI.
-//     // What I expect is for the data in the streams to be deleted.
-//     // this will be the first thing. The second thing is that I expect store
-//     // to be updated. But because store is empty, the returned state will
-//     // be empty.
 //
-// })
+//
