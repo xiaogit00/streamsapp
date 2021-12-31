@@ -13,7 +13,7 @@ function isURLInWhiteList(url) {
 
 function requestHandler(request) {
     console.log('RequestHandler is triggered and the request object is:', request)
-    if (request.method === 'GET' || 'get') {
+    if (request.method === 'GET' || request.method === 'get') {
         var checkIsValidResponse = cache.isValid(request.url || '')
         if (checkIsValidResponse.isValid) {
             console.log('[RequestHandler-InterceptorService] serving cached data:')
@@ -30,8 +30,9 @@ function requestHandler(request) {
 function responseHandler(response) {
     console.log('ResponseHandler is triggered and the response object is:', response)
     if (response.config) {
-        if (response.config.method === 'GET' || 'get') {
+        if (response.config.method === 'GET' || response.config.method === 'get') {
             console.log('[ResponseHandler-InterceptorService]', response)
+            console.log('response.config.method', response.config.method)
             if (response.config.url && isURLInWhiteList(response.config.url)) {
                 console.log('[ResponseHandler-InterceptorService]storing in cache')
                 cache.store(response.config.url, JSON.stringify(response.data))
