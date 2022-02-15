@@ -184,8 +184,8 @@ export default function SignUp() {
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                             <Grid container spacing={2}>
-                                <span> Your account is almost ready! We have sent an e-mail to you for verification. Follow the link provided
-                                    to finalize the signup process. 
+                                <span> Your account is almost ready! Click on the verification link sent to your email
+                                    to finalize the signup process. <br></br>If done, proceed to <a href='/'> login.</a>
                                 </span>
                             </Grid>
 
