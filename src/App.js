@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import useToken from 'components/useToken'
 import SignUp from 'components/signUp'
+import Verified from 'components/verified'
 
 const App = () => {
     console.log('app is rendered')
@@ -17,12 +18,14 @@ const App = () => {
     const { token, setToken } = useToken()
     // const loggedIn = useSelector(state => state.loggedIn)
 
-    if(!token && window.location.pathname !== '/signup') {
+    if(!token && (window.location.pathname !== '/signup' && window.location.pathname !== '/verified' )) {
         console.log('if condition is triggered, and the value of token is:', token)
         return <Login setToken={setToken} />
 
     } else if (!token && window.location.pathname === '/signup') {
         return <SignUp />
+    } else if (!token && window.location.pathname === '/verified') {
+        return <Verified />
     }
 
     return (

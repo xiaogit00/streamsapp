@@ -28,7 +28,7 @@ function Copyright(props) {
     )
 }
 
-const signUpURL = '/api/users'
+const signUpURL = '/api/email'
 // const confirmationEmailURL = '/api/email'
 
 const theme = createTheme()
@@ -184,7 +184,9 @@ export default function SignUp() {
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                             <Grid container spacing={2}>
-                                <span> Sign Up Success. Proceed to <a href='/'> login.</a> </span>
+                                <span> Your account is almost ready! Click on the verification link sent to your email
+                                    to finalize the signup process. <br></br>If done, proceed to <a href='/'> login.</a>
+                                </span>
                             </Grid>
 
 
